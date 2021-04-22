@@ -1,0 +1,93 @@
+<html>
+<head>
+  <style type="text/css">
+    body{
+      font-family: sans-serif;
+      font-size: 20px;
+    }
+    td{
+      padding: 5px;
+      padding-bottom: 15px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 24px;
+    }
+    img{
+      width: 250px;
+    }
+    hcal{
+      font-family: 'Lucida Calligraphy', 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Tex Gyre Chorus';
+      font-size: 28px;
+    }
+    .second-line{
+      margin-top:3px;
+    }
+    .tdheader{
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body onload="Load()">
+  <div style="width: 100%;text-align: center;">
+    <table id="mytab" style="display: inline-table;">
+      <tr>
+        <td class="tdheader"></td>
+        <td class="tdheader"><span>Image</span></td>
+        <td class="tdheader"><span>Ground-truth</span></td>
+        <td class="tdheader"><span>XLO-AVG</span></td>
+        <td class="tdheader"><span>XLO-AVG (0.19)</span></td>
+      </tr>
+    </table>
+  </div>
+  <script type="text/javascript">
+    function addHeaderRow() {
+        var root = document.getElementById('mytab').getElementsByTagName('tbody')[0];
+        var headerrow = root.getElementsByTagName('tr')[0];
+        var clone = cloneEl(headerrow);
+        root.appendChild(clone);
+    }
+    function cloneEl(el) {
+        var clo = el.cloneNode(true);
+        return clo;
+    }
+
+    function Load(){
+
+      images = ['101084',  '104010', '104055', '117025', '130014', '134067', '140006', '140088', '147077', '156054', '159002', '163004', '163096', '164046',  '17067', '181021',
+        '189006', '189013', '189029', '196027', '196040', '198087', '20069', '2018', '217013', '223004', '225022', '226043', '226060', '230063', '230098', '23050', '238025',
+        '243095', '246009', '249021', '250047', '250087', '253092', '257098', '259060', '267036', '268074', '279005',  '281017', '289011', '302022', '306051', '326085', '33044',
+        '334025', '347031',  '365072',  '372019', '384089',  '388006', '388018', '388067', '6046', '61034', '64061', '65084', '70090', '71076', '80090', '81090',]
+
+      bsds_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/datasets/BSDS500/data/"
+      xlo_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/export/BSDS500/20200701/xlo-all/avg/test_loss-v3_0"
+
+      var table = document.getElementById("mytab");
+      var index = 0;
+      images.forEach((item, i) => {
+        if(i%5==0 && i > 0){
+          addHeaderRow();
+          index += 1;
+          var row = table.insertRow(index);
+          var cell0 = row.insertCell(0);
+          cell0.innerHTML = "<br><br><br><br>";
+          index +=1;
+        }
+
+        index += 1;
+        var row = table.insertRow(index);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        var cell4 = row.insertCell(4);
+
+        cell0.innerHTML = "<td><span>" + item +  "</span></td>";
+        cell1.innerHTML = "<td><img id='" + i + "_img_bsds' src='" + (bsds_path + "images/test/" + item + ".jpg") + "' /></td>";
+        cell2.innerHTML = "<td><img id='" + i + "_img_gt' src='" + (bsds_path + "groundTruth/test-png/" + item + ".png") + "' /></td>";
+        cell3.innerHTML = "<td><img id='" + i + "_img_avg_all_0' src='" + (xlo_path + ".0/png/" + item + ".png") + "' /></td>";
+        cell4.innerHTML = "<td><img id='" + i + "_img_avg_all_19' src='" + (xlo_path + ".19/png/" + item + ".png") + "' /></td>";
+      });
+    }
+  </script>
+</body>
+</html>

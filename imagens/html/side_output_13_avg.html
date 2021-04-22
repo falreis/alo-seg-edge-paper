@@ -1,0 +1,86 @@
+<html>
+<head>
+  <style type="text/css">
+    body{
+      font-family: sans-serif;
+      font-size: 20px;
+    }
+    td{
+      padding: 5px;
+      padding-bottom: 15px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 24px;
+    }
+    img{
+      width: 400px;
+    }
+    .mathcal{
+      font-family: 'Lucida Calligraphy', 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Tex Gyre Chorus';
+      font-size: 28px;
+    }
+  </style>
+</head>
+<body onload="Load()">
+  <table>
+    <tr>
+      <td><div>Image and</div><div style="margin-top:3px;">Ground truth</div></td>
+      <td><img id="o_img" /></td>
+      <td><img id="g_img" /></td>
+    </tr>
+    <tr>
+      <td><span>Stage 1</span></td>
+      <td><img id="img1" /></td>
+      <td><img id="img2" /></td>
+    </tr>
+    <tr>
+      <td><span>Stage 2</span></td>
+      <td><img id="img3" /></td>
+      <td><img id="img4" /></td>
+    </tr>
+    <tr>
+      <td><span>Stage 3</span></td>
+      <td><img id="img5" /></td>
+      <td><img id="img6" /></td>
+      <td><img id="img7" /></td>
+    </tr>
+    <tr>
+      <td><span>Stage 4</span></td>
+      <td><img id="img8" /></td>
+      <td><img id="img9" /></td>
+      <td><img id="img10" /></td>
+    </tr>
+    <tr>
+      <td><span>Stage 5</td>
+      <td><img id="img11" /></td>
+      <td><img id="img12" /></td>
+      <td><img id="img13" /></td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+    function Load(){
+      img_ref="100007";
+
+      //image and gt
+      document.getElementById("o_img").src = img_ref + ".jpg";
+      document.getElementById("g_img").src = img_ref + "_upper.png";
+
+      //side outputs
+      img_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/export/BSDS500/20200410/vgg_alo-upper/avg/test_loss-v3_0.0_side/";
+      for(i=1; i<=13; i++){
+        img_id="img" + i.toString();
+        img_name="_" + i.toString() + ".png";
+        document.getElementById(img_id).src = img_path + img_ref + img_name;
+      }
+
+      //stage outputs
+      // img_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/export/BSDS500/20200410/vgg_alo-all/avg/test_loss-v3_0.0_stage/";
+      // for(i=1; i<=5; i++){
+      //   img_id="stg" + i.toString();
+      //   img_name="_" + i.toString() + ".png";
+      //   document.getElementById(img_id).src = img_path + img_ref + img_name;
+      // }
+    }
+  </script>
+</body>
+</html>

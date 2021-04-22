@@ -1,0 +1,41 @@
+%--------------------------------
+\subsubsection{Sub experiment 2 - Temp.}
+\label{ssec:bsds_subexp2}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.90\textwidth]{imagens/ilustracoes/cap6_bsds_side_outputs.png}
+  \caption{Side output maps for ALO network merging strategies}
+  \label{fig:bsds_expr_basic_side_outputs}
+\end{figure}
+
+Devido a diferença significativa entre os resultados existentes na Figura \ref{fig:bsds_expr_basic_side_outputs}, a análise será feita de acordo com o método de fusão das camadas.
+\begin{itemize}
+ \item \textit{ALO-ADD} - A primeira saída, $\mathcal{H}_{2}$, exibe os contornos esperados da imagem original, porém apresenta módulo de valor invertido (predominância de pixels claros, quando deveria haver predominância de pixels escuro, correspondentes ao fundo). A segunda saída, $\mathcal{H}_{4}$, exibe o melhor resultado desse método de fusão, com valores mais próximos aos esperado e com bordas mais nítidas, porém ainda com módulo invertido. As camadas $\mathcal{H}_{7}$ e $\mathcal{H}_{10}$, apresentam contornos da imagem, porém sem definição clara. Por fim, a última saída, $\mathcal{H}_{13}$, contém apenas ruídos, usados possivelmente na tentativa de contrabalancear os pixels das saídas anteriores.
+ \item \textit{ALO-AVG} - As duas primeiras saídas, $\mathcal{H}_{2}$ e $\mathcal{H}_{4}$, apresentam alguns contornos da imagem, porém com valores invertidos em relação ao esperado. A terceira saída, $\mathcal{H}_{7}$, contém os melhores resultados, com um resultado mais próximo ao esperado. Por fim, as saídas $\mathcal{H}_{10}$ e $\mathcal{H}_{13}$, são utilizadas para correção de valores, de modo a produzir a saída final com bons resultados.
+ \item \textit{ALO-MAX} - As duas primeiras saídas, $\mathcal{H}_{2}$ e $\mathcal{H}_{4}$, não apresentam nenhum resultado visível. A terceira saída, $\mathcal{H}_{7}$, por sua vez apresenta os melhores resultados, com características próximas ao resultado final. As demais saídas, $\mathcal{H}_{10}$ e $\mathcal{H}_{13}$, apresentam contornos gerais da imagem e ruídos, de modo que são utilizadas para correção de valores e seleção de bordas com alta confiança, que são aproveitadas nos resultados desse método.
+\end{itemize}
+
+As camadas $\mathcal{H}_{4}$ e $\mathcal{H}_{7}$ buscam contrabalancear os resultados gerados pela saída $\mathcal{H}_{2}$, mantendo a o contorno das bordas.
+Por outro lado, as camadas $\mathcal{H}_{10}$ e $\mathcal{H}_{13}$ não exibem detalhes das bordas, somente são utilizadas pelo modelo para melhoria do resultados e correção de erros ao longo do modelo.
+
+
+%--------------------------------
+%SUB - INFLUÊNCIA DOS MÉTODOS DE FUSÃO
+\subsubsection{\color{red}Merging Methods Characteristics}
+\label{cap6_influencia_metodos_fusao}
+
+The second experiment was designed to identify the influence of merging methods on \ac{ALO} overall performance.
+Although the results of the first experiment indicated that there was no considerably better method, the second experiment evaluated performance on a considerably more complex task that could differentiate each approach.
+The networks have been trained for 500 seasons, as detailed in Section \ref{cap6_result_experm_2}.
+Figure \ref{fig:bsds_training} shows the accuracy of the methods during the training phase.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{imagens/ilustracoes/empty.png}
+  \caption{Performance of ALO nets using \textit{Pixel-Error} metric for \ac{BSDS500} {\color{red}\textbf{Substituir}.}}
+  \label{fig:bsds_training}
+\end{figure}
+
+As observed in the first experiment, no evidence of a considerably superior fusion method was found.
+The results indicate that the training has similar loss and precision curves, requiring the use of new experiments to define the most appropriate technique.

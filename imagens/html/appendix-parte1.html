@@ -1,0 +1,98 @@
+<html>
+<head>
+  <style type="text/css">
+    body{
+      font-family: sans-serif;
+      font-size: 20px;
+    }
+    td{
+      padding: 5px;
+      padding-bottom: 15px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 24px;
+    }
+    img{
+      width: 400px;
+    }
+    hcal{
+      font-family: 'Lucida Calligraphy', 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Tex Gyre Chorus';
+      font-size: 28px;
+    }
+    .second-line{
+      margin-top:3px;
+    }
+    .tdheader{
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body onload="Load()">
+  <table id="mytab">
+    <tr>
+      <td class="tdheader"></td>
+      <td class="tdheader"><span>Image</span></td>
+      <td class="tdheader"><span>Ground-truth</span></td>
+      <td class="tdheader"><span>XLO-AVG</span></td>
+      <td class="tdheader"><span>XLO-AVG (0.19)</span></td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+    function addHeaderRow() {
+        var root = document.getElementById('mytab').getElementsByTagName('tbody')[0];
+        var headerrow = root.getElementsByTagName('tr')[0];
+        var clone = cloneEl(headerrow);
+        root.appendChild(clone);
+    }
+    function cloneEl(el) {
+        var clo = el.cloneNode(true);
+        return clo;
+    }
+
+    function Load(){
+
+      images = ['100007', '100039', '100099', '10081', '101027', /*'101084',*/ '102062', '103006']
+      images = ['103029', '103078', /*'104010', '104055',*/ '105027', '106005', '106047', '107014', '107045', '107072', '108004', '108036', '108069',
+      '109055', '112056', '112090', /*'117025',*/ '118015', '118031', '118072', '120003', '120093', '123057', '128035', /*'130014',*/ '130066', '134049', /*'134067', '140006', '140088',*/ '14085', '14092', '141012', '141048', '145059',
+      '145079', '146074', /*'147077',*/ '147080', '15011', '15062', /*'156054',*/ '157032', '157087', /*'159002',*/ '159022', '160006', '16004', '160067', '16068', '161045', /*'163004', '163096', '164046',*/ '168084', /*'17067',*/
+      '175083', '176051', '179084', /*'181021',*/ '183066', '185092', '187058', '187099', '188025', /*'189006', '189013', '189029',*/ '189096', /*'196027', '196040',*/ '196062', '196088', /*'198087', '20069',*/ '201080', /*'2018',*/
+      '202000', '206062', '206097', '207038', '207049', '208078', '209021', /*'217013',*/ '217090', '220003', /*'223004',*/ '223060', /*'225022',*/ '226022', '226033', /*'226043', '226060',*/ '228076', /*'230063', '230098', '23050',*/
+      '232076', '235098', /*'238025', '243095', '246009',*/ '247003', '247012', /*'249021', '250047', '250087',*/ '253016', /*'253092', '257098',*/ '258089', /*'259060', '267036',*/ '268048', /*'268074',*/
+      '277053', /*'279005',*/ '28083', /*'281017',*/ '285022', '288024', /*'289011',*/ '290035', '29030', '296028', '296058', /*'302022', '306051',*/ '306052', '3063', '309040', '317043', '326025', /*'326085', '33044', '334025',*/
+      '335088', '335094', '344010', '346016', /*'347031',*/ '35028', '35049', '36046', /*'365072',*/ '368037', /*'372019',*/ '376086', '384022', /*'384089',*/ '385022', /*'388006', '388018', '388067',*/ '393035', '41006', '41029',
+      '41085', '41096', '43033', '43051', '45000', '48017', '48025', '49024', '5096', '51084', /*'6046', '61034', '64061', '65084',*/ '69000', '69007', '69022', '70011', /*'70090', '71076',*/ '71099', '77062', '78098', '79073',
+      '80085', /*'80090',*/ '8068', '81066', /*'81090',*/ '81095', '87015', '92014', '94095', '97010']
+
+      bsds_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/datasets/BSDS500/data/"
+      xlo_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/export/BSDS500/20200701/xlo-all/avg/test_loss-v3_0"
+
+      var table = document.getElementById("mytab");
+      var index = 0;
+      images.forEach((item, i) => {
+        if(i%8==0 && i > 0){
+          addHeaderRow();
+          index += 1;
+          var row = table.insertRow(index);
+          var cell0 = row.insertCell(0);
+          cell0.innerHTML = "<br><br><br><br>";
+          index +=1;
+        }
+
+        index += 1;
+        var row = table.insertRow(index);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        var cell4 = row.insertCell(4);
+
+        cell0.innerHTML = "<td><span>" + item +  "</span></td>";
+        cell1.innerHTML = "<td><img id='" + i + "_img_bsds' src='" + (bsds_path + "images/test/" + item + ".jpg") + "' /></td>";
+        cell2.innerHTML = "<td><img id='" + i + "_img_gt' src='" + (bsds_path + "groundTruth/test-png/" + item + ".png") + "' /></td>";
+        cell3.innerHTML = "<td><img id='" + i + "_img_avg_all_0' src='" + (xlo_path + ".0/png/" + item + ".png") + "' /></td>";
+        cell4.innerHTML = "<td><img id='" + i + "_img_avg_all_19' src='" + (xlo_path + ".19/png/" + item + ".png") + "' /></td>";
+      });
+    }
+  </script>
+</body>
+</html>

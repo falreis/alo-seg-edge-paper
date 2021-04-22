@@ -1,0 +1,121 @@
+\section{Related Work}
+\label{cap4_trab_rel}
+
+Edge detection has been researched over the last 50 years, with several proposed algorithms \cite{RCF:2017:8100105}. 
+It was used in the first segmentation works, which later also began to identify regions.
+In parallel to the edge detection works, specific algorithms for region detection and pixel classification were developed \cite{pedrini2008analise}.
+
+The first works of edge detection, in the 1960s and 1970s, used color and shades intensity variation to identify horizontal or vertical differences, corresponding to the gradients.
+In the following decade, works used Laplacian of Gaussian operator for smoothing and edge detection.
+In the 1990s and 2000s, techniques were developed using manually created features, who developed methods based on gradients, color intensity and textures \cite{pedrini2008analise} %\cite{Roberts:1963}, \cite{ROBINSON1977492}, \cite{FREI_CHEN:1674733}, \cite{BERZINS1984195}, \cite{Canny:1986}, \cite{HUERTAS_MEDIONI:4767838}, \cite{pedrini2008analise}, \cite{KONISHI:1159946}, \cite{MARTIN:1273918}, \cite{KIRSCH1971315}
+
+In the current decade, works with manually developed features were also proposed, such as the Sketch Tokens method, proposed by \cite{LIM:6619250}. 
+However, new approaches have emerged using machine learning methods, as \textit{Structured Edges}, which uses random decision forests \cite{StructuredEdges:2015}.
+
+At the same time, some studies have been carried out using deep convolutional neural networks for edge detection. 
+These studies started with the success of neural networks for object detection \cite{Segnet:2017:7803544}.
+\textit{DeepContour} \cite{DeepContour:2015:7299024}, \textit{Holistically-nested Edge Detection (HED)} \cite{HED:2015} and \textit{Convolutional Oriented Boundaries (COB)} \cite{COB:2016} networks, are some examples of the usage of this technique.
+
+DeepContour and HED networks, are one of the pioneers in the use of deep learning to produce edge detection.
+DeepContour uses its own network, in a traditional way, with convolutional layers in sequence.
+HED developed a new approach, using intermediary results of the well known VGG16 \cite{VGGNET:2014}, to produce edge maps that are combined in a final layer.
+
+Compared with VGGNet, HED removed the classification layers and added side-outputs on the last convolutional layer of each of the VGG's 5 stages.
+Also HED forced all side-outputs to produce predictions, using loss functions for each of them.
+Then, these outputs have been combined to generate a final edge map output \cite{HED:2015}.
+
+HED's changes increased the ODS value of BSDS500 data set \cite{amfm_pami2011} from 0.756, produced by DeepContour, state of the art at the time, to 0.782.
+HED proposal of side-outputs become a success and was adopted in some many other projects.
+\cite{Kokkinos:2016} used HED network and combine proposals in three different scales, producing a single output.
+The work increased the performance of HED to 0.813, but it required an architecture 3 times bigger.
+
+Other approaches also used side-outputs, as the works of \cite{LearningRelaxed:2016:7780401} and \cite{SemanticSeg:2016:7780861}.
+The first one captured relaxed labels from simple detectors that were merged to the ground truth, used to supervise the training and remove some hard-to-classify false positives (relaxed labels), while the last one used Semantic Segmentation and Domain Transform (DT) to improve its predictions \cite{LearningRelaxed:2016:7780401} \cite{SemanticSeg:2016:7780861}.
+Both method use some kind of side-outputs, but the first reach better BSDS500' ODS values than HED, while the second performed worse.
+%The results of this methods are available in Table \ref{table:cap4_artigos_selecionados}.
+
+The proposed architecture COB is based on ResNet \cite{RESNET:2016:7780459}.
+It generates 8 distinct side-outputs in each layer, corresponding to different direction angles of the convolution operation.
+It also generates two outputs with images at different scales, to produce fine and coarse detections.
+All them are combined in a fusion layer, producing a single Ultrametric Contour Map output \cite{COB:2018:7917294}.
+
+Contrary to the tendency of usage of side-outputs, \cite{EdgeCNN:Wang201612} and \cite{ContourDetect:2017:8124495} approaches didn't use them.
+\cite{EdgeCNN:Wang201612} used a simple convolutional network followed by a morphological thin operation to increase accuracy.
+\cite{ContourDetect:2017:8124495} also used a simple 3-layers convolutional architecture to predict edges, followed by a contour refinement post processing, that transform coarse contours into fine-scale contours.
+Both results from simple convolutional architectures did not reach the results of other methods. %, as available in Table \ref{table:cap4_artigos_selecionados}.
+
+Following the side-output approach, it was observed by \cite{Wang:2017} that HED predictions produces some blurry edge maps.
+To avoid ``crispness'' of the boundaries (precisely localizing edge pixels), it was developed a new architecture, called Crisp Edge Detector that create a backward-refining pathway, which increases the resolution of intermediary maps progressively \cite{Wang:2017}. 
+The border crispness was also observed by \cite{CrispBoundaries:2018:Deng2018570}, that proposed refinement modules to reduce them.
+
+Some level of refinement was used also by \cite{DeepStructured:2017:Xu20173962}.
+It was proposed the usage of Attention-Gated Conditional Random Fields (AG-CRFs) to refine and fuse the representations learned at multiple scales.
+Attention mechanisms were integrated, into a two-level hierarchical CNN model, to produce multi-scale learning, in a custom networkd called Attention-guided Multi-scale Hierarchical deepNet (AMH-Net) for contour detection  \cite{DeepStructured:2017:Xu20173962}. 
+
+A network that proposed to create a multi-scale feature graph is the Proeminent Edge detection \cite{ProeminentEdge:2018:Cai2018}.
+It uses a different approach, with architecture based on U-Net \cite{Unet:2015} and influences of ResNet, with skip connections in order to avoid gradient vanishing from low level features.
+The work build an end-to-end Deep Symmetrical Metric Learning network (also know as Encoder and Decoder Network) and a Metric Learning to combine side-outputs from every network layer \cite{ProeminentEdge:2018:Cai2018}.
+
+An Encoder and Decoder Network was also proposed by \cite{Yang:2019}.
+In this approach, it was developed a Generative Adversarial Network for edge detection, called ContourGAN.
+This model is composed by a encoder-decoder model to extract edge information and a discriminator, a classification network that distinguishes the generated contours from the ground truth \cite{Yang:2019}.
+
+A more traditional work is RCF, an HED-based project that developed side-output network versions of VGGNet and ResNet.
+Its architecture contains side-outputs after each convolution.
+At each stage of the network, the outputs are combined into a single output with the sum of predictions.
+To improve the results, it is also made a process of scaling the images that enter the network in 3 different levels of detail.
+The results are then combined to generate a single map of borders \cite{RCF:2019}.
+
+Assessing the tendency in previous work to sum isolated side-outputs, with uneven qualities, \cite{Cumulative:Song20181847} proposed C-Net Cumulative Network.
+This network aims to learns cumulatively based on visual features and low-level side-outputs and gradually remove detailed and sharp boundaries.
+The authors indicate that this procedure allows more accurate edge detection, since superfluous results are progressively abandoned while the network learns \cite{Cumulative:Song20181847}.
+
+Similar as \cite{Cumulative:Song20181847}'s work, \cite{ReExtraction:Wen201884} proposed an edge detector based on feature re-extraction (FRE).
+It contains side-outputs in different stages, which are combined in feature re-extraction blocks.
+Each block contains three convolutional layers, a batch normalization and a residual operation, that are combined to produce a final stage output.
+The stage outputs are combined using a convolution $1 \times 1$ fusion module to produce edge detection \cite{ReExtraction:Wen201884}.
+
+The Hybrid Convolutional Features network, proposed by \cite{LearningHybrid:Hu2018377}, followed the usage of side pipeline to increase performance of edge detectors.
+It proposed fusion of multi-level information, based on feature-maps.
+To do it, it creates auxiliary branches, convolution, normalization, up-sampling, concatenation and a auxiliary loss function to increase the performance.
+Its proposed architecture is called HybridNet, and combine VGGNet and ResNet architectures \cite{LearningHybrid:Hu2018377}. 
+
+Bi-Directional Cascade Network network, proposed by \cite{He:2019}, explore multi-scale features for edge detection.
+The model differ from previous works due it custom supervision of labeled edges at its specific scales, instead of using the same supervision in all CNN outputs.
+Also, it uses dilated convolution to generate multi-scale features, named Scale Enhancement Module (SEM), rather of explicitly fuse multi-scale edge maps \cite{He:2019}.
+This work reached the state of the art in the BSDS500 data set, despite not having achieved the best performance in the NYUDv2 data set \cite{Silberman:ECCV12}. %, as shown in Table \ref{table:cap4_artigos_selecionados}.
+
+%\label{table:cap4_artigos_selecionados}
+%\input{../../tables/cap4_artigos_selecionados}
+
+%Table \ref{table:cap4_artigos_selecionados} provides important information regarding some trends in neural networks for edge detection.
+The analysis of related works provides important information regarding some trends in neural networks for edge detection.
+One trend is that side-outputs have been widely used in edge detection works in recent years.
+In addition, the results indicate that at least the 5 best ODS values in the BSDS500 and NYUDv2 data sets were achieved by methods that combine intermediary features.
+
+Another important information is related to the number of papers that developed their own loss functions.
+For training their network architecture, 11 of 18 works developed its own custom loss.
+This is observed due to the characteristics of the problem, where there is an imbalance between edge and background pixels.
+According to \cite{ReExtraction:Wen201884}, approximately 83\% of the pixels in the original BSDS500 testing images are non-edge pixels.
+
+Traditional loss functions does not help methods to identify edges, as they tend to learn only background pixels, producing highly accurate but unwanted results \cite{HED:2015}.
+Then some papers started to create its own functions, as Class-balanced Cross-entropy, proposed by \cite{HED:2015} and also used in \cite{Cumulative:Song20181847} and \cite{CrispBoundaries:2018:Deng2018570} papers, that aims to balance edges and non-edges pixels.
+
+Some works, like \cite{Kokkinos:2016}, \cite{COB:2018:7917294}, \cite{RCF:2019} and \cite{ReExtraction:Wen201884}, adapted class-balanced cross-entropy to create their own versions, exploring parameters improvement or addind some extra features.
+Others, like \cite{LearningHybrid:Hu2018377} and \cite{He:2019}, used it with other auxiliary losses to help to extract high-level features.
+These auxiliary function aims to increase performance in side branches of the network.
+
+These new loss functions have the additional objective of reducing the number of training iterations.
+%As available in Table \ref{table:cap4_artigos_selecionados}, 
+Some methods needs a lot of iterations to converge properly and achieve its best performance.
+Some methods with good results, like \cite{RCF:2019}, \cite{Yang:2019} and \cite{He:2019} (state-of-art) needs near 40k iterations, while others, like \cite{ProeminentEdge:2018:Cai2018} needed 110k.
+
+From the analysis of the data in Table \ref{table:cap4_artigos_selecionados} and the description of the most relevant points of the papers, it is possible to take some directions to build a new work that could produce good results with small number of iterations.
+Due characteristics of edge detection problems, with unbalance of classes, the results can be use for faster training in other image processing problems, as region segmentation.
+
+This project maintains some trends in literature.
+It will explore transfer learning techniques, evaluate multiple side-outputs and loss functions using a simple architecture as VGG16 \cite{VGGNET:2014}.
+Also, it will use a recent developed loss function, \textit{Focal Loss} \cite{Lin:2017}, designed for problems with high imbalance between classes.
+Training and evaluation of our model will be done with the widely-used BSDS500 database.
+
+%--------------------------------

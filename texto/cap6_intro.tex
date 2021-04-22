@@ -1,0 +1,93 @@
+%--------------------------------
+\section{Organization of Experiments}
+%--------------------------------
+%DATASETS
+\subsection{Data sets and evaluation methods}
+\label{cap5_dataset_eval}
+
+This section describes data sets used in this project.
+It also describes the metrics used to evaluate the experiments, as well as the benchmarks used for this.
+
+%--------------------------------
+%SUB - BASES DE DADOS
+\subsection{Data sets}
+\label{cap5_bases_dados}
+
+The methods present in this work were evaluated in the following data sets, widely used and cited by different works in the literature:
+
+\begin{itemize}
+ \item KITTI Road/Lane\footnote{~KITTI Road/Lane: \url{http://www.cvlibs.net/datasets/kitti/}}: part of the Karlsruhe Institute of Technology and Toyota Technological Institute project, it provides a set of images, and their respective human-annotated ground truths of the roads and lanes \cite{Fritsch2013ITSC};
+
+ \item BSDS500\footnote{~BSDS500: \url{https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html}}: the \textit{Berkeley Segmentation Data Set and Benchmarks 500} contains a set of natural images and their human-annotated ground truths for image segmentation and edge detection research. \cite{amfm_pami2011};
+ 
+ %\item NYU Depth v2\footnote{NYUD-v2: \url{https://cs.nyu.edu/~silberman/datasets/}}: a base corresponde a um conjunto de imagens rotuladas de ambientes internos, obtidos por câmeras RGB e de profundidade do Microsoft Kinect. Contém também frames de sequências de vídeos não rotulados, que foram utilizados para gerar as imagens da base \cite{Silberman:ECCV12};
+\end{itemize}
+%--------------------------------
+
+%--------------------------------
+%SUB - FERRAMENTAS PARA AVALIAÇÃO
+\subsection{Evaluation Tools and Benchmarking}
+\label{cap5_formas_avaliacao}
+
+The quality evaluation of the results were made using benchmarks of the own data sets. % or projects developed for this purpose.
+The following benchmarks were used:
+
+\begin{itemize}
+ \item KITTI Road/Lane Evaluation: benchmark of the KITTI suite, estimates roads and tracks based on birds-eye-view space. It returns \textit{f-measure}, precision and recall values, false positive and false negative rates. \cite{Fritsch2013ITSC};
+ 
+ \item BSDS500 Benchmark: BSDS500 benchmark for segmentation quality assessment. It uses precision and recall methods to classify results of segmentation and boundaries \cite{amfm_pami2011};
+ 
+ %\item SEISM: acrônimo de \textit{Supervised Evaluation of Image Segmentation Methods}, permite a avaliação de métodos de segmentação usando técnicas de precisão e revocação em bordas, objetos e partes. \cite{Pont-Tuset2016a}.
+\end{itemize}
+%--------------------------------
+
+%--------------------------------
+%SUB - FERRAMENTAS E APIs
+% \subsection{Development Tools and APIs}
+% \label{cap5_ferramentas_api}
+% 
+% The Python programming language was used to develop the method and the experiments.
+% The following frameworks, libraries and tools for neural network development, creation, comparison and validation of the methods were used:
+% 
+% \begin{itemize}
+%   \item \textit{Tensorflow}\footnote{~Tensorflow: \url{https://www.tensorflow.org}}: open source platform for machine and deep learning, developed by the Google Brain Team \cite{tensorflow2015-whitepaper};
+%  
+%   \item \textit{Keras}\footnote{~Keras: \url{https://keras.io}}: high-level open-source neural networks API, running on top of Tensorflow \cite{chollet2015keras}.
+%  
+%   \item \textit{OpenCV}\footnote{~OpenCV: \url{http://opencv.org/}}: multiplatform library for application development in Computer Vision and Image Processing.
+%  
+%   \item \textit{Scikit-Learn}\footnote{~Scikit-Learn: \url{https://scikit-learn.org/stable/}}: open source machine learning library containing tools for mining and data analysis.
+%  
+%   \item \textit{SciPy}\footnote{~SciPy: \url{https://scipy.org/}}: Python library that provides a variety of functionality for math, science and engineering.
+% \end{itemize}
+%--------------------------------
+
+%--------------------------------
+%SUB - FERRAMENTAS PARA AVALIAÇÃO
+\subsection{Experimental Setup}
+\label{cap5_experimental_setup}
+
+Our networks were built using using Keras \cite{chollet2015keras} with Tensorflow \cite{tensorflow2015-whitepaper}. 
+We used a pre-trained VGG16 model to initialize the weights. 
+Training experiments were performed in GeForce GTX 1080 8GB GPU\footnote{Some experiment were performed using a GeForce GTX 1660 6GB GPU}.
+%--------------------------------
+
+
+%--------------------------------
+%ORGANIZAÇÃO DOS EXPERIMENTOS
+\subsection{Organization of Experiments}
+\label{cap6_organiz_experimentos}
+
+The experiments developed in this work were organized as follows:
+
+\textbf{Experiment 1:} \textit{Region Segmentation - KITTI Road/Lane Detection}
+The first experiment aimed to analyze the feasibility of the method described in Section \ref{cap5_metodologia}.
+For an initial analysis, the region segmentation task was considered more appropriate, as it requires a lower level of precision than edge detection problems.
+Also, it was evaluated the influence of the amount of side-outputs and the performance of the methods to combine them.
+
+\textbf{Experiment 2:} \textit{Border Detection - BSDS500}
+
+The second experiment aimed to evaluate the method performance  in edge detection, a more complex and precise task than region segmentation.
+BSDS500 was chosen due its small size, relative simplicity and its wide use in the literature, which makes it suitable for comparison to the literature.
+%--------------------------------
+%--------------------------------

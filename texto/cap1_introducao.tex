@@ -1,0 +1,77 @@
+\label{cap1_introducao} % Label para referenciar
+
+% Computers and machines easily perform tasks that can be described using formal and mathematical rules.
+% However, some trivial activities for human-beings, but difficult to describe formally, are a challenge for them.
+% In the last few years, tasks of this latter group, such as object recognition, decision making and speech understanding also began to be performed by software, using machine learning techniques \cite[Ch. 1]{Goodfellow2016}.
+
+% In computer vision, machines can detect objects and edges, identify patterns and segment regions.
+% Although some computer vision reached or exceed human capabilities, research is still evolving.
+% There is still room for improving techniques and solving practical problems \cite{Khan:2020}.
+%This work aims to contribute to the improvement of methods of edge detection and region segmentation, using deep learning techniques.
+
+%--------------------------------
+% \subsection{Context and Motivation}
+% \label{cap1_motivacao}
+
+% Traditional segmentation methods use basic image properties to find discontinuities that can indicate objects, regions or borders.
+% However, these techniques face practical problems, such as similar color patterns, noise, and multiple thresholds for groups of images.
+% More recent techniques propose supervised methods using neural networks for edge detection and region segmentation, in which image characteristics are learned by algorithms \cite{MARTIN:1273918} \cite{Segnet:2017:7803544}.
+%This approach reduces the need for manual pattern recognition, leaving this task to software \cite{MARTIN:1273918} \cite{Segnet:2017:7803544}.
+
+% In recent years, new practical applications have started to be proposed, such as disease detection in imaging exams, recognition of objects, vehicles, and fire outbreaks in aerial images, and segmentation of images for autonomous vehicles.
+% These applications seek to improve performance and lower health care costs, map structures in aerial photographs, ensure environmental maintenance and prevent automotive accidents, providing better quality of life for people \cite{Akkus:2017}, \cite{Kumar:2020}, \cite{Pham:2020}, \cite{Wu:2018}.
+
+% The methods that exist today, despite the greater precision compared to some years ago, can be improved to allow total reliability in automatic systems.
+% Medical diagnoses, in the future, can be analyzed entirely by algorithms; plantation can be monitored by software to prevent fires; and autonomous vehicles can become the safest way to go from one place to another.
+% Thus, machine and deep learning researches are needed so that these activities can be carried out entirely by software.
+%--------------------------------
+
+%--------------------------------
+%DEFINIÇÃO DO PROBLEMA
+% \subsection{Problem Definition}
+% \label{cap1_def_problema}
+
+Segmentation subdivides an image into its constituent regions or objects, while edge detection techniques identify the boundaries between objects \cite{gonzalez2002digital}.
+An edge, according to \cite{gonzalez2002digital}, is defined as a set of connected pixels that border two regions.
+
+In addition to \cite{gonzalez2002digital}'s definition, \cite{MARTIN:1273918} subdivide edge detection into boundary detection and the classical edge detection.
+For them, edge is ``an abrupt change in some low-level image feature such as brightness or color'' while boundary ``is a contour in the image plane that represents a change in pixel ownership from one object or surface to another'' \cite{MARTIN:1273918}. 
+
+\cite{Jain:1995} defines contours as a link between edges and a representation of region boundaries.
+Closed contours represents region boundaries and open contours are parts of region boundaries \cite{Jain:1995} .
+Contours can be combined into a UCM representation, an indexed hierarchy of regions as a soft boundaries \cite{Arbelaez:2006}.
+
+Region segmentation, object and boundary detection are correlated tasks.
+Object limits with its high-level information can be used to define boundaries location.
+Also, boundaries can limit pixels into regions \cite{MARTIN:1273918}.
+This correlation allows one problem to be modeled on another and effective techniques can be shared between them.
+
+Traditional segmentation methods use basic image properties to find discontinuities that can indicate objects, regions or borders.
+However, these techniques face practical problems, such as similar color patterns, noise, and multiple thresholds for groups of images.
+More recent techniques propose supervised methods using neural networks for edge detection and region segmentation, in which image characteristics are learned by algorithms \cite{MARTIN:1273918} \cite{Segnet:2017:7803544}.
+
+In recent years, CNNs have emerged to solve increasingly complicated applications.
+%The emergence of them in object detection and classification started with AlexNet's impressive performance in the ImageNet Large Scale Visual Recognition Challenge (ILSVRC), by decreasing the top 5 state-of-art error by more than 10\% \cite[Ch. 1]{Goodfellow2016} \cite{Krizhevsky:2012} \cite{ILSVRC15}.
+After the rise of CNNs, some architectures have emerged to produce also region segmentation/classification and edge detection \cite[Ch. 1]{Goodfellow2016} \cite{Segnet:2017:7803544}.
+In edge detection, HED architecture have emerged using intermediate outputs to produce maps that are then combined, generating a final proposition \cite{HED:2015}.
+%This new architecture dropped BSDS500 state-of-art value in almost 3\% and became a trend in boundary detection.
+
+Due to their architecture, a common CNN produces different information along its layers.
+Each layer contributes specifically to the final result, with its own characteristics, that indicates how the network adjusted its weights.
+This is based on a characteristic of some convolutional networks: the sequence of convolutions gradually decreases the size of images along their layers \cite{VGGNET:2014} \cite{Zeiler:2014} \cite{Fidler:2007} \cite{Hadji:2018}.
+
+To produce final results, some works such as HED, RCF and BDCN trained convolutional blocks individually. 
+This procedure produces resources in macro and detailed information, with its own characteristics at different scales \cite{HED:2015} \cite{RCF:2019} \cite{He:2019}. 
+This option, however, does not take advantage of transfer learning, and increases the cost and time of training, forcing several layers to produce the same result.
+
+To enhance training speed and accuracy, many projects developed its own loss functions and techniques to combine intermediate results, extracted from the network and called side-outputs.
+Also, they made some changes in well-known convolutional networks, as VGG16 \cite{VGGNET:2014} and ResNet \cite{RESNET:2016:7780459}, adding extra ones to create new features and refine intermediate results \cite{DeepStructured:2017:Xu20173962} \cite{COB:2016} \cite{ProeminentEdge:2018:Cai2018}.
+
+Training of side-outputs individually makes the networks produce results in a targeted manner, without taking advantage of information previously generated by correlated problems.
+Take advantage of related problems could reduce training cost and increase speed.
+Thus, it may be possible to simplify some methods and architectures, to produce good results with a low number of training iterations, making it suitable for proof of concepts and problems with a close deadline.
+
+This work seeks to develop simple methods to produce results using previous information from well-know object detection networks, generic
+loss functions and trivial operations to combine side-outputs, such as average, maximum and sum.
+The creation of simple or even trivial methods favors the use in different scenarios, since they have no particularities found in each problem.
+%--------------------------------

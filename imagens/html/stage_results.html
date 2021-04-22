@@ -1,0 +1,95 @@
+<html>
+<head>
+  <style type="text/css">
+    body{
+      font-family: sans-serif;
+      font-size: 20px;
+    }
+    td{
+      padding: 5px;
+      padding-bottom: 15px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 24px;
+    }
+    img{
+      width: 400px;
+    }
+    .mathcal{
+      font-family: 'Lucida Calligraphy', 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Tex Gyre Chorus';
+      font-size: 28px;
+    }
+    .second-line{
+      margin-top:3px;
+    }
+  </style>
+</head>
+<body onload="Load()">
+  <table>
+    <tr>
+      <td></td>
+      <td><span>ALO-ADD</span></td>
+      <td><span>ALO-AVG</span></td>
+    </tr>
+    <tr>
+      <td><div>BSDS500's </div><div css="second-line">image</div></td>
+      <td><img id="o_add" /></td>
+      <td><img id="o_avg" /></td>
+    </tr>
+    <tr>
+      <td><span>Ground-truth</span></td>
+      <td><img id="g_add" /></td>
+      <td><img id="g_avg" /></td>
+    </tr>
+    <tr>
+      <td><div>Combined results</div><div css="second-line">until Stage 1</div></td>
+      <td><img id="add1" /></td>
+      <td><img id="avg1" /></td>
+    </tr>
+    <tr>
+      <td><div>Combined results</div><div css="second-line">until Stage 2</div></td>
+      <td><img id="add2" /></td>
+      <td><img id="avg2" /></td>
+    </tr>
+    <tr>
+      <td><div>Combined results</div><div css="second-line">until Stage 3</div></td>
+      <td><img id="add3" /></td>
+      <td><img id="avg3" /></td>
+    </tr>
+    <tr>
+      <td><div>Combined results</div><div css="second-line">until Stage 4</div></td>
+      <td><img id="add4" /></td>
+      <td><img id="avg4" /></td>
+    </tr>
+    <tr>
+      <td><div>Combined results</div><div css="second-line">until Stage 5</div></td>
+      <td><img id="add5" /></td>
+      <td><img id="avg5" /></td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+    function Load(){
+      add_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/export/BSDS500/20200420/vgg_alo-upper/add/test_loss-v3_0.0_stage_results/";
+      avg_path = "/home/falreis/Me/mestrado/alo-seg-edge/code/export/BSDS500/20200410/vgg_alo-upper/avg/test_loss-v3_0.0_stage_results/";
+
+      img_ref="100007";
+
+      for(i=1; i<=5; i++){
+        add_id="add" + i.toString();
+        avg_id="avg" + i.toString();
+
+        img_name="_" + i.toString() + ".png";
+
+        document.getElementById(add_id).src = add_path + img_ref + img_name;
+        document.getElementById(avg_id).src = avg_path + img_ref + img_name;
+      }
+
+      document.getElementById("o_add").src = img_ref + ".jpg";
+      document.getElementById("o_avg").src = img_ref + ".jpg";
+
+      document.getElementById("g_add").src = img_ref + "_upper.png";
+      document.getElementById("g_avg").src = img_ref + "_upper.png";
+    }
+  </script>
+</body>
+</html>

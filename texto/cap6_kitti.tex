@@ -39,7 +39,7 @@ It was also used a modified VGG16 version to predict regions, without side-outpu
 % \begin{figure}
 %   \centering
 %   \caption{Validation loss using \textit{Categorical Cross Entropy} metric.}
-%   \includegraphics[width=1.\columnwidth]{../../imagens/graficos/cap6_kitti_validation_loss.png}
+%   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_validation_loss.png}
 %   \sourceOwn
 %   \label{fig:kitti_validation_loss_100epochs}
 % \end{figure}
@@ -63,7 +63,7 @@ All versions of network ALO outperforms NSO network using both metrics.
 % \begin{figure}
 %   \centering
 %   \caption{Performance of ALO and NSO nets using \textit{Categorical Cross Entropy} metric.}
-%   \includegraphics[width=1.\columnwidth]{../../imagens/graficos/cap6_kitti_val_acc_500_epochs.png}
+%   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_val_acc_500_epochs.png}
 %   \sourceOwn
 %   \label{fig:kitti_cross_entropy_500_epochs}
 % \end{figure}
@@ -71,7 +71,7 @@ All versions of network ALO outperforms NSO network using both metrics.
 % \begin{figure}
 %   \centering
 %   \caption{Performance of ALO and NSO nets using \textit{Pixel-Error} metric.}
-%   \includegraphics[width=1.\columnwidth]{../../imagens/graficos/cap6_kitti_pixel_error_500_epochs.png}
+%   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_pixel_error_500_epochs.png}
 %   \sourceOwn
 %   \label{fig:kitti_pixel_error_500_epochs}
 % \end{figure}
@@ -93,7 +93,7 @@ In addition, the images were transformed into monochromatic (binary), with white
 % \begin{figure*}
 %   \centering
 %   \caption{Side-output maps for ALO network merging strategies in KITTI Road/Lane data set.}
-%   \includegraphics[width=0.7\textwidth]{../../imagens/ilustracoes/cap6_kitti_side_outputs.png}
+%   \includegraphics[width=0.7\textwidth]{../imagens/ilustracoes/cap6_kitti_side_outputs.png}
 %   \sourceOwn
 %   \label{fig:kitti_side_outputs}
 % \end{figure*}
@@ -101,7 +101,7 @@ In addition, the images were transformed into monochromatic (binary), with white
 \begin{figure}
   \centering
   \caption{Side-output maps for ALO network merging strategies in KITTI Road/Lane data set.}
-  \includegraphics[width=1\columnwidth]{../../imagens/ilustracoes/cap6_kitti_side_outputs.png}
+  \includegraphics[width=1\columnwidth]{../imagens/ilustracoes/cap6_kitti_side_outputs.png}
   \sourceOwn
   \label{fig:kitti_side_outputs}
 \end{figure}
@@ -136,7 +136,7 @@ The operation was applied using a $13 \times 13$ square structuring element as a
 % \begin{figure}%[h!]
 %   \centering
 %   \caption{Differences between original method results and after post processing.}
-%   \includegraphics[width=0.9\columnwidth]{../../imagens/ilustracoes/cap6_kitti_post_proc_comp.png}
+%   \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_kitti_post_proc_comp.png}
 %   \sourceOwn
 %   \label{fig:kitti_post_processing_comp}
 % \end{figure}
@@ -152,7 +152,7 @@ Results were sent to  the KITTI Evaluation Server, with name of \textbf{ALO-AVG-
 The server returned the following metrics: MaxF, AP, PRE, REC, FPR and FNR, whose results for each road scene category\footnote{~\textit{URBAN\_ROAD} category corresponds to the combination of the other three categories.}, as described in Section \ref{cap6_result_experm_1}, are available in Table \ref{tab:kitti_metrics}.
 
 %table kitti_metrics
-\input{../../texto/cap6_kitti_metrics}
+\input{../texto/cap6_kitti_metrics}
 
 %The results available in Table \ref{tab:kitti_metrics} show how efficient the method is.
 Compared to the best result on the KITTI platform named PLARD \cite{Chen:2019}\footnote{~At the time of our first conference paper submission, \cite{Reis:2019}, \textit{PLARD} had not yet been published in the literature, being an anonymous submission on KITTI platform.}, our method had an overall performance 5.0\% lower.
@@ -167,7 +167,7 @@ The original images were created by the KITTI Evaluation Server, based on the bi
 \begin{figure}
   \centering
   \caption{Visual representation of ALO-AVG-MM predictions}
-  \includegraphics[width=0.9\columnwidth]{../../imagens/ilustracoes/cap6_kitti_visual_representation.png}
+  \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_kitti_visual_representation.png}
   \sourceOwn
   \label{fig:kitti_representacao_visual}
 \end{figure}

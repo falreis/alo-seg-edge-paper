@@ -1,22 +1,23 @@
 %--------------------------------
 \section{Conclusions}
 \label{cap7_contribuicoes}
-Machine learning is increasingly used for object recognition, decision making and image segmentation activities. 
-Among machine learning methods, deep learning stands out, which have often reached the state of the art in computer vision tasks.
-In recent years, networks with side-outputs have produced excellent results in various activities, such as border detection.%, due the retrieval of multi-scale features.
+% Machine learning is increasingly used for object recognition, decision making and image segmentation activities. 
+% Among machine learning methods, deep learning stands out, which have often reached the state of the art in computer vision tasks.
+% In recent years, networks with side-outputs have produced excellent results in various activities, such as border detection.%, due the retrieval of multi-scale features.
 
-In this scenario, the present work corroborates papers that indicate that the addition of side-outputs in convolutional neural networks, with multi-scale  feature retrieval, provides a considerable increase in performance and less training time compared to the original network.
-The results presented in this work confirm that the combination of multiple feature results leads to greater precision without the need for architectural expansion.
+%In this scenario, the present work corroborates papers that indicate that the addition of side-outputs in convolutional neural networks, with multi-scale  feature retrieval, provides a considerable increase in performance and less training time compared to the original network.
+% The results presented in this work confirm that the combination of multiple feature results leads to greater precision without the need for architectural expansion.
 
-In the same context, the present work innovatively indicates that even trivial operations such as average, sum, and maximum can be used to combine side-outputs of neural networks, increasing training speed and forecast accuracy.
+%In the same context, 
+The present work innovatively indicates that even trivial operations such as average, sum, and maximum can be used to combine side-outputs of neural networks, increasing training speed and forecast accuracy.
 The paper also presents and compares characteristics of each of the trivial operations, indicating its performance both in the training and testing phases, in the region segmentation and border detection tasks.
 
 Another contribution of the work is to indicate the influence of the number of features extracted from the network: the greater the number of features, the better the performance.
 In addition, increasing the number of side-outputs tends to make training more stable, with fewer sudden changes between good and bad results.
 The network is also less susceptible to parameter initialization, requiring less care in this step.
 
-It is important to clarify that the increase in performance as there is an increase in features extracted from the network occurs only if the training is done globally, with no specific loss in each layer, as occurs in several works in the literature.
-It was observed that the excessive loss functions could decrease the performance of the network, once it not seens to provide useful information to the following layers.
+% It is important to clarify that the increase in performance as there is an increase in features extracted from the network occurs only if the training is done globally, with no specific loss in each layer, as occurs in several works in the literature.
+% It was observed that the excessive loss functions could decrease the performance of the network, once it not seens to provide useful information to the following layers.
 
 Also, the work indicated that it is not necessary to train layers or stages individually, making side-outputs to produce similar results.
 Combining them before a single loss function provide similar effects to using multiple losses across the network.
@@ -35,7 +36,9 @@ In border detection, the work presented relevant results, when compared to those
 Despite its simple and generic proposition, the method has achieved near human threshold results in the well-known BSDS500 data set.
 Also, the method achieved the performance of \myFPS FPS, making it suitable for real-time applications, as microscope images information extraction and road boundary detection \cite{Qu:2020} \cite{Li:2020} \cite{Perng:2020}.
 
-The development of simpler and faster methods, with good results, can accelerate the use in real-time applications, enabling the use in devices with less computing capacity and energy consumption, such as smartphones and embedded devices.
+% The development of simpler and faster methods, with good results, can accelerate the use in real-time applications, enabling the use in devices with less computing capacity and energy consumption. %, such as smartphones and embedded devices.
 %This scenario indicates that some neural networks can be better exploited without the need for larger and more complex networks.
+
+The code and the list of dependencies to reproduce the experiments (under Anaconda environment) are publicly available online in \textit{https://github.com/falreis/alo-seg-edge}.
 
 %--------------------------------

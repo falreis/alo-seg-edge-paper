@@ -39,7 +39,7 @@ Creating, training and analyzing the influence of outputs is a simpler task than
 \subsection{Side-outputs}
 \label{cap5_saidas_laterais}
 
-In addition to following the VGG16 architecture, the work used side-outputs, like several other existing approaches, described in Table \ref{table:cap4_artigos_selecionados}.
+In addition to following the VGG16 architecture, the work used side-outputs, like several other existing approaches described in Section \ref{cap4_trab_rel}.
 To evaluate the most appropriate number of side-outputs, it was analyzed HED and RCF architectures.
 HED creates outputs after the last convolutional layer of each stage (5 outputs), while RCF adds side-outputs after each of the convolutions (13 outputs) \cite{HED:2015} \cite{RCF:2017:8100105}.
 
@@ -50,7 +50,7 @@ The second strategy, named \textit{All Layers Outputs} (\textbf{ALO}) and inspir
 \begin{figure*}
   \centering
   \caption{SLO Neural Network Architecture.}
-  \includegraphics[width=1\textwidth]{../../imagens/ilustracoes/cap6_arquitetura_slo.png}
+  \includegraphics[width=0.7\textwidth]{../../imagens/ilustracoes/cap6_arquitetura_slo.png}
   \sourceOwn
   \label{fig:architecture_slo}
 \end{figure*}
@@ -58,10 +58,26 @@ The second strategy, named \textit{All Layers Outputs} (\textbf{ALO}) and inspir
 \begin{figure*}
   \centering
   \caption{ALO Neural Network Architecture.}
-  \includegraphics[width=1\textwidth]{../../imagens/ilustracoes/cap6_arquitetura_alo.png}
+  \includegraphics[width=0.7\textwidth]{../../imagens/ilustracoes/cap6_arquitetura_alo.png}
   \sourceOwn
   \label{fig:architecture_alo}
 \end{figure*}
+
+% \begin{figure}
+%   \centering
+%   \caption{SLO Neural Network Architecture.}
+%   \includegraphics[width=1\columnwidth]{../../imagens/ilustracoes/cap6_arquitetura_slo.png}
+%   \sourceOwn
+%   \label{fig:architecture_slo}
+% \end{figure}
+% 
+% \begin{figure}
+%   \centering
+%   \caption{ALO Neural Network Architecture.}
+%   \includegraphics[width=1\columnwidth]{../../imagens/ilustracoes/cap6_arquitetura_alo.png}
+%   \sourceOwn
+%   \label{fig:architecture_alo}
+% \end{figure}
 
 In SLO, the number of side-outputs corresponds to the number of network stages $|S|$.
 In turn, in the ALO method, the amount of output equals the number of convolutional layers $|L|$.
@@ -117,10 +133,18 @@ The method overview is illustrated in Figure \ref{fig:method}.
 \begin{figure*}
   \centering
   \caption{Overview of our method.}
-  \includegraphics[width=1.\textwidth]{../../imagens/ilustracoes/cap5_metodo.png}
+  \includegraphics[width=0.7\textwidth]{../../imagens/ilustracoes/cap5_metodo.png}
   \sourceOwn
   \label{fig:method}
 \end{figure*}
+
+% \begin{figure}
+%   \centering
+%   \caption{Overview of our method.}
+%   \includegraphics[width=1\columnwidth]{../../imagens/ilustracoes/cap5_metodo.png}
+%   \sourceOwn
+%   \label{fig:method}
+% \end{figure}
 
 In region segmentation tasks, $\hat{Y}$ seeks to provide partitions that represent significant areas of an image, while in the edge detection tasks, it seeks to represent the boundary between regions.
 

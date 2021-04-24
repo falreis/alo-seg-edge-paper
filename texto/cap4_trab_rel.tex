@@ -24,10 +24,12 @@ Compared with VGGNet, HED removed the classification layers and added side-outpu
 Also HED forced all side-outputs to produce predictions, using loss functions for each of them.
 Then, these outputs have been combined to generate a final edge map output \cite{HED:2015}.
 
-HED's changes increased the ODS value of BSDS500 data set \cite{amfm_pami2011} from 0.756, produced by DeepContour, state of the art at the time, to 0.782.
-HED proposal of side-outputs become a success and was adopted in some many other projects.
+% HED's changes increased the ODS value of BSDS500 data set \cite{amfm_pami2011} from 0.756, produced by DeepContour, state of the art at the time, to 0.782.
+% HED proposal of side-outputs become a success and was adopted in some many other projects.
+HED's changes increased the state of art of BSDS500 data set \cite{amfm_pami2011} and become a success.
+HED proposal of side-outputs was adopted in many other projects.
 \cite{Kokkinos:2016} used HED network and combine proposals in three different scales, producing a single output.
-The work increased the performance of HED to 0.813, but it required an architecture 3 times bigger.
+The work increased the performance, but it required an architecture 3 times bigger.
 
 Other approaches also used side-outputs, as the works of \cite{LearningRelaxed:2016:7780401} and \cite{SemanticSeg:2016:7780861}.
 The first one captured relaxed labels from simple detectors that were merged to the ground truth, used to supervise the training and remove some hard-to-classify false positives (relaxed labels), while the last one used Semantic Segmentation and Domain Transform (DT) to improve its predictions \cite{LearningRelaxed:2016:7780401} \cite{SemanticSeg:2016:7780861}.
@@ -80,7 +82,7 @@ It proposed fusion of multi-level information, based on feature-maps.
 To do it, it creates auxiliary branches, convolution, normalization, up-sampling, concatenation and a auxiliary loss function to increase the performance.
 Its proposed architecture is called HybridNet, and combine VGGNet and ResNet architectures \cite{LearningHybrid:Hu2018377}. 
 
-Bi-Directional Cascade Network network, proposed by \cite{He:2019}, explore multi-scale features for edge detection.
+Bi-Directional Cascade Network (BDCN) network, proposed by \cite{He:2019}, explore multi-scale features for edge detection.
 The model differ from previous works due it custom supervision of labeled edges at its specific scales, instead of using the same supervision in all CNN outputs.
 Also, it uses dilated convolution to generate multi-scale features, named Scale Enhancement Module (SEM), rather of explicitly fuse multi-scale edge maps \cite{He:2019}.
 This work reached the state of the art in the BSDS500 data set, despite not having achieved the best performance in the NYUDv2 data set \cite{Silberman:ECCV12}. %, as shown in Table \ref{table:cap4_artigos_selecionados}.
@@ -110,12 +112,12 @@ These new loss functions have the additional objective of reducing the number of
 Some methods needs a lot of iterations to converge properly and achieve its best performance.
 Some methods with good results, like \cite{RCF:2019}, \cite{Yang:2019} and \cite{He:2019} (state-of-art) needs near 40k iterations, while others, like \cite{ProeminentEdge:2018:Cai2018} needed 110k.
 
-From the analysis of the data in Table \ref{table:cap4_artigos_selecionados} and the description of the most relevant points of the papers, it is possible to take some directions to build a new work that could produce good results with small number of iterations.
-Due characteristics of edge detection problems, with unbalance of classes, the results can be use for faster training in other image processing problems, as region segmentation.
-
-This project maintains some trends in literature.
-It will explore transfer learning techniques, evaluate multiple side-outputs and loss functions using a simple architecture as VGG16 \cite{VGGNET:2014}.
-Also, it will use a recent developed loss function, \textit{Focal Loss} \cite{Lin:2017}, designed for problems with high imbalance between classes.
-Training and evaluation of our model will be done with the widely-used BSDS500 database.
+% From the analysis of the data in Table \ref{table:cap4_artigos_selecionados} and the description of the most relevant points of the papers, it is possible to take some directions to build a new work that could produce good results with small number of iterations.
+% Due characteristics of edge detection problems, with unbalance of classes, the results can be use for faster training in other image processing problems, as region segmentation.
+% 
+% This project maintains some trends in literature.
+% It will explore transfer learning techniques, evaluate multiple side-outputs and loss functions using a simple architecture as VGG16 \cite{VGGNET:2014}.
+% Also, it will use a recent developed loss function, \textit{Focal Loss} \cite{Lin:2017}, designed for problems with high imbalance between classes.
+% Training and evaluation of our model will be done with the widely-used BSDS500 database.
 
 %--------------------------------

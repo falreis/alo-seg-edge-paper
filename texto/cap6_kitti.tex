@@ -16,6 +16,21 @@ The test set is evaluated using the KITTI Server Evaluation.
 In the work developed, only road markings were considered and images for lane segmentation were ignored.
 The ground truth of roads is divided into three categories: $(i)$ urban unmarked (\textbf{uu\_road}), $(ii)$ urban marked (\textbf{um\_road}), $(iii)$ urban multiple marked lanes (\textbf{umm\_road}) \cite{Fritsch2013ITSC}.
 
+
+{\color{red}
+To visualize the data set and understand better the problem, Figure \ref{fig:kitti_colormap} was developed.
+In this image, ground truths were combined into images of each category. 
+Categories \textit{uu\_road}, \textit{um\_road} and \textit{umm\_road} contains, respectively, 13.68\%, 16.22\% and 23.41\% of road pixels, respectively.
+Although the highway and background classes are unbalanced, the pixel position favors the learning of the neural network, and it is not necessary to use pixel balancing methods.
+}
+
+\begin{figure}%[h!]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{../imagens/visualiz_dados/kitti_colormap.png}
+  \caption{KITTI \textit{uu\_road}, \textit{um\_road} and \textit{umm\_road} combined ground truth colormap.}
+  \label{fig:kitti_colormap}
+\end{figure}
+
 To increase the number of images in the training set, data-augmentation techniques were used.
 The following transformations have been applied: salt/pepper noise, noise shadow, horizontal inversion (mirroring), contrast and brightness change, random rain/snow addition.
 Data augmentation procedures that create unwanted behavior, such as vertical inversion and distortions that would change the nature of objects in the scene, such as cars and pedestrians, have been avoided.
@@ -34,15 +49,15 @@ The first test of the current experiment was designed to identify the influence 
 For this, it were used \textbf{ALO} and \textbf{SLO} networks, detailed in Section \ref{cap5_saidas_laterais}.
 The networks have been trained for only 100 epochs, using each merging methods.
 It was also used a modified VGG16 version to predict regions, without side-outputs, as baseline, called in this work \textit{No Side-Outputs} (\textbf{NSO}).
-%Figure \ref{fig:kitti_validation_loss_100epochs} shows the loss curves during the training phase for the validation set.
+Figure \ref{fig:kitti_validation_loss_100epochs} shows the loss curves during the training phase for the validation set.
 
-% \begin{figure}
-%   \centering
-%   \caption{Validation loss using \textit{Categorical Cross Entropy} metric.}
-%   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_validation_loss.png}
-%   \sourceOwn
-%   \label{fig:kitti_validation_loss_100epochs}
-% \end{figure}
+\begin{figure*}
+  \centering
+  %\includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_validation_loss.png}
+  \includegraphics[width=0.8\textwidth]{../imagens/visualiz_dados/kitti_alo-slo-nso_training.png}
+  \caption{Validation loss using \textit{Categorical Cross Entropy} metric.}
+  \label{fig:kitti_validation_loss_100epochs}
+\end{figure*}
 
 It is observed in the first part of the experiment that the ALO networks appear to be more stable, with a steeper loss curve than the NSO and all SLO approaches.
 % In addition, it is important to note that the NSO and SLO-MAX networks are highly unstable during learning phase, with abrupt changes in the loss value, resulting in graphical spikes.
@@ -56,23 +71,23 @@ The network NSO was also trained as a comparison \textit{baseline}.
 
 Performance analysis was done by two different metrics: the well-known \textit{Categorical Cross Entropy} and \textit{Pixel-error} metric.
 Pixel-error was adopted when high precision values were observed in results where there were noticeably many errors, especially with numerous false positives.
-% The performance of the above networks using both metrics is shown in Figures \ref{fig:kitti_cross_entropy_500_epochs} and \ref{fig:kitti_pixel_error_500_epochs}. 
+%The performance of the above networks using both metrics is shown in Figures \ref{fig:kitti_cross_entropy_500_epochs} and \ref{fig:kitti_pixel_error_500_epochs}. 
 %It can be observed that side-outputs have a positive influence on the performance of the networks.
 All versions of network ALO outperforms NSO network using both metrics.
 
 % \begin{figure}
 %   \centering
+%   %\includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_val_acc_500_epochs.png}
+%   \includegraphics[width=0.8\columnwidth]{../imagens/visualiz_dados/kitti_cat-cross-entropy_training.png}
 %   \caption{Performance of ALO and NSO nets using \textit{Categorical Cross Entropy} metric.}
-%   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_val_acc_500_epochs.png}
-%   \sourceOwn
 %   \label{fig:kitti_cross_entropy_500_epochs}
 % \end{figure}
 % 
 % \begin{figure}
 %   \centering
+%   %\includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_pixel_error_500_epochs.png}
+%   \includegraphics[width=0.8\columnwidth]{../imagens/visualiz_dados/kitti_pixel-error_training.png}
 %   \caption{Performance of ALO and NSO nets using \textit{Pixel-Error} metric.}
-%   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_kitti_pixel_error_500_epochs.png}
-%   \sourceOwn
 %   \label{fig:kitti_pixel_error_500_epochs}
 % \end{figure}
 
@@ -92,17 +107,15 @@ In addition, the images were transformed into monochromatic (binary), with white
 
 % \begin{figure*}
 %   \centering
-%   \caption{Side-output maps for ALO network merging strategies in KITTI Road/Lane data set.}
 %   \includegraphics[width=0.7\textwidth]{../imagens/ilustracoes/cap6_kitti_side_outputs.png}
-%   \sourceOwn
+%   \caption{Side-output maps for ALO network merging strategies in KITTI Road/Lane data set.}
 %   \label{fig:kitti_side_outputs}
 % \end{figure*}
 
 \begin{figure}
   \centering
-  \caption{Side-output maps for ALO network merging strategies in KITTI Road/Lane data set.}
   \includegraphics[width=1\columnwidth]{../imagens/ilustracoes/cap6_kitti_side_outputs.png}
-  \sourceOwn
+  \caption{Side-output maps for ALO network merging strategies in KITTI Road/Lane data set.}
   \label{fig:kitti_side_outputs}
 \end{figure}
 
@@ -135,9 +148,8 @@ The operation was applied using a $13 \times 13$ square structuring element as a
 % 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Differences between original method results and after post processing.}
 %   \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_kitti_post_proc_comp.png}
-%   \sourceOwn
+%   \caption{Differences between original method results and after post processing.}
 %   \label{fig:kitti_post_processing_comp}
 % \end{figure}
 
@@ -166,9 +178,8 @@ The original images were created by the KITTI Evaluation Server, based on the bi
 %\begin{sidewaysfigure}
 \begin{figure}
   \centering
-  \caption{Visual representation of ALO-AVG-MM predictions}
   \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_kitti_visual_representation.png}
-  \sourceOwn
+  \caption{Visual representation of ALO-AVG-MM predictions}
   \label{fig:kitti_representacao_visual}
 \end{figure}
 %\end{sidewaysfigure}

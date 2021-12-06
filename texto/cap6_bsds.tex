@@ -10,6 +10,19 @@ The set is explicit subdivided into training, validation and test, containing 20
 Ground truths are manually annotated by five different subjects on average. 
 It contains ground truth for region segmentation and border detection \cite{amfm_pami2011}.
 
+{\color{red}
+To visualize the data set and understand better the problem, Figure \ref{fig:bsds_colormap} was developed.
+Unlike the KITTI database, the BSDS database does not contain pixels of interest distributed in a specific position of the image, making training difficult.
+Thus, it becomes necessary to use methods that can work with unbalanced classes, as discussed in the Section \ref{cap5_balanc_classes}.
+}
+
+\begin{figure}%[h!]
+  \centering
+  \includegraphics[width=1\columnwidth]{../imagens/visualiz_dados/bsds_colormap.png}
+  \caption{BSDS500 combined ground truth colormap.}
+  \label{fig:bsds_colormap}
+\end{figure}
+
 BSDS500's test set is evaluated using BSDS500 Benchmark, provided by the authors \cite{amfm_pami2011}.
 In our experiments, training and validation sets were merged into one group, in order to increase generalization.
 The test set was only used to evaluate the performance of our results.
@@ -43,7 +56,6 @@ This representation is shown in Figure \ref{sfig:cap6_bsds_100075_all}.
 
 \begin{figure*}%[h!]
   \centering
-  \caption{(a) BSDS500 image and its ground truth, using (b) ALL, (c) UPPER and (d) MORPH representations.}
   \subfloat[\label{sfig:cap6_bsds_100075_orig_all}]{\includegraphics[width=0.24\textwidth]{../imagens/ilustracoes/cap6_bsds_100075.jpg}}
   \hfill
   \subfloat[\label{sfig:cap6_bsds_100075_all}]{\includegraphics[width=0.24\textwidth]{../imagens/ilustracoes/cap6_bsds_100075_all.png}}
@@ -51,7 +63,7 @@ This representation is shown in Figure \ref{sfig:cap6_bsds_100075_all}.
   \subfloat[\label{sfig:cap6_bsds_100075_upper}]{\includegraphics[width=0.24\textwidth]{../imagens/ilustracoes/cap6_bsds_100075_upper.png}}
   \hfill
   \subfloat[\label{sfig:cap6_bsds_100075_morf}]{\includegraphics[width=0.24\textwidth]{../imagens/ilustracoes/cap6_bsds_100075_morf.png}}
-  \sourceOwn
+  \caption{(a) BSDS500 image and its ground truth, using (b) ALL, (c) UPPER and (d) MORPH representations.}
   \label{fig:cap6_bsds_all}
 \end{figure*}
 
@@ -69,12 +81,11 @@ This ground truth representation method is available in Figure \ref{sfig:cap6_bs
 
 % \begin{figure}
 %   \centering
-%   \caption{(a) BSDS500 image and (b) its ground truth, using UPPER representation.}
 %   \subfloat[\label{sfig:cap6_bsds_100075_orig_upper}]{\includegraphics[width=0.48\textwidth]{../imagens/ilustracoes/cap6_bsds_100075.jpg}}
 %   \hfill
 %   \subfloat[\label{sfig:cap6_bsds_100075_upper}]{\includegraphics[width=0.48\textwidth]{../imagens/ilustracoes/cap6_bsds_100075_upper.png}}
-%   \sourceOwn
 %   \label{fig:cap6_bsds_upper}
+%   \caption{(a) BSDS500 image and (b) its ground truth, using UPPER representation.}
 % \end{figure}
 
 Although benefits of the first approach, the second problem is not solved by them.
@@ -87,12 +98,11 @@ The visual result of the morphological operations, named \textbf{MORPH}, is avai
 
 % \begin{figure}
 %   \centering
-%   \caption{(a) BSDS500 image and (b) its ground truth, using MORPH representation.}
 %   \subfloat[\label{sfig:cap6_bsds_100075_orig_morf}]{\includegraphics[width=0.48\textwidth]{../imagens/ilustracoes/cap6_bsds_100075.jpg}}
 %   \hfill
 %   \subfloat[\label{sfig:cap6_bsds_100075_morf}]{\includegraphics[width=0.48\textwidth]{../imagens/ilustracoes/cap6_bsds_100075_morf.png}}
-%   \sourceOwn
 %   \label{fig:cap6_bsds_morf}
+%   \caption{(a) BSDS500 image and (b) its ground truth, using MORPH representation.}
 % \end{figure}
 
 Some initial experiments were performed to evaluate the three approaches.
@@ -164,9 +174,8 @@ After no gain for 50 epochs, the protocol ended its first phase.
 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Training and validation losses using ALO-ADD/MORPH method on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_bsds_add_focal_morf_v1v2_20200409.png}
-%   \sourceOwn
+%   \caption{Training and validation losses using ALO-ADD/MORPH method on BSDS500.}
 %   \label{fig:bsds_add_focal_morf_v1v2}
 % \end{figure}
 
@@ -190,9 +199,8 @@ The protocol has ended its first phase (only deconvolutions training) at the epo
 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Training and validation losses using ALO-AVG/MORPH method on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_bsds_avg_focal_morf_v1v2_20200407.png}
-%   \sourceOwn
+%   \caption{Training and validation losses using ALO-AVG/MORPH method on BSDS500.}
 %   \label{fig:bsds_avg_focal_morf_v1v2}
 % \end{figure}
 
@@ -218,9 +226,8 @@ It had the lowest loss (722.39), 24.06\% more when compared to ALO-ADD (582.29) 
 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Training and validation losses using ALO-MAX/MORPH method on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_bsds_max_focal_morf_v1v2_20200408.png}
-%   \sourceOwn
+%   \caption{Training and validation losses using ALO-MAX/MORPH method on BSDS500.}
 %   \label{fig:bsds_max_focal_morf_v1v2}
 % \end{figure}
 
@@ -240,17 +247,15 @@ It is possible to conclude that only the training of the deconvolution layers wa
 % 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Loss comparison using ALL ground truth on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/bsds_addavgmax_focal_all.png}
-%   \sourceOwn
+%   \caption{Loss comparison using ALL ground truth on BSDS500.}
 %   \label{fig:bsds_addavgmax_focal_all}
 % \end{figure}
 % 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Loss comparison using UPPER ground truth on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/bsds_addavgmax_focal_upper.png}
-%   \sourceOwn
+%   \caption{Loss comparison using UPPER ground truth on BSDS500.}
 %   \label{fig:bsds_addavgmax_focal_upper}
 % \end{figure}
 % 
@@ -272,9 +277,8 @@ It is possible to conclude that only the training of the deconvolution layers wa
 % 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Accuracy comparison using UPPER ground truth on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/bsds_focal_upper_metrics.png}
-%   \sourceOwn
+%   \caption{Accuracy comparison using UPPER ground truth on BSDS500.}
 %   \label{fig:bsds_focal_upper_metrics}
 % \end{figure}
 % 
@@ -292,53 +296,63 @@ The results will be shown in Section \ref{ssec:basic_pred_eval}, when they will 
 \label{ssec:basic_pred_eval}
 
 Due to the low capacity to evaluate the previous experiments using the accuracy metric, it was decided to evaluate the model withs the BSDS500 Benchmark.
-The results are presented in Table \ref{tab:bsds_subexp1_results}.
+The results are presented in Figure \ref{fig:bsds_subexp1_results}. %Table \ref{tab:bsds_subexp1_results}.
 To evaluate the gain of UPPER and ALL ground truths training, it was decided to evaluate MORPH performance also.
 As explained in Section \ref{ssec:framework_experiments}, the network was trained until it does not improve for 50 epochs, making MORPH almost unable to perform better.
 
-\begin{table}%[h!]
-  \centering
-  \caption{Border detection performance on BSDS500 for ALO-AVG, ALO-ADD and ALO-MAX.}
-  \scriptsize
-  \setlength{\tabcolsep}{1em}
-  \renewcommand{\arraystretch}{1.5}
-  \begin{tabular}{{c}{c}{c}{c}{c}{c}{c}}
-    \hline
-    Network & Loss & Ground truth & TH & ODS & OIS %& Area PR
-    \\
-    \hline
-    ALO-ADD & FL & MORPH (v1) & 0.51 & 0.7214 & 0.7461 %& 0.4721
-    \\
-    ALO-ADD & FL & MORPH (v2) & 0.50 & 0.7376 & 0.7596 %& 0.5331
-    \\
-    ALO-ADD & FL & ALL & 0.40 & 0.7504 & \textbf{0.7714} %& 0.6105
-    \\
-    ALO-ADD & FL & UPPER & 0.47 & \textbf{0.7512} & 0.7704 %& 0.5809
-    \\
-    ALO-AVG & FL & MORPH (v1) & 0.52 & 0.7227 & 0.7462 %& 0.4862
-    \\
-    ALO-AVG & FL & MORPH (v2) & 0.51 & 0.7384 & 0.7606 %& 0.5356
-    \\
-    ALO-AVG & FL & ALL & 0.40 & 0.7496 & 0.7708 %& 0.5932
-    \\
-    ALO-AVG & FL & UPPER & 0.46 & 0.7500 & 0.7690 %& 0.5796
-    \\
-    \hline
-    ALO-MAX & FL & MORPH (v1) & 0.70 & 0.6911 & 0.7127 %& 0.5712
-    \\
-    ALO-MAX & FL & MORPH (v2) & 0.67 & 0.7039 & 0.7247 %& 0.5510
-    \\
-    ALO-MAX & FL & ALL & 0.56 & 0.7122 & 0.7311 %& \textbf{0.6337}
-    \\
-    ALO-MAX & FL & UPPER & 0.64 & 0.7127 & 0.7326 %& 0.5932
-    \\
-    \hline
-  \end{tabular}
-  \label{tab:bsds_subexp1_results}
-\end{table}
+% \begin{table}%[h!]
+%   \centering
+%   \caption{Border detection performance on BSDS500 for ALO-AVG, ALO-ADD and ALO-MAX.}
+%   \scriptsize
+%   \setlength{\tabcolsep}{1em}
+%   \renewcommand{\arraystretch}{1.5}
+%   \begin{tabular}{{c}{c}{c}{c}{c}{c}{c}}
+%     \hline
+%     Network & Loss & Ground truth & TH & ODS & OIS %& Area PR
+%     \\
+%     \hline
+%     ALO-ADD & FL & MORPH (v1) & 0.51 & 0.7214 & 0.7461 %& 0.4721
+%     \\
+%     ALO-ADD & FL & MORPH (v2) & 0.50 & 0.7376 & 0.7596 %& 0.5331
+%     \\
+%     ALO-ADD & FL & ALL & 0.40 & 0.7504 & \textbf{0.7714} %& 0.6105
+%     \\
+%     ALO-ADD & FL & UPPER & 0.47 & \textbf{0.7512} & 0.7704 %& 0.5809
+%     \\
+%     ALO-AVG & FL & MORPH (v1) & 0.52 & 0.7227 & 0.7462 %& 0.4862
+%     \\
+%     ALO-AVG & FL & MORPH (v2) & 0.51 & 0.7384 & 0.7606 %& 0.5356
+%     \\
+%     ALO-AVG & FL & ALL & 0.40 & 0.7496 & 0.7708 %& 0.5932
+%     \\
+%     ALO-AVG & FL & UPPER & 0.46 & 0.7500 & 0.7690 %& 0.5796
+%     \\
+%     \hline
+%     ALO-MAX & FL & MORPH (v1) & 0.70 & 0.6911 & 0.7127 %& 0.5712
+%     \\
+%     ALO-MAX & FL & MORPH (v2) & 0.67 & 0.7039 & 0.7247 %& 0.5510
+%     \\
+%     ALO-MAX & FL & ALL & 0.56 & 0.7122 & 0.7311 %& \textbf{0.6337}
+%     \\
+%     ALO-MAX & FL & UPPER & 0.64 & 0.7127 & 0.7326 %& 0.5932
+%     \\
+%     \hline
+%   \end{tabular}
+%   \label{tab:bsds_subexp1_results}
+% \end{table}
 
-It is possible to notice, in the analysis of Table \ref{tab:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
+\begin{figure*}%[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{../imagens/visualiz_dados/bsds_experiment_2-1.png}
+  \caption{Border detection ODS performance on BSDS500 for ALO-AVG, ALO-ADD and ALO-MAX.}
+  \label{fig:bsds_subexp1_results}
+\end{figure*}
+
+%It is possible to notice, in the analysis of Table \ref{tab:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
+It is possible to notice, in the analysis of Figure \ref{fig:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
 The benefit of using both ground truths is around 1,5\% in comparison with the best result achieved by MORPH ground truth.
+
+
 % Using the analysis of Figures \ref{fig:bsds_addavgmax_focal_all} and \ref{fig:bsds_addavgmax_focal_upper}, it is important to remember that these networks have barely improved their performance in the last phase of the protocol.
 
 These results can be partially explained due to the deformation caused by the morphological thinning operation.
@@ -377,7 +391,6 @@ However, due to its poor performance, this information cannot be used in favor o
     \hline
   \end{tabular}
   \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_subexp1_epochs}
 \end{table}
 
@@ -386,7 +399,6 @@ However, due to its poor performance, this information cannot be used in favor o
 
 % \begin{figure*}
 %   \centering
-%   \caption{Predictions of the ALO-ADD, ALO-AVG and ALO-MAX networks, and its best thresholds.}
 %   \captionsetup[subfigure]{labelformat=empty}
 %   \subfloat[BSDS500 image\label{fig:cap6_expr1_img}]{\includegraphics[width=0.24\textwidth]{../imagens/ilustracoes/cap6_bsds_372019.jpg}}
 %   \hfill
@@ -404,7 +416,7 @@ However, due to its poor performance, this information cannot be used in favor o
 %   \subfloat[ALO-AVG (0.46)\label{fig:cap6_expr1_avg_th}]{\includegraphics[width=0.24\textwidth]{../imagens/ilustracoes/cap6_bsds_372019_avg_20200407_046.png}}
 %   \hfill
 %   \subfloat[ALO-MAX (0.64)\label{fig:cap6_expr1_max_th}]{\includegraphics[width=0.24\textwidth]{../imagens/ilustracoes/cap6_bsds_372019_max_20200408_064.png}}
-%   \sourceOwn
+%   \caption{Predictions of the ALO-ADD, ALO-AVG and ALO-MAX networks, and its best thresholds.}
 %   \label{fig:cap6_expr1_bsds_visual}
 % \end{figure*}
 
@@ -446,9 +458,8 @@ Loss: PEFL ($\gamma$=1.0; $\alpha$=0.25)
 % 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Training and validation losses of ALO-ADD and ALO-AVG methods on BSDS500, using MORPH ground truth.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_bsds_fuse_morf_v1v2_20200410-20.png}
-%   \sourceOwn
+%   \caption{Training and validation losses of ALO-ADD and ALO-AVG methods on BSDS500, using MORPH ground truth.}
 %   \label{fig:bsds_avg_fuse_1_morf}
 % \end{figure}
 
@@ -481,8 +492,6 @@ Instead, it performed better than that obtained in the experiment described in S
     \\
     \hline
   \end{tabular}
-  \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_subexp2_results}
 \end{table}
 
@@ -503,8 +512,6 @@ Instead, it performed better than that obtained in the experiment described in S
     \\
     \hline
   \end{tabular}
-  \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_subexp2_epochs} 
 \end{table}
 
@@ -518,7 +525,7 @@ It is important to remember that both networks have increased their performance 
 \label{ssec:bsds_sideout}
 
 After training the network in previous experiments, it is important to evaluate the contributions of each layer.
-This evaluation allows obtaining knowledge to improve the model's performance.
+Model interpretation can help decision making process to obtain knowledge to improve the model's performance \cite{Hohman:2019} and, also, improve results trustworthiness \cite{Chatzimparmpas:2020}.
 %Contrary to what was done in Section \ref{cap6_contribuicoes_saidas_intermediarias}, where only the last layer of each stage was plotted, Figures \ref{fig:bsds_add_side_outputs} and \ref{fig:bsds_avg_side_outputs} displays information for all side-outputs of the networks.
 
 Contrary to what was done in Section \ref{cap6_contribuicoes_saidas_intermediarias}, where only the last layer of each stage was plotted,
@@ -531,17 +538,15 @@ Both images can contribute to the evaluation of a possible removal of stages in 
 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Side-outputs of each convolution of ALO-ADD method, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
 %   \includegraphics[width=1\columnwidth]{../imagens/ilustracoes/cap6_bsds_add_side_outputs.png}
-%   \sourceOwn
+%   \caption{Side-outputs of each convolution of ALO-ADD method, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
 %   \label{fig:bsds_add_side_outputs}
 % \end{figure}
 % 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Side-outputs of each convolution of ALO-AVG method, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
 %   \includegraphics[width=1\columnwidth]{../imagens/ilustracoes/cap6_bsds_avg_side_outputs.png}
-%   \sourceOwn
+%   \caption{Side-outputs of each convolution of ALO-AVG method, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
 %   \label{fig:bsds_avg_side_outputs}
 % \end{figure}
 
@@ -583,17 +588,15 @@ Also, it was observed that the latest convolution, with operation of $1 \times 1
 
 \begin{figure}%[h!]
   \centering
+  \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_outputs.png}
   \caption{Side-outputs of each stage of ALO-ADD and ALO-AVG methods, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
-  \includegraphics[width=0.8\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_outputs.png}
-  \sourceOwn
   \label{fig:bsds_stage_outputs}
 \end{figure}
 
 \begin{figure}%[h!]
   \centering
+  \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_results.png}
   \caption{Results of ALO-ADD and ALO-AVG methods with side-outputs until each stage, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
-  \includegraphics[width=0.8\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_results.png}
-  \sourceOwn
   \label{fig:bsds_stage_results}
 \end{figure}
 
@@ -643,17 +646,15 @@ However, even with this advantage, the total training time was about 21.80\% lon
 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Training losses of 4 and 5 stages ALO-AVG versions using MORPH ground truth on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_bsds_avg_4stage_morph_20200410-0529.png}
-%   \sourceOwn
+%   \caption{Training losses of 4 and 5 stages ALO-AVG versions using MORPH ground truth on BSDS500.}
 %   \label{fig:bsds_4stage_morph}
 % \end{figure}
 % 
 % \begin{figure}%[h!]
 %   \centering
-%   \caption{Training losses of 4 and 5 stages ALO-AVG versions using ALL ground truth on BSDS500.}
 %   \includegraphics[width=1.\columnwidth]{../imagens/graficos/cap6_bsds_avg_4stage_all_20200410-0529.png}
-%   \sourceOwn
+%   \caption{Training losses of 4 and 5 stages ALO-AVG versions using ALL ground truth on BSDS500.}
 %   \label{fig:bsds_4stage_all}
 % \end{figure}
 
@@ -674,8 +675,6 @@ However, even with this advantage, the total training time was about 21.80\% lon
     \\
     \hline
   \end{tabular}
-  \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_subexp3_results}
 \end{table}
 
@@ -712,8 +711,6 @@ The results are slightly inferior to training described in the last paragraph, b
     \\
     \hline
   \end{tabular}
-  \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_subexp3_results_pre_vgg}
 \end{table}
 
@@ -818,7 +815,6 @@ The following experiments, in next sections, will use the same pre-processing me
 %     \hline
 %   \end{tabular}
 %   \vspace{0.2cm}
-%   \sourceOwn
 %   \label{tab:bsds_subexp4_results}
 % \end{table}
 
@@ -888,8 +884,6 @@ Also, the number of training epochs has not increased considerably when compared
     \\
     \hline
   \end{tabular}
-  \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_subexp5_results}
 \end{table}
 
@@ -910,8 +904,6 @@ Also, the number of training epochs has not increased considerably when compared
     \\
     \hline
   \end{tabular}
-  \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_subexp5_epochs} 
 \end{table}
 
@@ -940,8 +932,6 @@ As can be seen in Table \ref{tab:bsds_fps}, XLO network is 8,74\% faster than AL
     \\
     \hline
   \end{tabular}
-  \vspace{0.2cm}
-  \sourceOwn
   \label{tab:bsds_fps} 
 \end{table}
 
@@ -962,16 +952,14 @@ As can be seen in Table \ref{tab:bsds_fps}, XLO network is 8,74\% faster than AL
 
 % \begin{figure*}%[h!]
 %   \centering
-%   \caption{Results of XLO-AVG method trained with BSDS 500 using MORPH/ALL ground truth methods.}
 %   \includegraphics[width=0.7\textwidth]{../imagens/apendice/appendix-horiz-09.png}
-%   \sourceOwn
+%   \caption{Results of XLO-AVG method trained with BSDS 500 using MORPH/ALL ground truth methods.}
 %   \label{fig:cap6_expr5_bsds_visual}
 % \end{figure*}
 
-\begin{figure}%[h!]
+\begin{figure*}%[h!]
   \centering
+  \includegraphics[width=0.8\textwidth]{../imagens/apendice/appendix-horiz-09_v2.png}
   \caption{Results of XLO-AVG method trained with BSDS 500 using MORPH/ALL ground truth methods.}
-  \includegraphics[width=1\columnwidth]{../imagens/apendice/appendix-horiz-09.png}
-  \sourceOwn
   \label{fig:cap6_expr5_bsds_visual}
-\end{figure}
+\end{figure*}

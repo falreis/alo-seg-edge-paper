@@ -10,7 +10,7 @@ The set is explicit subdivided into training, validation and test, containing 20
 Ground truths are manually annotated by five different subjects on average. 
 It contains ground truth for region segmentation and border detection \cite{amfm_pami2011}.
 
-{\color{red}
+{\color{blue}
 To visualize the data set and understand better the problem, Figure \ref{fig:bsds_colormap} was developed.
 Unlike the KITTI database, the BSDS database does not contain pixels of interest distributed in a specific position of the image, making training difficult.
 Thus, it becomes necessary to use methods that can work with unbalanced classes, as discussed in the Section \ref{cap5_balanc_classes}.
@@ -138,7 +138,7 @@ The following parameters set as standard in our experiments with BSDS500, unless
     \item Learn. decay: $1 \times 10^{-10}$ (first step) and $1 \times 10^{-11}$ (others)
     \item Batch size: 8 images
     \item Merging method: ALO
-    \item Loss: Focal Loss ($\gamma$=2.0; $\alpha$=0.25)\footnote{~Parameters recomended by \citeonline{Lin:2017} paper.}
+    \item Loss: Focal Loss ($\gamma$=2.0; $\alpha$=0.25)\footnote{~Parameters recomended by \cite{Lin:2017} paper.}
     \item Initial weights: VGG-16
     \item Training samples: 9690 images 
     \item Validation samples: 1710 images
@@ -295,9 +295,9 @@ The results will be shown in Section \ref{ssec:basic_pred_eval}, when they will 
 \subsection{Evaluation and Predictions}
 \label{ssec:basic_pred_eval}
 
-Due to the low capacity to evaluate the previous experiments using the accuracy metric, it was decided to evaluate the model withs the BSDS500 Benchmark.
+Due to the low capacity to evaluate the previous experiments using the accuracy metric, it was decided to evaluate the model with BSDS500 Benchmark.
 The results are presented in Figure \ref{fig:bsds_subexp1_results}. %Table \ref{tab:bsds_subexp1_results}.
-To evaluate the gain of UPPER and ALL ground truths training, it was decided to evaluate MORPH performance also.
+To evaluate the gain of UPPER and ALL ground truths usage, it was decided to evaluate MORPH performance also.
 As explained in Section \ref{ssec:framework_experiments}, the network was trained until it does not improve for 50 epochs, making MORPH almost unable to perform better.
 
 % \begin{table}%[h!]
@@ -343,10 +343,17 @@ As explained in Section \ref{ssec:framework_experiments}, the network was traine
 
 \begin{figure*}%[h!]
   \centering
-  \includegraphics[width=0.8\textwidth]{../imagens/visualiz_dados/bsds_experiment_2-1.png}
+  %\includegraphics[width=0.8\textwidth]{../imagens/visualiz_dados/bsds_experiment_2-1.png}
+  \includegraphics[width=1\textwidth]{../imagens/visualiz_dados/bsds_experiment_2-1.png} %VISUALIZ
   \caption{Border detection ODS performance on BSDS500 for ALO-AVG, ALO-ADD and ALO-MAX.}
   \label{fig:bsds_subexp1_results}
 \end{figure*}
+
+{\color{blue}
+Figure \ref{fig:bsds_subexp1_results} was developed using small multiples technique to show the difference between methods.
+ALO-ADD and ALO-AVG were plotted in different images once the results were similar and one data was above other.
+This results contrasts with the poor performance of ALO-MAX network.
+}
 
 %It is possible to notice, in the analysis of Table \ref{tab:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
 It is possible to notice, in the analysis of Figure \ref{fig:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
@@ -588,14 +595,16 @@ Also, it was observed that the latest convolution, with operation of $1 \times 1
 
 \begin{figure}%[h!]
   \centering
-  \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_outputs.png}
+  %\includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_outputs.png}
+  \includegraphics[width=1\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_outputs.png} %VISUALIZ
   \caption{Side-outputs of each stage of ALO-ADD and ALO-AVG methods, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
   \label{fig:bsds_stage_outputs}
 \end{figure}
 
 \begin{figure}%[h!]
   \centering
-  \includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_results.png}
+  %\includegraphics[width=0.9\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_results.png}
+  \includegraphics[width=1\columnwidth]{../imagens/ilustracoes/cap6_bsds_stage_results.png} %VISUALIZ
   \caption{Results of ALO-ADD and ALO-AVG methods with side-outputs until each stage, trained with BSDS 500 using MORPH/UPPER ground truth methods.}
   \label{fig:bsds_stage_results}
 \end{figure}
@@ -683,7 +692,7 @@ However, even with this advantage, the total training time was about 21.80\% lon
 
 All previous experiments, including those with the KITTI data set, were done using histogram equalization for each image channel as a pre-processing step.
 The technique was chosen due to its possible adaptation to different databases.
-However, after all the experiments previously carried out, it was decided to evaluate the subtraction of the means of each channel, using the same parameters described in \citeonline{VGGNET:2014} paper.
+However, after all the experiments previously carried out, it was decided to evaluate the subtraction of the means of each channel, using the same parameters described in \cite{VGGNET:2014} paper.
 
 Using VGGNet pre-processing weights, an increase in performance was expected, since the method would equalize the entire database evenly, unlike the previous technique, which adjusted each image separately.
 Such a procedure would enable faster and more effective learning.
@@ -959,7 +968,38 @@ As can be seen in Table \ref{tab:bsds_fps}, XLO network is 8,74\% faster than AL
 
 \begin{figure*}%[h!]
   \centering
-  \includegraphics[width=0.8\textwidth]{../imagens/apendice/appendix-horiz-09_v2.png}
+  \includegraphics[width=0.9\textwidth]{../imagens/apendice/appendix-horiz-09_v2.png}
   \caption{Results of XLO-AVG method trained with BSDS 500 using MORPH/ALL ground truth methods.}
   \label{fig:cap6_expr5_bsds_visual}
 \end{figure*}
+
+
+%--------------------------------
+\subsection{Experiment Summary}
+\label{ssec:bsds_summary}
+
+{\color{blue}
+The evolution of results due to experiments using BSDS500 are available in Figure \ref{fig:bsds_experiments_evolution}.
+The figure summarizes the experiments in the BSDS500 dataset, indicating the main modifications at each step.
+The figure was created to facilitate the understanding of each of the experiments, indicating the main modifications carried out.
+}
+
+\begin{figure*}%[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../imagens/visualiz_dados/bsds_results_evolution.png}
+  \caption{Results of ALO-AVG due experiments.}
+  \label{fig:bsds_experiments_evolution}
+\end{figure*}
+
+% {\color{blue}
+% The comparison ALO-ADD and ALO-AVG results are available in Figure \ref{fig:bsds_add_avg_evolution}.
+% The figure that ALO-ADD and ALO-AVG had similar performance in most of the experiments.
+% The end result, however, indicates that ALO-AVG outperformed ALO-ADD and can be considered the best evaluated method for combining side outputs.
+% }
+% 
+% \begin{figure}%[h!]
+%   \centering
+%   \includegraphics[width=1\columnwidth]{../imagens/visualiz_dados/bsds_avg_add_evolution.png}
+%   \caption{ALO-ADD and ALO-AVG comparison summary.}
+%   \label{fig:bsds_add_avg_evolution}
+% \end{figure}

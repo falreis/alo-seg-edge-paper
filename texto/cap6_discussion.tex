@@ -15,7 +15,7 @@ After the individual assessment of the contribution of each of the stages, in Se
 To train the network on the BSDS500 dataset, it was necessary to change the loss function to help with the imbalance between borders and non-borders pixels.
 % Due to imbalance between classes, the \textit{Categorical Cross Entropy} function had difficulties in converging, becoming inadequate.
 % To help with the imbalance, \textit{Focal Loss} function was chosen.
-After some tests, it was observed that \textit{Focal Loss} could learn edges but produced mostly soft borders\footnote{~This condition was also reported in the work of \citeonline{WangDOOBNet:2018}, analyzed later.}.
+After some tests, it was observed that \textit{Focal Loss} could learn edges but produced mostly soft borders\footnote{~This condition was also reported in the work of \cite{WangDOOBNet:2018}, analyzed later.}.
 From small experiments, it was possible to notice that the increase in the difference in tone between edge and background pixels allowed a faster network convergence.
 In this way, edge pixels were binary classified, regardless of the number of times they appeared in multiple ground truths.
 

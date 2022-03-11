@@ -10,18 +10,18 @@ The set is explicit subdivided into training, validation and test, containing 20
 Ground truths are manually annotated by five different subjects on average. 
 It contains ground truth for region segmentation and border detection \cite{amfm_pami2011}.
 
-{\color{blue}
-To visualize the data set and understand better the problem, Figure \ref{fig:bsds_colormap} was developed.
-Unlike the KITTI database, the BSDS database does not contain pixels of interest distributed in a specific position of the image, making training difficult.
-Thus, it becomes necessary to use methods that can work with unbalanced classes, as discussed in the Section \ref{cap5_balanc_classes}.
-}
+%{\color{blue}
+%To visualize the data set and understand better the problem, Figure \ref{fig:bsds_colormap} was developed.
+Unlike KITTI, BSDS data set does not contain pixels of interest (a.k.a. edges) distributed in a specific position of the image, making training difficult.
+Also, the number non-edge pixels are considerably bigger than edge pixels \cite{ReExtraction:Wen201884}, becoming necessary to use methods that handles unbalanced classes, as discussed in the Section \ref{cap5_balanc_classes}.
+%}
 
-\begin{figure}%[h!]
-  \centering
-  \includegraphics[width=1\columnwidth]{../imagens/visualiz_dados/bsds_colormap.png}
-  \caption{BSDS500 combined ground truth colormap.}
-  \label{fig:bsds_colormap}
-\end{figure}
+% \begin{figure}%[h!]
+%   \centering
+%   \includegraphics[width=1\columnwidth]{../imagens/visualiz_dados/bsds_colormap.png}
+%   \caption{BSDS500 combined ground truth colormap.}
+%   \label{fig:bsds_colormap}
+% \end{figure}
 
 BSDS500's test set is evaluated using BSDS500 Benchmark, provided by the authors \cite{amfm_pami2011}.
 In our experiments, training and validation sets were merged into one group, in order to increase generalization.
@@ -47,7 +47,7 @@ The analysis of experiments are summarized in Section \ref{cap6_discussion}.
 
 As briefly reported previously, BSDS500's ground truths are manually annotated by five different subjects on average \cite{amfm_pami2011}.
 Due multiples ground truths, some experiments were conducted to define how to combine them, in order to help the network to learn properly.
-To do that, we developed 3 different methods to combine them.
+To do that, we developed and studied 3 different methods to combine them.
 
 The first ground truth representation, named \textbf{ALL}, added all ground truths and divided them by the maximum of ground truths' overlaps in each image.
 Ground truths borders were represented in a interval of 0 to 1, where the \textit{1-value} represents borders annotated in all ground truths, while the \textit{0-value} represents background in every annotation.
@@ -115,7 +115,7 @@ However, ALL and UPPER ones, applied after a some MORPH training, produced bette
 \label{ssec:framework_experiments}
 
 %This section will describe the protocol developed for training our networks. 
-As described in Section \ref{ssec:groundtruth_analysis}, the use of ground truth \textit{MORPH} in the early stages of training achieved the best generalization.
+As described in Section \ref{ssec:groundtruth_analysis}, the usage of ground truth \textit{MORPH} in the early stages of training achieved the best generalization.
 After it, the usage of \textit{ALL} and \textit{UPPER} ground truths improves achieved results.
 For this, we developed the following protocol, with the following phases:
 
@@ -134,8 +134,8 @@ The following parameters set as standard in our experiments with BSDS500, unless
 \begin{itemize}
     \item Learning method: SGD
     \item Activation: ReLU
-    \item Learning rate: $1 \times 10^{-6}$ (first step) and $1 \times 10^{-7}$ (others)
-    \item Learn. decay: $1 \times 10^{-10}$ (first step) and $1 \times 10^{-11}$ (others)
+    \item Learning rate: $1 \times 10^{-6}$ (first phase) and $1 \times 10^{-7}$ (others)
+    \item Decay: $1 \times 10^{-10}$ (first phase) and $1 \times 10^{-11}$ (others)
     \item Batch size: 8 images
     \item Merging method: ALO
     \item Loss: Focal Loss ($\gamma$=2.0; $\alpha$=0.25)\footnote{~Parameters recomended by \cite{Lin:2017} paper.}
@@ -146,7 +146,7 @@ The following parameters set as standard in our experiments with BSDS500, unless
 \end{itemize}
 
 In addition to the parameters listed previously, it was decided to use some functions to automatically reduce the learning rate and finish the training procedure after a number of epochs without any improvements. 
-Learning rate (LR) is reduced by factor of 0.3 ($LR \times 0.3$), after 10 epochs, if the loss does not decrease, in absolute value, at least 0.5 units.
+Learning rate (LR) is reduced by factor of 0.3 ($LR \times 0.3$), after 10 epochs, if the loss does not decrease, in absolute value, at least 0.5 units\footnote{~This technique is also called as Reduce Learning Rate on Plateau.}.
 
 After loss decreasing, the code waits for 5 epochs (\textit{cooldown}) and the procedure repeats until the learning rate achieves $1 \times 10^{-9}$, when it stops decreasing.
 Concomitantly with learning rate reduction, the early stopping procedure finishes training when the absolute value does not decrease at least 0.5 units after 50 epochs.
@@ -167,7 +167,7 @@ The last section will compare final training results.
 \subsubsection{ALO-ADD}
 \label{ssec:bsds_subexp1_add}
 
-The first network trained in the protocol was the ALO-ADD, which proved to be more stable in different preliminary tests.
+%The first network trained in the protocol was the ALO-ADD, which proved to be more stable in different preliminary tests.
 The network quickly converged from pre-trained weights and after about 130 epochs, it has stabilized, with small performance gains.
 After no gain for 50 epochs, the protocol ended its first phase.
 %The training and validation losses from phases 1 and 2 in the protocol are shown in Figure \ref{fig:bsds_add_focal_morf_v1v2}.
@@ -191,9 +191,9 @@ Close to the 500th epoch, the network showed again poor training loss decrease a
 \subsubsection{ALO-AVG}
 \label{ssec:bsds_subexp1_avg}
 
-The second network trained in the protocol was the ALO-AVG, which had similar performance to ALO-ADD in preliminary tests.
-ALO-AVG promptly converged, with a behavior similar to ALO-ADD.
-After around 140 epochs, the network has stabilized, with small performance gains. 
+%The second network trained in the protocol was the ALO-AVG, which had similar performance to ALO-ADD in preliminary tests.
+The network promptly converged, with a behavior similar to ALO-ADD.
+After near 140 epochs, the network has stabilized, with small performance gains. 
 The protocol has ended its first phase (only deconvolutions training) at the epoch 219.
 %The training and validation losses from steps 1 and 2 of the protocol are shown in Figure \ref{fig:bsds_avg_focal_morf_v1v2}.
 
@@ -216,7 +216,7 @@ It is important to note that this behavior occurred even with small learning rat
 \subsubsection{ALO-MAX}
 \label{ssec:bsds_subexp1_max}
 
-ALO-MAX was the last network trained in this experiment.
+%ALO-MAX was the last network trained in this experiment.
 Contrarily to other networks, ALO-MAX had more difficult to converge properly in preliminary tests.
 It had the lowest loss (722.39), 24.06\% more when compared to ALO-ADD (582.29) and 20.29\% more when compared with ALO-AVG (600.54).
 %The training and validation losses of ALO-MAX's protocol in phases 1 and 2, the are presented in Figure \ref{fig:bsds_max_focal_morf_v1v2}.
@@ -231,11 +231,11 @@ It had the lowest loss (722.39), 24.06\% more when compared to ALO-ADD (582.29) 
 %   \label{fig:bsds_max_focal_morf_v1v2}
 % \end{figure}
 
-It is also possible to notice that the validation loss was really unstable during both phases, with many ups and downs, without any convergence in the process.
+%It is also possible to notice that 
+The validation loss was really unstable during both phases, with many ups and downs, without any convergence in the process.
 The training was faster than the previous ones, with 94 epochs in the first phase and only 69 epochs in second one.
-
-The second phase indicates that the network was almost training and did not improved its results.
-It is possible to conclude that only the training of the deconvolution layers was enough for the network to reach the best possible value.
+This behaviour indicates that the network did not improved its results and the training of the deconvolution layers was enough for the network to reach the best possible value.
+%It is possible to conclude that only the training of the deconvolution layers was enough for the network to reach the best possible value.
 
 %--------------------------------
 % \subsubsection{Networks comparison}
@@ -345,18 +345,25 @@ As explained in Section \ref{ssec:framework_experiments}, the network was traine
   \centering
   %\includegraphics[width=0.8\textwidth]{../imagens/visualiz_dados/bsds_experiment_2-1.png}
   \includegraphics[width=1\textwidth]{../imagens/visualiz_dados/bsds_experiment_2-1.png} %VISUALIZ
-  \caption{Border detection ODS performance on BSDS500 for ALO-AVG, ALO-ADD and ALO-MAX.}
+  \caption{Border detection ODS performance on BSDS500 for ALO-AVG, ALO-ADD and ALO-MAX in Experiment 1.}
   \label{fig:bsds_subexp1_results}
 \end{figure*}
 
-{\color{blue}
+\begin{comment}
 Figure \ref{fig:bsds_subexp1_results} was developed using small multiples technique to show the difference between methods.
 ALO-ADD and ALO-AVG were plotted in different images once the results were similar and one data was above other.
 This results contrasts with the poor performance of ALO-MAX network.
-}
+\end{comment}
+
+The overall results of ALO-ADD and ALO-AVG were really similar, considerably better than ALO-MAX. %but ALO-ADD had better performance using both ODS and OIS metrics.
+The number of training epochs to reach the best results were also similar, as described in Table \ref{tab:bsds_subexp1_epochs}. %, but with less epochs for ALO-AVG.
+These results indicates that both methods are similar in performance and number of training epochs.
+%Table \ref{tab:bsds_subexp1_epochs} also shows that 
+In contrast, ALO-MAX had the least number of training epochs.
+However, due to its poor performance, this information cannot be used in favor of the method.
 
 %It is possible to notice, in the analysis of Table \ref{tab:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
-It is possible to notice, in the analysis of Figure \ref{fig:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
+It is also possible to notice, in the analysis of Figure \ref{fig:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
 The benefit of using both ground truths is around 1,5\% in comparison with the best result achieved by MORPH ground truth.
 
 
@@ -365,7 +372,7 @@ The benefit of using both ground truths is around 1,5\% in comparison with the b
 These results can be partially explained due to the deformation caused by the morphological thinning operation.
 UPPER and ALL ground truths maintains the original outline of the edges.
 Also, the differences can be seen as just an adjust of the weights, to provide hard and soft defined borders.
-This difference seens to influence the evaluation, once the benchmark compare borders with each human annotation in each ground truth.
+This difference seems to influence the evaluation, once the benchmark compare borders with each human annotation in each ground truth.
 
 \begin{comment}
 It is also important to notice in Table \ref{tab:bsds_subexp1_results} that ALL and UPPER ground truths reduced the thresholds for the OIS and ODS values.
@@ -374,15 +381,9 @@ These borders just was plotted in the image because the values were presented in
 When the MORPH ground truth was used, all classes were above 0.5, indicating that the results were well defined, despite the lower final result than those obtained with other ground truths.
 \end{comment}
 
-The overall results of ALO-ADD and ALO-AVG were really similar, but ALO-ADD had better performance using both ODS and OIS metrics.
-The number of training epochs to reach the best results were also similar, as described in Table \ref{tab:bsds_subexp1_epochs}, but with less epochs for ALO-AVG.
-These results indicates that both methods are similar in performance and number of training epochs.
-Table \ref{tab:bsds_subexp1_epochs} also shows that ALO-MAX had the least number of training epochs.
-However, due to its poor performance, this information cannot be used in favor of the method.
-
 \begin{table}%[h!]
   \centering
-  \caption{Number of training epochs using Focal Loss.}
+  \caption{Number of training epochs in Experiment 2.1.}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -431,7 +432,7 @@ However, due to its poor performance, this information cannot be used in favor o
 %Also, the results shows that ALO-MAX didn't performed well, once it contains a lot of noise.
 %Its best threshold removed many border details, resulting only in sparse pixels following the expected shape, but without producing a contour.
 
-Due the weak convergence of ALO-MAX in all previous tests and preliminary experiments, it was decided that the ALO-MAX method will no longer be tested, due to its low performance.
+After this experiment, it was decided that the ALO-MAX method will no longer be tested, due to its low performance and weak convergence. %\footnote{ALO-MAX also had poor performance in preliminary experiments.}.
 The following sections will provide and discuss experiments using only the ALO-ADD and ALO-AVG methods.
 
 %--------------------------------
@@ -440,11 +441,11 @@ The following sections will provide and discuss experiments using only the ALO-A
 
 After training BSDS500 using Focal Loss, a new experiment was developed to try to increase the results achieved and decrease the number of training epochs.
 To do it, a simple change in Focal Loss is proposed in this section.
-The suggested change is to add the metric Pixel Error (PE), as a factor to improve Focal Loss (FL).
+The suggested change is to add the metric Pixel-Error (PE), as a factor to improve Focal Loss (FL).
 
-The purpose of the modification is to increase the separation between the edges and the background, making the network converge more quickly.
+The purpose of the modification is to increase the separation between the edges and the background, making the network convergence faster.
 It is important to clarify that this change will mainly affect the ground truths MORPH and UPPER, that contains edge values far from background values.
-This new metric, named PEFL, can be simple defined as Equation \ref{equ:pixel_error_focal_loss}:
+The new metric, named PEFL (\textit{Pixel-Error Focal Loss}), can be simple defined as Equation \ref{equ:pixel_error_focal_loss}:
 
 \begin{equation}
   PEFL = FL \times (1 + PE)
@@ -479,7 +480,7 @@ Instead, it performed better than that obtained in the experiment described in S
 
 \begin{table}%[h!]
   \centering
-  \caption{Border detection performance on BSDS500 for ALO-ADD and ALO-AVG.}
+  \caption{Border detection performance on BSDS500 for ALO-ADD and ALO-AVG in Experiment 2.2.}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -504,7 +505,7 @@ Instead, it performed better than that obtained in the experiment described in S
 
 \begin{table}%[h!]
   \centering
-  \caption{Number of training epochs of Pixel Error Focal Loss.}
+  \caption{Number of training epochs in Experiment 2.2.}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -535,7 +536,7 @@ After training the network in previous experiments, it is important to evaluate 
 Model interpretation can help decision making process to obtain knowledge to improve the model's performance \cite{Hohman:2019} and, also, improve results trustworthiness \cite{Chatzimparmpas:2020}.
 %Contrary to what was done in Section \ref{cap6_contribuicoes_saidas_intermediarias}, where only the last layer of each stage was plotted, Figures \ref{fig:bsds_add_side_outputs} and \ref{fig:bsds_avg_side_outputs} displays information for all side-outputs of the networks.
 
-Contrary to what was done in Section \ref{cap6_contribuicoes_saidas_intermediarias}, where only the last layer of each stage was plotted,
+%Contrary to what was done in Section \ref{cap6_contribuicoes_saidas_intermediarias}, where only the last layer of each stage was plotted,
 Figure \ref{fig:bsds_stage_outputs} combine results from side-outputs inside one distinct stage while Figure \ref{fig:bsds_stage_results} combine results of all previous stages, until the current one.
 Figure \ref{fig:bsds_stage_outputs} helps to understand how each stage combine to the final output while \ref{fig:bsds_stage_results} helps to evaluate the gain when some stages are added to the final output.
 Both images can contribute to the evaluation of a possible removal of stages in the network architecture.
@@ -671,7 +672,7 @@ However, even with this advantage, the total training time was about 21.80\% lon
 
 \begin{table}%[h!]
   \centering
-  \caption{Border detection performance on BSDS500 for ALO-AVG with 4 stages.}
+  \caption{Border detection performance on BSDS500 in Experiment 2.3 (using histogram equalization pre-processing).}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -707,7 +708,7 @@ The results are slightly inferior to training described in the last paragraph, b
 
 \begin{table}%[h!]
   \centering
-  \caption{Border detection performance on BSDS500 for ALO-AVG with 4 stages, using VGG16 pre-processing.}
+  \caption{Border detection performance on BSDS500 in Experiment 2.3 (using VGG16 pre-processing).}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -728,81 +729,89 @@ The results provided in this section indicates that the change in the pre-proces
 The following experiments, in next sections, will use the same pre-processing method.
   
 %--------------------------------
-% \subsection{Experiment 2.4 - Training Side-Outputs}
-% \label{ssec:bsds_subexp4}
-% 
-% In order to answer Research Question Q2, described in Section \ref{cap1_objetivos}, and Hypothesis H3, detailed in Section \ref{cap1_hipoteses}, a new experiment was developed.
-% The experiment aims to evaluate the contribution of the technique of forcing side-outputs to produce similar predictions, in order to take advantage of multi-scale architecture.
-% 
-% To evaluate this technique, a new experiment was developed, with different ways of forcing the neural networks to produce the same result at the side-outputs, to try take advantage of multi-scale inside the network.
-% All networks used in this experiment were versions of VGG16 with 4 stages and parameterization similar to that described in Section \ref{ssec:bsds_subexp3} (including  pre-processing described in Section \ref{sssec:bsds_pre_process_data}).
-% 
-% \subsubsection{Training each convolution of ALO-AVG with 4 stages}
-% \label{sssec:train_conv_alo_avg}
-% 
-% The first experiment aimed to evaluate the possible improvement in the results of the ALO-AVG network by training it with loss functions after each convolutional layer.
-% The network was then trained with 11 loss functions, one for each convolution and one for the final output, with the average result of the entire network.
-% 
-% This training variation sought to evaluate the gains in the production of multi-scale outputs with the network that obtained the best results in the previous experiments.
-% However, despite the good results in the previous experiments, the network had difficulties to learn, possibly due to the excess of outputs and loss functions.
-% 
-% Excessive side-outputs may have caused difficulties in the transmission of knowledge between layers of the network.
-% The color and border adjustments, as shown in Figure \ref{fig:bsds_avg_side_outputs}, were compromised, since the layer alone sought to generate an output close to the border map.
-% 
-% It was observed, in the individual evaluation of the outputs, that some intermediate results, mainly in the first stages, did not present useful information (map without any border) and that several others, mainly at the end of the network, presented many noises, generating many false positives and inaccurate edges.
-% 
-% As result, the network produced, in a only 271 epochs training, an ODS value of 0.7259 and an OIS value of 0.7418, considerably lower than the results obtained in Section \ref{sssec:bsds_pre_process_data}.
-% The low number of training epochs, added to the low results obtained, indicates that the network was unable to learn properly and that the high number of side-outputs hindered learning.
-% 
-% \subsubsection{Training each stage of SLO-AVG with 4 stages}
-% \label{sssec:train_stage_slo_avg}
-% 
-% Due to the poor results of the ALO-AVG network in the last experiment, it was proposed to reduce the number of side-outputs that should be trained.
-% Following the context of this work and the previously used networks, it was decided to use the SLO-AVG net.
-% The network was trained with 5 loss functions, one for each stage and one for the final average output.
-% 
-% Since early epochs, this version of the network produced smaller training and validation loss values than the previous ALO-AVG experiment.
-% After 476 training epochs, the network produced 0.7640 ODS and 0.7795 OIS values, which is almost 6\% better than the last experiment with ALO-AVG.
-% Nonetheless, these results are smaller than the results of ALO-AVG without multiple loss functions, as described in Section \ref{sssec:bsds_pre_process_data}.
-% 
-% \subsubsection{Training a fine and a coarse output}
-% \label{sssec:train_alo_plus}
-% 
-% Inspired in Convolutional Oriented Boundaries network \cite{COB:2016}, this new experiment aimed to evaluate the creation of a fine and a coarse output.
-% To produce it, a new version of ALO-AVG network was created and named ALO-PLUS.
-% 
-% The network contained two side-outputs, a fine one, containing the average of the initial intermediate outputs (convolutions in stages 1 to 3) and a coarse one, containing the average of the outputs of the fourth stage.
-% The outputs were trained independently.
-% To produce a single result, a late merging method was created, with the average of both results.
-% 
-% The BSDS500 evaluation of the results produced by this ALO-PLUS network resulted in 0.7573 ODS and 0.7729 OIS values (the training procedure left 534 epochs).
-% The results can be considered intermediate when compared to values of other experiments carried out in this work.
-% 
-% It is also important to indicate that this experiment, with a delayed fusion method, allows the choice of a more appropriate technique to combine the network outputs after training.
-% Despite this, only a visual assessment of the use of weights in each output was made, but no improvement was noticed. 
-% Then, it was not evaluated using the BSDS500 benchmark.
-% 
-% \subsubsection{Training each stage of SLO-ADD  with 4 stages}
-% \label{sssec:train_stage_slo_add}
-% 
-% Due to the good results of the SLO-AVG network in the experiment described in Section \ref{sssec:train_stage_slo_avg} and the equivalence of ADD and AVG methods in some experiments described in Sections \ref{ssec:bsds_subexp2} and \ref{ssec:bsds_subexp2}, a new experiment was carried out using SLO-ADD network.
-% The network was trained with 5 loss functions, one for each stage and one for the final output.
-% 
-% The training of SLO-ADD was slower to other networks, with exactly 700 epochs.
-% Despite the longer training time, SLO-ADD produced poorly 0.7117 ODS and 0.7231 OIS values, what is considerably worse than SLO-AVG and other networks.
-% 
-% The results visually indicated the edges, however, presented numerous noises, which could be considered as soft edges.
-% However, it was noticed that the hue of the soft edges was very similar to the hard edges, which probably caused the results to be very low.
-% This small difference could lead to multiple false positives, even with different thresholds.
-% 
-% \subsubsection{Side-outputs training summary}
-% \label{sssec:sideout_train_summary}
-% 
-% The summary of the experiments performed in this section are presented in Table \ref{tab:bsds_subexp4_results}.
-% Analyzing the results, it is possible to see that SLO-AVG network had the best ODS and OIS values.
-% However, the results are smaller than those achieved by ALO-AVG net in Section \ref{sssec:bsds_pre_process_data}.
-% 
-% \begin{table}%[h!]
+\subsection{Experiment 2.4 - Training Side-Outputs}
+\label{ssec:bsds_subexp4}
+
+{\color{red}
+The current experiment aims to evaluate if making all side-outputs to produce similar predictions increase overall results.
+%This experiment used differents approaches to make network to produce the same result at the side-outputs, to trying to take advantage of multi-scale.
+All networks used in this experiment are VGG16 versions with 4 stages and parameterization described in Section \ref{ssec:bsds_subexp3} (including  pre-processing of Section \ref{sssec:bsds_pre_process_data}).
+}
+
+\subsubsection{Training each convolution of ALO-AVG with 4 stages}
+\label{sssec:train_conv_alo_avg}
+
+The first experiment aimed to evaluate the possible improvement in the results of the ALO-AVG network by training it with loss functions after each convolutional layer.
+The network was trained with 11 loss functions, one for each convolution and one for the final output, with merged output.
+
+%This training variation sought to evaluate the gains in the production of multi-scale outputs with the network that obtained the best results in the previous experiments.
+%However, despite the good results in the previous experiments, the network had difficulties to learn, possibly due to the excess of outputs and loss functions.
+
+After training, it was observed that the network had more difficulty to learn when compared to previous architectures, resulting in a worse performance. \ref{tab:bsds_subexp4_results}.
+As result, the network reached an ODS value of 0.7259 and an OIS value of 0.7418 after 271 training epochs.
+
+It was observed, in the individual evaluation of the outputs, that some intermediate results, mainly in the first stages, did not present useful information (map without any border) and that several others, specially at the end, presented many noises, generating many false positives and inaccurate edges.
+
+%Excessive side-outputs may have caused difficulties in knowledge propagation between layers of the network.
+%Also, the network trained only for 271 epochs, whats indicates that the network was unable to learn properly.
+%The color and border adjustments, as shown in Figure \ref{fig:bsds_avg_side_outputs}, were compromised, since the layer alone sought to generate an output close to the border map.
+
+%As result, the network reached an ODS value of 0.7259 and an OIS value of 0.7418 after 271 training epochs.
+%Evaluating the results presented in Table \ref{tab:bsds_subexp4_results}, it is possible to see that the network had considerably lower results than other networks described in Section \ref{sssec:bsds_pre_process_data}.
+
+%The low number of training epochs, added to the low results obtained, indicates that the network was unable to learn properly and that the high number of side-outputs hindered learning.
+
+\subsubsection{Training each stage of SLO-AVG with 4 stages}
+\label{sssec:train_stage_slo_avg}
+
+Due to the poor results in the last experiment, it was proposed to reduce the number of side-outputs that should be trained.
+Following the context of this work and the previously used networks, it was decided to use the SLO-AVG net.
+The network was trained with 5 loss functions, one for each stage and one for the final average output.
+
+Since early epochs, this version of the network produced smaller training and validation loss values than the previous ALO-AVG experiment.
+After 476 training epochs, the network produced 0.7640 ODS and 0.7795 OIS values, which is almost 6\% better than the previous network.
+Nonetheless, these results are smaller than the results of ALO-AVG without multiple loss functions.
+
+\subsubsection{Training a fine and a coarse output}
+\label{sssec:train_alo_plus}
+
+Inspired in Convolutional Oriented Boundaries network \cite{COB:2016}, this new experiment aimed to evaluate the creation of a fine and a coarse output.
+To produce it, a new version of ALO-AVG network was created and named ALO-PLUS.
+
+The network contained two side-outputs, a fine one, containing the average of the initial intermediate outputs (convolutions in stages 1 to 3) and a coarse one, containing the average of the outputs of the fourth stage.
+The outputs were trained independently.
+To produce a single result, a late merging method was created, with the average of both results.
+
+The BSDS500 evaluation of the results produced by this ALO-PLUS network resulted in 0.7573 ODS and 0.7729 OIS values (the training procedure left 534 epochs).
+The results can be considered intermediate when compared to values of other experiments carried out in this work.
+
+%It is also important to indicate that this experiment, with a delayed fusion method, allows the choice of a more appropriate technique to combine the network outputs after training.
+%espite this, only a visual assessment of the use of weights in each output was made, but no improvement was noticed. 
+%Then, it was not evaluated using the BSDS500 benchmark.
+
+\subsubsection{Training each stage of SLO-ADD  with 4 stages}
+\label{sssec:train_stage_slo_add}
+
+Due to the good results of the SLO-AVG in the experiment described in Section \ref{sssec:train_stage_slo_avg} and the similar results reached using ADD and AVG operations in experiments in Sections \ref{ssec:bsds_subexp2} and \ref{ssec:bsds_subexp2}, a new experiment was carried out using SLO-ADD network.
+The network was trained with 5 loss functions, one for each stage and one for the final output.
+
+The training of SLO-ADD was slower to other networks, with exactly 700 epochs.
+Despite the longer training time, SLO-ADD produced poorly 0.7117 ODS and 0.7231 OIS values, what is considerably worse than SLO-AVG and other networks.
+
+The results visually indicated the edges, however, presented numerous noises, which could be considered as soft edges.
+However, it was noticed that the hue of the soft edges was very similar to the hard edges, which probably caused the poorly results.
+This small difference could lead to multiple false positives, even with different thresholds.
+
+\subsubsection{Side-outputs training summary}
+\label{sssec:sideout_train_summary}
+
+{\color{red}
+The summary of the experiments performed in this section are presented in Table \ref{tab:bsds_subexp4_results}.
+Analyzing the results, it is possible to see that SLO-AVG network had the best ODS and OIS values.
+However, the results are smaller than those achieved by ALO-AVG net in Section \ref{sssec:bsds_pre_process_data}.
+}
+
+% \begin{table*}%[h!]
 %   \centering
 %   \caption{Border detection performance on BSDS500 for SLO and ALO networks with side-output training.}
 %   \scriptsize
@@ -825,7 +834,33 @@ The following experiments, in next sections, will use the same pre-processing me
 %   \end{tabular}
 %   \vspace{0.2cm}
 %   \label{tab:bsds_subexp4_results}
-% \end{table}
+% \end{table*}
+
+\begin{table}%[h!]
+  \centering
+  \caption{Border detection performance on BSDS500 in Experiment 2.4.}
+  \scriptsize
+  \setlength{\tabcolsep}{1em}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{{c}{c}{c}{c}{c}{c}{c}}
+    \hline
+    Network & Loss & Side-out. & GT & TH & ODS & OIS
+    \\
+    \hline
+    ALO-AVG & PEFL & 11 & ALL & 0.18 & 0.7259 & 0.7418
+    \\
+    SLO-AVG & PEFL & 5 & ALL & 0.18 & 0.7640 & 0.7795
+    \\
+    ALO-PLUS & PEFL & 2 & ALL & 0.18 & 0.7573 & 0.7729
+    \\
+    SLO-ADD & PEFL & 5 & ALL & 0.18 & 0.7117 & 0.7231
+    \\
+    \hline
+  \end{tabular}
+  \vspace{0.2cm}
+  \label{tab:bsds_subexp4_results}
+\end{table}
+
 
 %--------------------------------
 \subsection{Experiment 2.5 - Improving ALO network}
@@ -840,7 +875,7 @@ The following experiments, in next sections, will use the same pre-processing me
 As described in Section \ref{cap5_saidas_laterais}, ALO's side-output blocks are composed by an $1 \times 1$ convolution, followed by a transposed convolution.
 It was observed that the $1 \times 1$ convolution could be removed without great impact in the network, except for the possibility of making it a little less stable.
 
-Due to the architectural change made and in order to differentiate it from the ALO network, the new neural network was named \textit{eXtreme All-layers Outputs}  (XLO).
+Due to the architectural change and in order to differentiate it from the ALO networks, the new neural network was named \textit{eXtreme All-layers Outputs}  (XLO).
 % The network was created only with AVG and ADD operations, due the poor performance of MAX in previous tests, as described in Sections \ref{ssec:bsds_subexp1} and \ref{ssec:basic_pred_eval}.
 % The XLO network was trained using the default protocol with AVG and ADD merging methods, ALL and UPPER ground truths and the following parameterization, similar to that described in Section \ref{sssec:bsds_pre_process_data}, and summarized below.
 The XLO network was trained using the default protocol with AVG and ADD merging methods, ALL and UPPER ground truths and the following parameterization different from the default one, described in Section \ref{ssec:framework_experiments}.
@@ -867,13 +902,13 @@ The XLO network was trained using the default protocol with AVG and ADD merging 
 % \end{itemize}
 
 After training the networks, the results were evaluated and summarized in Table \ref{tab:bsds_subexp5_results}.
-The number of training epochs are available in Table \ref{tab:bsds_subexp5_epochs} and the some visual samples of the best results are available in Figure \ref{fig:cap6_expr5_bsds_visual}.
+The number of training epochs is available in Table \ref{tab:bsds_subexp5_epochs} and the some visual samples of the best results are available in Figure \ref{fig:cap6_expr5_bsds_visual}.
 It is possible to see in Table \ref{tab:bsds_subexp5_results} that the results increased when compared to Section \ref{ssec:bsds_subexp3}, the best results so far.
 Also, the number of training epochs has not increased considerably when compared to previous experiments.
 
 \begin{table}%[h!]
   \centering
-  \caption{Border detection performance on BSDS500 for XLO-ADD and XLO-AVG.}
+  \caption{Border detection performance on BSDS500 for XLO-ADD and XLO-AVG in Experiment 2.5.}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -898,7 +933,7 @@ Also, the number of training epochs has not increased considerably when compared
 
 \begin{table}%[h!]
   \centering
-  \caption{Number of training epochs of Pixel Error Focal Loss.}
+  \caption{Number of training epochs in Experiment 2.5.}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -916,8 +951,8 @@ Also, the number of training epochs has not increased considerably when compared
   \label{tab:bsds_subexp5_epochs} 
 \end{table}
 
-The results indicating a better behavior of XLO networks when compared to all previous versions of ALO network, although the performance is not considerably superior.
-However, due to the performance gain in all versions of the network, combining side-outputs with ADD or AVG functions, the XLO network can be considered superior to the ALO network and, consequently, to the SLO network.
+The results indicating a better behavior of XLO networks when compared to all previous versions of ALO networks, although the performance is not considerably superior.
+However, due to the performance gain in all versions of the network, the XLO network can be considered superior to the ALO network and, consequently, to the SLO network.
 
 To compare the speed of the best versions of XLO and ALO networks, it was created the Table \ref{tab:bsds_fps}.
 This table contains the speed performance of both networks to predict images\footnote{~The images that fed the network had the size of $384 \times 288$ and were resized to the default image size of $321 \times 481$ inside the FPS evaluation.}. %\footnote{~Using XLO's $384 \times 288$ weights to fed a $320 \times 480$ network and without any image resizing, the network produced 0.7768 ODS and 0.7920 OIS values at 54.4 FPS.}.
@@ -925,7 +960,7 @@ As can be seen in Table \ref{tab:bsds_fps}, XLO network is 8,74\% faster than AL
 
 \begin{table}%[h!]
   \centering
-  \caption{FPS evaluation of ALO-AVG with 4 stages and XLO-AVG network}
+  \caption{FPS performance evaluation of ALO-AVG with 4 stages and XLO-AVG network.}
   \scriptsize
   \setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -975,6 +1010,7 @@ As can be seen in Table \ref{tab:bsds_fps}, XLO network is 8,74\% faster than AL
 
 
 %--------------------------------
+\begin{comment}
 \subsection{Experiment Summary}
 \label{ssec:bsds_summary}
 
@@ -990,16 +1026,4 @@ The figure was created to facilitate the understanding of each of the experiment
   \caption{Results of ALO-AVG due experiments.}
   \label{fig:bsds_experiments_evolution}
 \end{figure*}
-
-% {\color{blue}
-% The comparison ALO-ADD and ALO-AVG results are available in Figure \ref{fig:bsds_add_avg_evolution}.
-% The figure that ALO-ADD and ALO-AVG had similar performance in most of the experiments.
-% The end result, however, indicates that ALO-AVG outperformed ALO-ADD and can be considered the best evaluated method for combining side outputs.
-% }
-% 
-% \begin{figure}%[h!]
-%   \centering
-%   \includegraphics[width=1\columnwidth]{../imagens/visualiz_dados/bsds_avg_add_evolution.png}
-%   \caption{ALO-ADD and ALO-AVG comparison summary.}
-%   \label{fig:bsds_add_avg_evolution}
-% \end{figure}
+\end{comment}

@@ -2,17 +2,19 @@
 \section{Discussion}
 \label{cap6_discussion}
 
-The experiments carried out in the KITTI dataset allowed the conclusion that adding side-outputs in the network helps both the performance and the convergence during the training phase.
-It was also verified that the increase in network performance was directly related to the increase in the number of side-outputs.
+The experiments carried out in the KITTI data set allowed the conclusion that adding side-outputs in the network helps both the performance and the convergence during the training phase.
+%It was also observed that the increase in network performance was directly related to the increase in the number of side-outputs.
+It was also possible to directly relate the increase in network performance with the increase in the number of side outputs.
 
 The results obtained in Section \ref{cap6_experm_1_qtd_saidas} indicated equivalence between side-output merging operations.
 However, as verified later in Section \ref{ssec:basic_pred_eval}, the MAX operation performed considerably less than the ADD and AVG.
 The first results, which indicated similar performances, can be attributed to the relative simplicity of highway segmentation when compared to the edge detection, a much more complex and accurate task.
 
-As verified in Section \ref{cap6_contribuicoes_saidas_intermediarias} and later in Section \ref{ssec:bsds_sideout}, network learning is influenced by the method used to combine the outputs.
+%As verified in Section \ref{cap6_contribuicoes_saidas_intermediarias} and later in Section \ref{ssec:bsds_sideout}, network learning is influenced by the method used to combine the outputs.
+As verified in Section \ref{ssec:bsds_sideout}, network learning is influenced by the method used to combine the outputs.
 After the individual assessment of the contribution of each of the stages, in Section \ref{ssec:bsds_subexp3}, it was possible to reduce the network, eliminating layers with small contributions to the result.
 
-To train the network on the BSDS500 dataset, it was necessary to change the loss function to help with the imbalance between borders and non-borders pixels.
+To train the network on the BSDS500 data set, it was necessary to change the loss function to help with the imbalance between borders and non-borders pixels.
 % Due to imbalance between classes, the \textit{Categorical Cross Entropy} function had difficulties in converging, becoming inadequate.
 % To help with the imbalance, \textit{Focal Loss} function was chosen.
 After some tests, it was observed that \textit{Focal Loss} could learn edges but produced mostly soft borders\footnote{~This condition was also reported in the work of \cite{WangDOOBNet:2018}, analyzed later.}.
@@ -23,7 +25,7 @@ However, multiple ground truths when placed overlapping, caused noise and thick 
 To solve this problem, a detailed study of the ground truth was carried out and a framework for experiments was created.
 In the framework protocol, the first phases uses large differences between the pixels, with morphological thinning operation to reduce noise, while in the following phases the differences were more subtle, which made it possible to refine the results.
 
-% In order to increase the convergence of the Focal Loss function, a small change was made to add an extra parameter, corresponding to the Pixel Error metric, also used in the KITTI dataset experiments.
+% In order to increase the convergence of the Focal Loss function, a small change was made to add an extra parameter, corresponding to the Pixel Error metric, also used in the KITTI data set experiments.
 % The change, despite improving the network convergence, the new PEFL function, did not considerably improve the smooth identification of sets.
 
 Due to the smooth identification of edges, the network, despite the good results in the ODS and OIS metrics, presented low results in the AP metric, when compared to other methods in the literature.
@@ -52,7 +54,7 @@ Based on the training protocol created, it was possible, in the last experiments
 %In Section \ref{ssec:bsds_subexp4}, experiments were developed to evaluate \textit{Hypothesis H3} and \textit{Research Question Q2}.
 %From the results, it can be said that it is possible to generate good results without the need to train the neural network in order to produce similar results in each layer / stage.
 
-Regarding the training epochs on the BSDS500 dataset, all networks converged with less than 700 epochs (the best ODS result converged in 442 epochs).
+Regarding the training epochs on the BSDS500 data set, all networks converged with less than 700 epochs (the best ODS result converged in 442 epochs).
 Despite the low number of epochs, the number of images processed due to data augmentation was really high.
 % Thus, to reduce the number of iterations, random subsets of images can be used each time, and the optimizer in the first phase of the protocol and the early stopping criterion can be changed.
 

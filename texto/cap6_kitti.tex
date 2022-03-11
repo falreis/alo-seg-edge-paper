@@ -4,8 +4,8 @@
 \label{cap6_result_experm_1}
 
 The first set of experiments aimed to analyze the feasibility of the method described in Section \ref{cap5_metodologia}.
-For an initial analysis, the region segmentation task was considered more appropriate, as it requires a lower level of precision than edge detection problems.
-Also, it was evaluated the influence of the amount of side-outputs and the performance of the methods to combine them.
+For an initial analysis, the region segmentation task was considered more appropriate, as it requires a lower level of precision than edge detection.
+Also, it was evaluated the influence of the number of side-outputs and the methods to combine them.
 
 The experiments were conducted using the KITTI Road/Lane data set.
 This data set is composed of 289 training and 290 test images with size of $1242 \times 375$ pixels. 
@@ -13,10 +13,10 @@ Ground truth is manually annotated for two different pixel types: $(i)$ \textbf{
 
 KITTI data set contains only ground truth for training data.
 The test set is evaluated using the KITTI Server Evaluation.
-In the work developed, only road markings were considered and images for lane segmentation were ignored.
-The ground truth of roads is divided into three categories: $(i)$ urban unmarked (\textbf{uu\_road}), $(ii)$ urban marked (\textbf{um\_road}), $(iii)$ urban multiple marked lanes (\textbf{umm\_road}) \cite{Fritsch2013ITSC}.
+In this work, only road markings were considered and images for lane segmentation were ignored.
+The ground truth of roads is divided into three categories: $(i)$ urban unmarked (\textbf{uu\_road}), $(ii)$ urban marked (\textbf{um\_road}) and $(iii)$ urban multiple marked lanes (\textbf{umm\_road}) \cite{Fritsch2013ITSC}.
 
-
+\begin{comment}
 {\color{blue}
 To visualize the data set and understand better the problem, Figure \ref{fig:kitti_colormap} was developed.
 In this image, ground truths were combined into images of each category. 
@@ -31,6 +31,7 @@ Although the highway and background classes are unbalanced, the pixel position f
   \caption{KITTI \textit{uu\_road}, \textit{um\_road} and \textit{umm\_road} combined ground truth colormap.}
   \label{fig:kitti_colormap}
 \end{figure}
+\end{comment}
 
 To increase the number of images in the training set, data-augmentation techniques were used.
 The following transformations have been applied: salt/pepper noise, noise shadow, horizontal inversion (mirroring), contrast and brightness change, random rain/snow addition.
@@ -51,12 +52,9 @@ For this, it were used \textbf{ALO} and \textbf{SLO} networks, detailed in Secti
 The networks have been trained for only 100 epochs, using each merging methods.
 It was also used a modified VGG16 version to predict regions, without side-outputs, as baseline, called in this work \textit{No Side-Outputs} (\textbf{NSO}).
 
-{
-\color{blue}
-Figure \ref{fig:kitti_validation_loss_100epochs} shows the loss curves during the training phase for the validation set.
-Once the number of trained networks is big, the curves were separated according to the architecture, in a small multiple format.
-This type of graph facilitates the understanding of the information and make analysis more clear.
-}
+%Figure \ref{fig:kitti_validation_loss_100epochs} shows the loss curves during the training phase for the validation set.
+%Once the number of trained networks is big, the curves were separated according to the architecture, in a small multiple format.
+%This type of graph facilitates the understanding of the information and make analysis more clear.
 
 \begin{figure*}
   \centering
@@ -67,7 +65,8 @@ This type of graph facilitates the understanding of the information and make ana
   \label{fig:kitti_validation_loss_100epochs}
 \end{figure*}
 
-It is observed in the first part of the experiment that the ALO networks appear to be more stable, with a steeper loss curve than the NSO and all SLO approaches.
+Figure \ref{fig:kitti_validation_loss_100epochs} shows the loss curves during the training phase for the validation set.
+It can be observed that the ALO networks appear to be more stable, with a steeper loss curve than the NSO and all SLO approaches.
 % In addition, it is important to note that the NSO and SLO-MAX networks are highly unstable during learning phase, with abrupt changes in the loss value, resulting in graphical spikes.
 In addition, NSO and SLO-MAX networks were highly unstable during learning phase, with abrupt changes in the loss value, resulting in graphical spikes.
 On the other hand, the ALO-AVG network had the best result, followed by ALO-MAX and ALO-ADD.
@@ -76,7 +75,7 @@ This is possibly caused by the considerably higher number of outputs, which crea
 To improve results, a new round of testing was created with 500 training epochs.
 As SLO networks showed poor performance in the previous test and other tests performed with different parameters, then it was decided to evaluate only ALO networks.
 The network NSO was also trained as a comparison \textit{baseline}.
-Figure \ref{fig:kitti_accuracy_500epochs} was developed to show the accuracy of the network in this experiment.
+%Figure \ref{fig:kitti_accuracy_500epochs} was developed to show the accuracy of the network in this experiment.
 
 % {\color{blue}
 % Figure \ref{fig:kitti_accuracy_500epochs} shows the accuracy of the second experiment using ALO and NSO networks.
@@ -117,15 +116,24 @@ The results of the merging techniques of the ALO networks have similar value, in
 The best result for \textit{Categorical Cross Entropy} metric slightly outperforms the worst method (0.983 for ALO-ADD and 0.9821 for ALO-AVG).
 Using \textit{Pixel-error metric}, the best value is only 0.004 higher than the worst (0.0332 for ALO-AVG and 0.0372 for ALO-MAX).
 
+{\color{red}-------------------------------}
+
+{\color{red}Removed Side-Outputs Contribution (Exists Edge Detect)}
+
+{\color{red}-------------------------------}
+
 %--------------------------------
 %SUB - CONTRIBUIÇÕES SAÍDAS laterais
-\subsection{Side-Outputs Contribution}
+\begin{comment}
+\subsection{\color{blue}Side-Outputs Contribution {\color{red}Check Remove}}
 \label{cap6_contribuicoes_saidas_intermediarias}
 
+{\color{blue}
 The layers in each merging strategy learn uniquely.
 The contributions to the final prediction differ according to the merging method adopted, as shown in Figure \ref{fig:kitti_side_outputs}.
 To make the analysis of the image clearer, only last side-output maps of each stage were plotted.
 In addition, the images were transformed into monochromatic (binary), with white pixels representing the road and black pixels representing the background.
+}
 
 % \begin{figure*}
 %   \centering
@@ -153,6 +161,7 @@ This feature indicates that the layer was not able to learn correctly.
 
 The merged output combines all side-outputs, including other intermediate results not available in Figure \ref{fig:kitti_side_outputs}, for prediction.
 Despite the poor results in some layers, the learning process adjusts itself so that even bad results can be used by the model.
+\end{comment}
 
 %--------------------------------
 %PÓS PROCESSAMENTO
@@ -182,14 +191,15 @@ The operation was applied using a $13 \times 13$ square structuring element as a
 
 After the post-processing step, segmentation quality was evaluated.
 The tests were performed using the ALO-AVG method, the best in the training phase.
-Results were sent to  the KITTI Evaluation Server, with name of \textbf{ALO-AVG-MM}\footnote{~Results are available in a public leaderboard at \url{http://www.cvlibs.net/datasets/kitti/eval_road.php}}.
-The server returned the following metrics: MaxF, AP, PRE, REC, FPR and FNR, whose results for each road scene category\footnote{~\textit{URBAN\_ROAD} category corresponds to the combination of the other three categories.}, as described in Section \ref{cap6_result_experm_1}, are available in Table \ref{tab:kitti_metrics}.
+Results were sent with name of \textbf{ALO-AVG-MM}\footnote{~Results are available in a public leaderboard at \url{http://www.cvlibs.net/datasets/kitti/eval_road.php}} to the KITTI Evaluation Server, that returned the following metrics: MaxF, AP, PRE, REC, FPR and FNR, whose results for each road scene category\footnote{~\textit{URBAN\_ROAD} category corresponds to the combination of the other three categories.}, available in Table \ref{tab:kitti_metrics}.
 
 %table kitti_metrics
 \input{../texto/cap6_kitti_metrics}
 
 %The results available in Table \ref{tab:kitti_metrics} show how efficient the method is.
+{\color{red}
 Compared to the best result on the KITTI platform named PLARD \cite{Chen:2019}\footnote{~At the time of our first conference paper submission, \cite{Reis:2019}, \textit{PLARD} had not yet been published in the literature, being an anonymous submission on KITTI platform.}, our method had an overall performance 5.0\% lower.
+}
 It is also necessary to remember that the model was trained for only 500 epochs.
 Thus, it is indicated that the techniques for combining side-outputs had good results, as desired.
 

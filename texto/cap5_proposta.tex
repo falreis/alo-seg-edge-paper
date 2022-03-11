@@ -3,18 +3,20 @@
 \section{Method}
 \label{cap5_metodologia}
 
-The project architecture uses VGG16 neural network with multiple side-outputs, in order to obtain multi-level features.
-It proposes to train the network without forcing side-outputs to produce similar predictions, to reduce the number of training iterations.
-The architectures here are inspired by HED \cite{HED:2015} and RCF \cite{RCF:2017:8100105} networks.
+{\color{blue}
+In this paper we will evaluate and create some different network architectures, inspired by HED \cite{Xie:2017:HED:3158436.3158453} and RCF \cite{RCF:2017:8100105} networks. 
+All architectures uses VGG16 \cite{VGGNET:2014} neural network with multiple side-outputs, in order to obtain multi-level features.
+}
 
 %--------------------------------
 %SUB - TÉCNICAS PARA COMBINAR SAÍDAS laterais
-\subsection{Neural Network Architecture}
+\subsection{Neural Network Architectures}
 \label{cap5_rede_neural}
 
-VGG16's architecture is made up of 13 convolutional layers, divided into 5 stages, with 2 or 3 convolutional layers.
+Once our work is based on VGG16, we will address its architecture.
+VGG16 is made up of 13 convolutional layers, divided into 5 stages, with 2 or 3 convolutional layers.
 It uses a rectified linear unit $ReLU(\cdot) = max(0, \cdot)$ as an activation function and a max-pooling layer.
-At the end of the network, it has a fully connected layer, a ReLU layer and a final layer with the softmax activation function, totaling 16 weight layers \cite{VGGNET:2014}.
+At the end of the network, it has a fully connected layer, a ReLU layer and a final softmax activation function layer, totaling 16 weight layers \cite{VGGNET:2014}.
 
 % \begin{figure}
 %   \centering
@@ -24,10 +26,10 @@ At the end of the network, it has a fully connected layer, a ReLU layer and a fi
 %   \label{fig:architecture_vgg16}
 % \end{figure}
 
-%The work developed here followed the approaches present in the networks  HED \cite{HED:2015} and RCF \cite{RCF:2017:8100105}, which make changes in the final layers to build their architectures.
+%The work developed here followed the approaches present in the networks  HED \cite{Xie:2017:HED:3158436.3158453} and RCF \cite{RCF:2017:8100105}, which make changes in the final layers to build their architectures.
 To build our architecture, the last activation layer and all the fully connected layers of the VGG16 network were removed.
 Also it was added side-outputs in different quantities, for evaluation.
-In the first proposal, side-outputs were added in the last convolution of each stage, while in the second, secondary outputs were added after each convolutional layer.
+%In the first proposal, side-outputs were added in the last convolution of each stage, while in the second proposal, side-outputs outputs were added after each convolutional layer.
 Details regarding these architectures, influence on training and accuracy will be discussed in Sections \ref{cap5_saidas_laterais} and \ref{cap6_experm_1_qtd_saidas}.
 An overview of the architecture can be seen in Figure \ref{fig:method}.
 
@@ -39,9 +41,9 @@ Creating, training and analyzing the influence of outputs is a simpler task than
 \subsection{Side-outputs}
 \label{cap5_saidas_laterais}
 
-In addition to following the VGG16 architecture, the work used side-outputs, like several other existing approaches described in Section \ref{cap4_trab_rel}.
+Following a current trend, our work used side-outputs, like several other existing approaches in the literature, as described in Section \ref{cap4_trab_rel}.
 To evaluate the most appropriate number of side-outputs, it was analyzed HED and RCF architectures.
-HED creates outputs after the last convolutional layer of each stage (5 outputs), while RCF adds side-outputs after each of the convolutions (13 outputs) \cite{HED:2015} \cite{RCF:2017:8100105}.
+HED creates outputs after the last convolutional layer of each stage (5 outputs), while RCF adds side-outputs after each of the convolutions (13 outputs) \cite{Xie:2017:HED:3158436.3158453} \cite{RCF:2017:8100105}.
 
 The first strategy, named \textit{Stage Layer Outputs} (\textbf{SLO}) and inspired by the HED model, creates a side-output $\mathcal{H}_i$ for each stage $S$ of the network.
 Its graphical representation is available in Figure \ref{fig:architecture_slo}.
@@ -88,7 +90,7 @@ Formally, the set $ \mathcal{H}$ of $m$ side-outputs maps in each strategy is de
 
 Each side-output $\mathcal{H}_1, ... \mathcal{H}_m$ is composed of a $1 \times 1$ convolution, followed by a transposed convolution of variable size.
 Due to the network architecture, with \textit{pooling} layers, the images are reduced along the network. 
-Thus, for the images to be resized to a single size, it is necessary that the transposed convolutions have a variable size.
+Thus, for the images to be rescaled to a single size, it is necessary that the transposed convolutions have a variable size.
 %The evaluation of the learning curve and final post-training performance of each strategy will be presented in Section \ref{cap6_experm_1_qtd_saidas}.
 
 %--------------------------------
@@ -96,11 +98,11 @@ Thus, for the images to be resized to a single size, it is necessary that the tr
 \subsection{Side-outputs Merging Techniques}
 \label{cap5_func_combinar_saidas}
 
-Working with side-outputs requires that methods be used to combine intermediate results.
+Working with side-outputs requires the usage of methods to combine intermediate results.
 These are generated at different scales and may represent different concepts due to the position of the output on the network.
 The goal, then, is to produce a single proposition $\hat{Y}$ to be evaluated in the task, keeping useful information contained in different layers.
 
-In this work, a new strategy is developed to overcome the challenge of combining the outputs by exploring the knowledge of the learning process.
+In this work, a new simple strategy is developed to overcome the challenge of combining the outputs by exploring the knowledge of the learning process.
 Operations are performed element-wise at each side-output.
 To do this, the initial step is to resize the images generated at different stages of the network, so that they all have the same size.
 Then, different trivial merge functions were studied and compared, once each of these has an expected behavior, as described below:
@@ -161,7 +163,7 @@ Due to class imbalance, machine learning methods have difficult to identify edge
 Without proper treatment, the classification returns only backgound pixels, with high confidence.
 
 To help to solve this problem, we decided to use Focal Loss, proposed by \cite{Lin:2017}, aims helps to solve problems with high imbalance between classes.
-It is a change in Cross Entropy for binary classification function, that seeks to devalue pixels that are easy to identify and to value pixels that are hard to classify \cite{Lin:2017}.
+It is a modification in Cross Entropy Loss Function for binary classification, that seeks to devalue pixels that are easy to identify and to value pixels that are hard to classify \cite{Lin:2017}.
 
 % Consider the binary cross-entropy (CE) function, defined by Equation \ref{equ:cap6_cross_entropia1}, where $M$ is the number of training examples, $y_m$ is target label for a training example $m$ and $\hat{y}_m$ is the prediction of the neural network for a training example $m$ \cite{Ho:2019}.
 % 

@@ -3,17 +3,19 @@
 \section{Method}
 \label{cap5_metodologia}
 
+\begin{comment}
 {\color{blue}
 In this paper we will evaluate and create some different network architectures, inspired by HED \cite{Xie:2017:HED:3158436.3158453} and RCF \cite{RCF:2017:8100105} networks. 
 All architectures uses VGG16 \cite{VGGNET:2014} neural network with multiple side-outputs, in order to obtain multi-level features.
 }
+\end{comment}
 
 %--------------------------------
 %SUB - TÉCNICAS PARA COMBINAR SAÍDAS laterais
 \subsection{Neural Network Architectures}
 \label{cap5_rede_neural}
 
-Once our work is based on VGG16, we will address its architecture.
+Once our work is based on VGG16 \cite{VGGNET:2014}, we will address its architecture.
 VGG16 is made up of 13 convolutional layers, divided into 5 stages, with 2 or 3 convolutional layers.
 It uses a rectified linear unit $ReLU(\cdot) = max(0, \cdot)$ as an activation function and a max-pooling layer.
 At the end of the network, it has a fully connected layer, a ReLU layer and a final softmax activation function layer, totaling 16 weight layers \cite{VGGNET:2014}.
@@ -41,7 +43,7 @@ Creating, training and analyzing the influence of outputs is a simpler task than
 \subsection{Side-outputs}
 \label{cap5_saidas_laterais}
 
-Following a current trend, our work used side-outputs, like several other existing approaches in the literature, as described in Section \ref{cap4_trab_rel}.
+Following a recent trend, our work used side-outputs, like several other existing approaches in the literature, as described in Section \ref{cap4_trab_rel}.
 To evaluate the most appropriate number of side-outputs, it was analyzed HED and RCF architectures.
 HED creates outputs after the last convolutional layer of each stage (5 outputs), while RCF adds side-outputs after each of the convolutions (13 outputs) \cite{Xie:2017:HED:3158436.3158453} \cite{RCF:2017:8100105}.
 

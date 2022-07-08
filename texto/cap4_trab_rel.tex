@@ -1,20 +1,18 @@
 \section{Related Work}
 \label{cap4_trab_rel}
 
-Edge detection has been researched over the last 50 years, with several proposed algorithms \cite{RCF:2017:8100105}. 
+Edge detection has been researched over the last 50 years, with several proposed algorithms. 
 It was used in the first segmentation works, which later also began to identify regions.
-In parallel to the edge detection works, specific algorithms for region detection and pixel classification were developed \cite{pedrini2008analise}.
+In parallel to the edge detection works, specific algorithms for region detection and pixel classification were developed \cite{RCF:2017:8100105} \cite{pedrini2008analise}.
 
-The first works of edge detection, in the 1960s and 1970s, used color and shades intensity variation to identify horizontal or vertical differences, corresponding to the gradients.
-In the following decade, works used Laplacian of Gaussian operator for smoothing and edge detection.
-In the 1990s and 2000s, techniques were developed using manually created features, who developed methods based on gradients, color intensity and textures \cite{pedrini2008analise} %\cite{Roberts:1963}, \cite{ROBINSON1977492}, \cite{FREI_CHEN:1674733}, \cite{BERZINS1984195}, \cite{Canny:1986}, \cite{HUERTAS_MEDIONI:4767838}, \cite{pedrini2008analise}, \cite{KONISHI:1159946}, \cite{MARTIN:1273918}, \cite{KIRSCH1971315}
+The first works of edge detection, in the 1960s and 1970s, used color and shades intensity variation to identify horizontal or vertical differences, corresponding to the gradients \cite{Roberts:1963} \cite{KIRSCH1971315} \cite{ROBINSON1977492} \cite{FREI_CHEN:1674733}.
+In the following decade, works used Laplacian of Gaussian operator for smoothing and edge detection \cite{BERZINS1984195}, \cite{Canny:1986}, \cite{HUERTAS_MEDIONI:4767838}.
+In the 1990s and 2000s, techniques were developed using manually created features, who developed methods based on gradients, color intensity and textures \cite{KONISHI:1159946}, \cite{MARTIN:1273918}.
+In 2010s works with manually developed features were also proposed \cite{LIM:6619250}, however new approaches have emerged using machine learning \cite{StructuredEdges:2015}.
 
-In the current decade, works with manually developed features were also proposed, such as the Sketch Tokens \cite{LIM:6619250}. 
-However, new approaches have emerged using machine learning, as \textit{Structured Edges}, which uses decision forests \cite{StructuredEdges:2015}.
-At the same time, some studies have been carried out using deep convolutional networks, following the success of neural networks for object detection \cite{Segnet:2017:7803544}.
-
-DeepContour \cite{DeepContour:2015:7299024} and HED \cite{Xie:2017:HED:3158436.3158453} networks, are one of the pioneers in the use of deep learning to produce edge detection.
-DeepContour uses its own network, in a traditional way, with convolutional layers in sequence.
+At the same time of rise of machine learning techniques, some studies have been carried out using deep convolutional networks, following the success of neural networks for object detection \cite{Segnet:2017:7803544}.
+DeepContour \cite{DeepContour:2015:7299024} and HED \cite{Xie:2017:HED:3158436.3158453} networks were one of the pioneers in the use of deep learning to produce edge detection.
+DeepContour creates its own network, in a traditional way, with convolutional layers in sequence.
 HED developed a new approach, adding side-outputs in the well known VGG16 \cite{VGGNET:2014}, to produce intermediary edge maps.
 
 HED removed the VGGNet's classification layers and added side-outputs on the last convolutional layer of each stage.
@@ -36,13 +34,13 @@ It also generates two outputs with images at different scales, to produce fine a
 All them are combined in a fusion layer, producing a single Ultrametric Contour Map. % output \cite{COB:2018:7917294}.
 
 Contrary to the tendency of side-outputs, \cite{EdgeCNN:Wang201612} used a simple convolutional network followed by a morphological thin operation to increase accuracy while \cite{ContourDetect:2017:8124495} also used a simple 3-layers convolutional architecture to predict edges, followed by a contour refinement post processing, that transform coarse contours into fine-scale ones.
-Both works did not reach the results of other side-output based methods. %, as available in Table \ref{table:cap4_artigos_selecionados}.
+%Both works did not reach the results of other side-output based methods. %, as available in Table \ref{table:cap4_artigos_selecionados}.
 
 Following the side-output approach, it was observed by \cite{Wang:2017} that HED predictions produces some blurry edge maps.
 To avoid ``crispness'' of the boundaries (precisely localizing edge pixels), it was developed a new architecture, called Crisp Edge Detector that create a backward-refining pathway, which increases the resolution of intermediary maps progressively \cite{Wang:2017}. 
 The border crispness was also observed by \cite{CrispBoundaries:2018:Deng2018570}, that proposed refinement modules to reduce them.
 
-Some level of refinement was used also by \cite{DeepStructured:2017:Xu20173962}.
+Some level of refinement was used also by \cite{DeepStructured:2017:Xu20173962} \cite{Xu:2020}.
 It was proposed the usage of Attention-Gated Conditional Random Fields (AG-CRFs) to refine and fuse the representations learned at multiple scales.
 Attention mechanisms were integrated, into a two-level hierarchical CNN model, to produce multi-scale learning, in a custom network for contour detection \cite{DeepStructured:2017:Xu20173962}.
 
@@ -52,39 +50,58 @@ The work build an end-to-end Deep Symmetrical Metric Learning network (also know
 
 An Encoder and Decoder Network was also proposed by \cite{Yang:2019}.
 In this approach, it was developed a Generative Adversarial Network (GAN) for edge detection.
-This model is composed by a encoder-decoder model to extract edge information and a discriminator, a classification network that distinguishes the generated contours from the ground truth \cite{Yang:2019}.
+This model is composed by a encoder-decoder model to extract edge information and a discriminator, a classification network that distinguishes the generated contours from ground truth \cite{Yang:2019}.
 
-A more traditional work is RCF \cite{RCF:2019}, an HED-based project that developed side-output network versions of VGGNet and ResNet.
-Its architecture contains side-outputs after each convolution.
+A more traditional work is Richer Convolutional Features (RCF) \cite{RCF:2019}, an HED-based project, build over VGGNet and ResNet, using side-outputs after each convolution.
 At each stage, the outputs are combined into a single output with the sum of predictions.
 To improve the results, it is also made a process of scaling the images that enter the network in 3 different levels of detail.
-The results are then combined to generate a single map of borders.
+The results are then combined to generate a single map of borders \cite{RCF:2019}.
 
-Assessing the tendency in previous work to sum isolated side-outputs, with uneven qualities, \cite{Cumulative:Song20181847} proposed C-Net Cumulative Network, that aims to learns cumulatively based on visual features and low-level side-outputs and gradually remove detailed and sharp boundaries.
-The authors indicate that this procedure allows more accurate edge detection, since superfluous results are progressively abandoned while the network learns \cite{Cumulative:Song20181847}.
+Assessing the tendency in previous work to sum isolated side-outputs, with uneven qualities, \cite{Cumulative:Song20181847} proposed C-Net Cumulative Network, that aims to learns cumulatively based on visual features and low-level side-outputs and gradually remove detailed and sharp boundaries, producing a more accurate edge detection \cite{Cumulative:Song20181847}.
+%The authors indicate that this procedure allows more accurate edge detection, since superfluous results are progressively abandoned while the network learns \cite{Cumulative:Song20181847}.
 
 Similar as \cite{Cumulative:Song20181847}'s work, \cite{ReExtraction:Wen201884} proposed an edge detector based on feature re-extraction (FRE).
 It contains side-outputs in different stages, which are combined in feature re-extraction blocks.
 Each block contains three convolutional layers, a batch normalization and a residual operation, that are combined to produce a final stage output.
 The stage outputs are combined using a convolution $1 \times 1$ fusion module \cite{ReExtraction:Wen201884}.
 
+% DexiNed \cite{Soria:2020}, an Xception \cite{Chollet:2017} network based, contains main blocks connected with up-sampling blocks (UBs) to produce thin edge-maps.
+% Up-sampling blocks produces a sub-network with feature maps of the main path, and are concatenated to produce a single output.
+
 The Hybrid Convolutional Features (HCF) network \cite{LearningHybrid:Hu2018377} defined a ``CNN-based pipeline'' that combine multi-level features, producing a probability map.
 %It proposed fusion of multi-level information, based on feature-maps.
-To do it, it creates auxiliary branches, new convolution, normalization, up-sampling and concatenation layerts to increase performance.
+To do it, it creates auxiliary branches and extra layers to increase performance.
 Its proposed architecture is called HybridNet, and combine VGGNet and ResNet architectures \cite{LearningHybrid:Hu2018377}.
 
-Bi-Directional Cascade Network (BDCN) network, proposed by \cite{He:2019}, explore multi-scale features for edge detection.
-The model differ from previous works due it custom supervision of labeled edges at its specific scales, instead of using the same supervision in all CNN outputs.
-Also, it uses dilated convolution to generate multi-scale features, named Scale Enhancement Module (SEM), rather of explicitly fuse multi-scale edge maps \cite{He:2019}.
-This work reached the state of the art in the BSDS500 data set \cite{Silberman:ECCV12}. %, as shown in Table \ref{table:cap4_artigos_selecionados}.
+Bi-Directional Cascade Network (BDCN) network \cite{He:2019} differ from previous works due it custom supervision of labeled edges at its specific scales, instead of using the same supervision in all CNN outputs.
+Also, it uses dilated convolution to generate multi-scale features, rather of explicitly fuse multi-scale edge maps \cite{He:2019}.
+Bidirectional Multiscale Refinement Network (BMRN) \cite{Bao:2022} had a similar proposal, added with refinement blocks to achieve better performance.
 
 %\label{table:cap4_artigos_selecionados}
 %\input{../tables/cap4_artigos_selecionados}
 
+{
+
+
+% \cite{Wibisono:2020} and \cite{Wibisono:2021} proposed lightweight models, named TIN (Traditional Inspired Network) and FINED (Fast Inference Network for Edge Detection) networks.
+% Both had performance similar to the literature, despite of the reduced number of parameters.
+% FINED network had ODS performance similar to HED, besides the number of almost 14 times less parameters.
+
+\cite{Su:2021} developed Pixel Difference Convolutions (PDC) that uses differences between pixels to replace convolutional kernels, taking advantage of the knowledge gained by traditional edge detectors.
+PiDiNet also proposed lightweight version of its networks, with reduced number of parameters.
+\cite{Wibisono:2020} and \cite{Wibisono:2021} also proposed lightweight models, with performance similar to the literature, despite of the reduced number of parameters.
+% FINED network had ODS performance similar to HED, besides the number of almost 14 times less parameters.
+
+Besides the works with neural networks, some authors proposed tradicional methods to identify edges, using unsupervised learning \cite{Wan:2020} \cite{Wang:2020} \cite{Lin:2021} \cite{Dhillon:2022} \cite{Yan:2022}.
+These methods included enhanced versions of Canny Edge Detection \cite{Dhillon:2022}, the usage of Oriented Dynamic Threshold Neural System P \cite{Yan:2022}, and methods based on superpixels \cite{Wan:2020} \cite{Lin:2021}.
+
+\begin{comment}
+{\color{blue}
 %Table \ref{table:cap4_artigos_selecionados} provides important information regarding some trends in neural networks for edge detection.
 The analysis of related works provides important information regarding some trends in neural networks for edge detection.
 One trend is that side-outputs have been widely used in edge detection works in recent years.
 In addition, the results indicate that at least the 5 best ODS values in the BSDS500 were achieved by methods that combine intermediary features.
+
 
 Another important information is related to the number of papers that developed their own loss functions.
 For training their network architecture, 11 of 18 works developed its own custom loss.
@@ -92,7 +109,7 @@ This is observed due to the characteristics of the problem, where there is an im
 According to \cite{ReExtraction:Wen201884}, approximately 83\% of the pixels in the original BSDS500 testing images are non-edge pixels.
 
 Traditional loss functions does not help methods to identify edges, as they tend to learn only background pixels, producing highly accurate but unwanted results \cite{Xie:2017:HED:3158436.3158453}.
-Then some papers started to create its own functions, as Class-balanced Cross-entropy, proposed by \cite{Xie:2017:HED:3158436.3158453} and also used in \cite{Cumulative:Song20181847} and \cite{CrispBoundaries:2018:Deng2018570} papers, that aims to balance edges and non-edges pixels.
+Then some papers started to create its own functions, as Class-balanced Cross-entropy, proposed by \cite{Xie:2017:HED:3158436.3158453} and also used in \cite{Cumulative:Song20181847}, \cite{CrispBoundaries:2018:Deng2018570} and \cite{Soria:2020}, that aims to balance edges and non-edges pixels.
 
 Some works, like \cite{Kokkinos:2016}, \cite{COB:2018:7917294}, \cite{RCF:2019} and \cite{ReExtraction:Wen201884}, adapted class-balanced cross-entropy to create their own versions, exploring parameters improvement or addind some extra features.
 Others, like \cite{LearningHybrid:Hu2018377} and \cite{He:2019}, used it with other auxiliary losses to help to extract high-level features.
@@ -102,6 +119,8 @@ These new loss functions have the additional objective of reducing the number of
 %As available in Table \ref{table:cap4_artigos_selecionados}, 
 Some methods needs a lot of iterations to converge properly and achieve its best performance.
 Some methods with good results, like \cite{RCF:2019}, \cite{Yang:2019} and \cite{He:2019} (state-of-art) needs near 40k iterations, while others, like \cite{ProeminentEdge:2018:Cai2018} needed 110k.
+}
+\end{comment}
 
 % From the analysis of the data in Table \ref{table:cap4_artigos_selecionados} and the description of the most relevant points of the papers, it is possible to take some directions to build a new work that could produce good results with small number of iterations.
 % Due characteristics of edge detection problems, with unbalance of classes, the results can be use for faster training in other image processing problems, as region segmentation.

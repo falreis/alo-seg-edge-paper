@@ -5,7 +5,7 @@
 The second set of experiments aimed to evaluate the method performance  in edge detection, a more complex and precise task than region segmentation.
 BSDS500 was chosen due its small size, relative simplicity and its wide use in the literature, which makes it suitable for comparison to the literature.
 
-BSDS500 consists in a set of 500 images with size of $480 \times 320$ pixels\footnote{~For boundary detection, images contains a extra pixel ($481 \times 321$ or $321 \times 481$)}.
+BSDS500 consists in a set of 500 images with size of $480 \times 320$ pixels. %\footnote{~For boundary detection, images contains a extra pixel ($481 \times 321$ or $321 \times 481$)}.
 The set is explicit subdivided into training, validation and test, containing 200, 100 and 200 images, respectively.
 Ground truths are manually annotated by five different subjects on average. 
 It contains ground truth for region segmentation and border detection \cite{amfm_pami2011}.
@@ -364,7 +364,7 @@ However, due to its poor performance, this information cannot be used in favor o
 
 %It is possible to notice, in the analysis of Table \ref{tab:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
 It is also possible to notice, in the analysis of Figure \ref{fig:bsds_subexp1_results}, that all networks improved with training using ALL or UPPER ground truths.
-The benefit of using both ground truths is around 1,5\% in comparison with the best result achieved by MORPH ground truth.
+The benefit of using both ground truths is around 1.5\% in comparison with the best result achieved by MORPH ground truth.
 
 
 % Using the analysis of Figures \ref{fig:bsds_addavgmax_focal_all} and \ref{fig:bsds_addavgmax_focal_upper}, it is important to remember that these networks have barely improved their performance in the last phase of the protocol.
@@ -452,7 +452,7 @@ The new metric, named PEFL (\textit{Pixel-Error Focal Loss}), can be simple defi
   \label{equ:pixel_error_focal_loss}
 \end{equation}
 
-In conjunction with the new loss function, some hyper-parameter tuning were made\footnote{~The experiment described in Section \ref{ssec:bsds_subexp1} was performed again, changing only the loss function. It produced, using ALL and UPPER ground truths, 0.7502 and 0.7505 ODS values, with 429 (36\% less) and 460 (34\% less) epochs, respectively.}.
+In conjunction with the new loss function, hyper-parameter tuning were made\footnote{~The experiment described in Section \ref{ssec:bsds_subexp1} was performed again, changing only the loss function. It produced, using ALL and UPPER ground truths, 0.7502 and 0.7505 ODS values, with 429 (36\% less) and 460 (34\% less) epochs, respectively.}.
 Some quick experiments were carried out and the one that showed the greatest evidence of improvement was the reduction in \textit{gamma} parameter.
 Then, ALO-ADD and ALO-AVG networks were fully trained with the following changes in default parameterization, defined in Section \ref{ssec:framework_experiments}.
 
@@ -625,7 +625,7 @@ It can be seen that the results become more accurate as more stages are added, e
 After analyzing the intermediate results, as indicated in Section \ref{ssec:bsds_sideout}, a new experiment was developed with the purpose of evaluating the impact of removing layers from the last stage.
 As observed in Figures \ref{fig:bsds_stage_outputs} and \ref{fig:bsds_stage_results}, the layers of the fifth stage apparently does not contribute effectively to the final result.
 
-In this experiment, the same parameterization described in Section \ref{ssec:bsds_subexp2} was used, except for the loss decreasing and the minimum learning rate (MinLR).
+In the current experiment, the same parameterization described in Section \ref{ssec:bsds_subexp2} was used, except for the loss decreasing and the minimum learning rate (MinLR).
 The value, once fixed into $1 \times 10^{-9}$, was replaced by Equation \ref{eq:min_lr}, where the value depends of the original Learning Rate.
 This procedure reduced it to $1 \times 10^{-10}$ in the first phase and $1 \times 10^{-11}$ in last two phases of the protocol.
 
@@ -732,11 +732,9 @@ The following experiments, in next sections, will use the same pre-processing me
 \subsection{Experiment 2.4 - Training Side-Outputs}
 \label{ssec:bsds_subexp4}
 
-{\color{red}
-The current experiment aims to evaluate if making all side-outputs to produce similar predictions increase overall results.
+The experiment aimed to evaluate different training procedures described in the literature, especially if making all side-outputs to produce similar predictions increase overall results.
 %This experiment used differents approaches to make network to produce the same result at the side-outputs, to trying to take advantage of multi-scale.
 All networks used in this experiment are VGG16 versions with 4 stages and parameterization described in Section \ref{ssec:bsds_subexp3} (including  pre-processing of Section \ref{sssec:bsds_pre_process_data}).
-}
 
 \subsubsection{Training each convolution of ALO-AVG with 4 stages}
 \label{sssec:train_conv_alo_avg}
@@ -805,11 +803,9 @@ This small difference could lead to multiple false positives, even with differen
 \subsubsection{Side-outputs training summary}
 \label{sssec:sideout_train_summary}
 
-{\color{red}
 The summary of the experiments performed in this section are presented in Table \ref{tab:bsds_subexp4_results}.
 Analyzing the results, it is possible to see that SLO-AVG network had the best ODS and OIS values.
 However, the results are smaller than those achieved by ALO-AVG net in Section \ref{sssec:bsds_pre_process_data}.
-}
 
 % \begin{table*}%[h!]
 %   \centering
@@ -875,7 +871,7 @@ However, the results are smaller than those achieved by ALO-AVG net in Section \
 As described in Section \ref{cap5_saidas_laterais}, ALO's side-output blocks are composed by an $1 \times 1$ convolution, followed by a transposed convolution.
 It was observed that the $1 \times 1$ convolution could be removed without great impact in the network, except for the possibility of making it a little less stable.
 
-Due to the architectural change and in order to differentiate it from the ALO networks, the new neural network was named \textit{eXtreme All-layers Outputs}  (XLO).
+Due to the architectural change and in order to differentiate it from the ALO networks, the new neural network was named \textit{eXtreme All-layers Outputs} (\textbf{XLO}).
 % The network was created only with AVG and ADD operations, due the poor performance of MAX in previous tests, as described in Sections \ref{ssec:bsds_subexp1} and \ref{ssec:basic_pred_eval}.
 % The XLO network was trained using the default protocol with AVG and ADD merging methods, ALL and UPPER ground truths and the following parameterization, similar to that described in Section \ref{sssec:bsds_pre_process_data}, and summarized below.
 The XLO network was trained using the default protocol with AVG and ADD merging methods, ALL and UPPER ground truths and the following parameterization different from the default one, described in Section \ref{ssec:framework_experiments}.

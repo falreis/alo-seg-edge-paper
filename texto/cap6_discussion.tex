@@ -39,6 +39,67 @@ Low thresholds between borders and background have also been adopted in other st
   \label{fig:bsds_xlo_avg_curve}
 \end{figure}
 
+\begin{table}%[h!]
+  \centering
+  \caption{Performance comparison between our method and other methods in literature.}
+  %\scriptsize
+  %\setlength{\tabcolsep}{1em}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{{l}{c}{c}{c}}
+    \hline
+    Method & ODS & OIS & AP
+    \\
+    \hline
+    DeepContour \cite{DeepContour:2015:7299024} & .756 & .776 & -
+    \\
+    HED \cite{HED:2015} & .782 & .808 & -
+    \\
+    DCNN + sPb \cite{Kokkinos:2016} & .813 & .831 & -
+    \\
+    RDS \cite{LearningRelaxed:2016:7780401} & .792 & .810 & -
+    \\
+    EdgeNet \cite{SemanticSeg:2016:7780861} & .718 & .731 & -
+    \\
+    Edge CNN \cite{EdgeCNN:Wang201612} & .69 & .71 & -
+    \\
+    COB \cite{COB:2016} & .793 & - & -
+    \\
+    \cite{Wang:2017} & .803 & - & -
+    \\
+    \cite{ContourDetect:2017:8124495} & .75 & - & -
+    \\
+    \cite{DeepStructured:2017:Xu20173962} & .798 & - & -
+    \\ 
+    RCF \cite{RCF:2017:8100105} & .819 & .823 & -
+    \\
+    \cite{ProeminentEdge:2018:Cai2018} & .788 & - & -
+    \\ 
+    \cite{Cumulative:Song20181847} & .819 & - & -
+    \\
+    \cite{CrispBoundaries:2018:Deng2018570} & .815 & - & -
+    \\ 
+    \cite{ReExtraction:Wen201884} & .804 & - & -
+    \\  
+    \cite{LearningHybrid:Hu2018377} & .814 & - & -
+    \\
+    \cite{Yang:2019} & .810 & - & -
+    \\
+    BDCN \cite{He:2019} & .828 & .844 & -
+    \\
+    \hline
+    XLO-ADD (ALL) & .776 & .790 & .702
+    \\
+    XLO-ADD (UPPER) & .774 & .790 & .685
+    \\
+    XLO-AVG (ALL) & .780 & .793 & .721
+    \\
+    XLO-AVG (UPPER) & .780 & .796 & .700
+    \\
+    \hline
+  \end{tabular}
+  \label{tab:bsds_subexp5_results}
+\end{table}
+
 % \begin{figure}%[h!]
 %   \centering
 %   \subfloat[\label{sfig:bsds_xlo_avg_curve}]{\includegraphics[width=0.48\textwidth]{imagens/graficos/cap6_xlo-avg.jpg}}

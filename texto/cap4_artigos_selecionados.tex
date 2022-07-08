@@ -1,0 +1,69 @@
+\begin{table*}
+  \centering
+  \caption{Recent published works of edge detection using Convolutional Neural Networks in BSDS500 or NYUDv2 data sets.}
+  \tiny
+  \renewcommand{\arraystretch}{1.5}%
+  \begin{tabular*}{\linewidth}{p{2.6in} c c c c c c c}
+  \hline 
+  Paper & Year & Month & Side-out & Own Loss & BSDS\textsuperscript{\dag} & NYUD\textsuperscript{\dag} & Iterat.\textsuperscript{\ddag}
+  \\
+  \hline
+  DeepContour: \cite{DeepContour:2015:7299024} & 2015 & 06 & No & Yes & .756 & .55 & - %Positive-share loss
+  \\
+  HED\cite{HED:2015} \textsuperscript{1} & 2015 & 12 & Yes & Yes\textsuperscript{\S} & .782 & .746 & 10k %Cross-entropy loss 
+  \\
+  Pushing the Boundaries of Boundary Detection using Deep Learning \cite{Kokkinos:2016} & 2016 & 05 & Yes & Yes & .813 & - & - %DSN/HED loss
+  \\
+  Learning Relaxed Deep Supervision for Better Edge Detection \cite{LearningRelaxed:2016:7780401} & 2016 & 06 & Yes & No & .792 & .65 & -
+  \\
+  Semantic Image Segmentation with Task-Specific Edge Detection Using CNNs and a Discriminatively Trained Domain Transform \cite{SemanticSeg:2016:7780861} & 2016 & 06 & Yes & No & .718 & - & -
+  \\
+  Edge detection using convolutional neural network \cite{EdgeCNN:Wang201612} & 2016 & 07 & No & No & .69 & - & -
+  \\
+  Convolutional oriented boundaries \cite{COB:2016} \textsuperscript{2} & 2016 & 08 & Yes & Yes & .793 & \textbf{.784} \textsuperscript{5} & 30k
+  \\
+  Deep crisp boundaries \cite{Wang:2017} \textsuperscript{3} & 2017 & 07 & Yes & No & .803 & - & -
+  \\
+  Contour detection from deep patch-level boundary prediction \cite{ContourDetect:2017:8124495} & 2017 & 08 & No & No & .75 & - & -
+  \\
+  Learning deep structured multi-scale features using attention-gated CRFs for contour prediction \cite{DeepStructured:2017:Xu20173962} & 2017 & 12 & Yes & Yes & .798 & .771 & 40k
+  \\ 
+  Richer Convolutional Features for Edge Detection \cite{RCF:2017:8100105} \textsuperscript{4} & 2018 & 07 & Yes & Yes & .819 & .757 & 40k
+  \\
+  Prominent edge detection with deep metric expression and multi-scale features \cite{ProeminentEdge:2018:Cai2018} & 2018 & 08 & Yes & Yes & .788 & - & 110k
+  \\ 
+  Cumulative nets for edge detection \cite{Cumulative:Song20181847} & 2018 & 10 & Yes & No\textsuperscript{\S} & .819 & .762 & 60k
+  \\
+  Learning to predict crisp boundaries \cite{CrispBoundaries:2018:Deng2018570} & 2018 & 10 & Yes & No\textsuperscript{\S} & .815 & .762 & -
+  \\ 
+  Edge detection with feature re-extraction deep convolutional neural network \cite{ReExtraction:Wen201884} & 2018 & 11 & Yes & Yes & .804 & .701 & 42k
+  \\  
+  Learning hybrid convolutional features for edge detection \cite{LearningHybrid:Hu2018377} & 2018 & 11 & Yes & Yes & .814 & .765 & -
+  \\
+  Image contour detection with generative adversarial network \cite{Yang:2019} & 2019 & 01 & No & Yes & .810 & .715 & 40k
+  \\
+  Bi-Directional Cascade Network for Perceptual Edge Detection \cite{He:2019} & 2019 & 06 & Yes & Yes & \textbf{.828} & .748 & 40k
+  
+  \\
+  \hline
+    \multicolumn{8}{l}{\textsuperscript{\dag} Optimal Dataset Scale (\ac{ODS}) value in \ac{BSDS500} and \ac{NYUDv2} databases.}
+    \\
+    \multicolumn{8}{l}{\textsuperscript{\ddag} Number of iterations to train the method in BSDS500 dataset.}
+    \\
+    \multicolumn{8}{l}{\textsuperscript{\S} Usage of class-balanced cross-entropy}.
+    \\
+    \multicolumn{8}{l}{\textsuperscript{1} Published also in 2017, as Holistically-nested edge detection \cite{Xie:2017:HED:3158436.3158453}.}
+    \\
+    \multicolumn{8}{l}{\textsuperscript{2} Published also in 2018, as Convolutional Oriented Boundaries: From Image Segmentation to High-Level Tasks \cite{COB:2018:7917294}.}
+    \\
+    \multicolumn{8}{l}{\textsuperscript{3} Published also in 2019, as Deep crisp boundaries: From boundaries to higher-level tasks \cite{WangCrisp:2019}.}
+    \\
+    \multicolumn{8}{l}{\textsuperscript{4} Published also in 2019, as Richer Convolutional Features for Edge Detection \cite{RCF:2019}.}
+    \\
+    \multicolumn{8}{l}{\textsuperscript{5} Published only in COB's 2018 paper \cite{COB:2018:7917294}.}
+  \\
+  \hline
+  \end{tabular*}
+  \vspace{0.1cm} \sourceOwn
+  \label{table:cap4_artigos_selecionados}
+\end{table*}

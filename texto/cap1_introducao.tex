@@ -31,47 +31,60 @@
 % \subsection{Problem Definition}
 % \label{cap1_def_problema}
 
-Segmentation subdivides an image into its constituent regions or objects, while edge detection techniques identify the boundaries between objects \cite{gonzalez2002digital}.
-An edge, according to \cite{gonzalez2002digital}, is defined as a set of connected pixels that border two regions.
+%Segmentation subdivides an image into its constituent regions or objects, while edge detection techniques identify the boundaries between objects \cite{gonzalez2002digital}.
 
-In addition to \cite{gonzalez2002digital}'s definition, \cite{MARTIN:1273918} subdivide edge detection into boundary detection and the classical edge detection.
-For them, edge is ``an abrupt change in some low-level image feature such as brightness or color'' while boundary ``is a contour in the image plane that represents a change in pixel ownership from one object or surface to another'' \cite{MARTIN:1273918}. 
+Image segmentation corresponds to the partition of an image into a set of meaningful areas, while edge detection techniques identify the boundaries between objects, that borders to regions \cite{Dominguez:2016} \cite{gonzalez2002digital}.
+Both can be considered as challenging semantic tasks, aiming to determine and group uniform regions for analysis or identifying pixels that limit those regions.
 
-\cite{Jain:1995} defines contours as a link between edges and a representation of region boundaries.
-Closed contours represents region boundaries and open contours are parts of region boundaries \cite{Jain:1995}.
-Contours can be combined into a UCM representation, an indexed hierarchy of regions as a soft boundaries \cite{Arbelaez:2006}.
+According to~\cite{Dominguez:2016}, a proper segmented image should present some fundamental characteristics, such as: (i) region uniformity and homogeneity in  its features, such as gray level, color or texture; (ii) region continuity, without holes; (iii) significant difference between adjacent regions; and (iv) spatial accuracy with smooth and well-defined boundaries.
 
-Region segmentation, object and boundary detection are correlated tasks.
-Object limits with its high-level information can be used to define boundaries location.
-Also, boundaries can limit pixels into regions \cite{MARTIN:1273918}.
+Image segmentation is still an active topic of research \cite{Khan:2020}, with room for improving techniques and solving practical problems.
+It could be divided in two stages~\cite{Guigues:2006}: (i) low-level analysis, which evaluates the pixel characteristics, neighboring relation and it is ideally uncommitted in terms of position, orientation, size and contrast; and (ii) high-level analysis, which maps the low-level characteristics to fulfill the task.
+
+Edge detection can limit pixels into regions and, as a complementary task, can be used to refine segmentation \cite{MARTIN:1273918}.
 This correlation allows one problem to be modeled on another and effective techniques can be shared between them.
+%This task could be subdivided into boundary detection and the classical edge detection, where edge is ``an abrupt change in some low-level image feature such as brightness or color'' while boundary ``is a contour in the image plane that represents a change in pixel ownership from one object or surface to another'' \cite{MARTIN:1273918}.
+% \cite{Jain:1995} defines contours as a link between edges and a representation of region boundaries.
+% Closed contours represents region boundaries and open contours are parts of region boundaries \cite{Jain:1995}.
+% Contours can be combined into a UCM representation, an indexed hierarchy of regions as a soft boundaries \cite{Arbelaez:2006}.
 
 Traditional segmentation methods use basic image properties to find discontinuities that can indicate objects, regions or borders.
-However, these techniques face practical problems, such as similar color patterns, noise, and multiple thresholds for groups of images.
-To solve this, nowadays, its common to use deep learning supervised methods (especially CNNs), in which image characteristics are learned by algorithms \cite{MARTIN:1273918} \cite{Segnet:2017:7803544}.
+However, these techniques face practical problems, such as similar color patterns, noise, and multiple thresholds for groups of images \cite{MARTIN:1273918} \cite{Segnet:2017:7803544}.
+Recently, deep learning approaches have drastically changed the computational paradigm for visual tasks. The main advantage of deep learning algorithms is that they do not require an engineered model to operate, meaning that they can not only learn the features to represent the data, but also the models to describe them~\cite{Goodfellow:2016}.
 
-\begin{comment}
-In recent years, CNNs have emerged to solve increasingly complicated applications.
-%The emergence of them in object detection and classification started with AlexNet's impressive performance in the ImageNet Large Scale Visual Recognition Challenge (ILSVRC), by decreasing the top 5 state-of-art error by more than 10\% \cite[Ch. 1]{Goodfellow2016} \cite{Krizhevsky:2012} \cite{ILSVRC15}.
-After the rise of CNNs, some architectures have emerged to produce region segmentation/classification and edge detection \cite[Ch. 1]{Goodfellow2016} \cite{Segnet:2017:7803544}.
-In edge detection, HED architecture have emerged using intermediate outputs to produce maps in different scales, that are combined generating a final proposition \cite{HED:2015}.
-%This new architecture dropped BSDS500 state-of-art value in almost 3\% and became a trend in boundary detection.
-\end{comment}
-
+Facing deep learning paradigm, hand-crafted features used in the low-level analysis were first replaced by the features learned in deep models~\cite{Farabet:2013, VGGNET:2014, Lee:2015}, which mostly achieved the desirable results.
 Due to their architectures, a common CNN produces different information along its layers.
 Each layer contributes specifically to the final result, with its own characteristics, that indicates how weights are adjusted by the network.
-Furthermore, the network produces information in different sizes along the layers, due convolutional and pooling operations \cite{VGGNET:2014} \cite{Zeiler:2014} \cite{Fidler:2007} \cite{Hadji:2018}. %, that can be combined to produce a single output.
+Furthermore, the network produces information in different sizes along the layers, due convolutional and pooling operations \cite{VGGNET:2014, Zeiler:2014, Fidler:2007, Hadji:2018}. %, that can be combined to produce a single output.
+
+More recently, many proposals explored the learned model for the high-level analysis, in order to create segmentation maps from the outputs of different layers of a deep network~\cite{Xie:2017:HED:3158436.3158453, Cheng:2016, COB:2016, RCF:2017:8100105, Yang:2018}.
+These outputs are network samples, which do not require architectural changes and are therefore often called \textit{side-outputs}.
+One challenge on the latter strategy is the combination of the side-outputs from distinct layers, considering that they have different sizes and could represent different aspects of the input.
+
+In this work, we propose some strategies to combine the side-outputs from different layers by using simple merging functions in order to explore useful behavior in the learning process.
+We also study the amount of combined side-outputs that is needed to create a viable region propositions.
+
+{\color{red}
+In region segmentation task, we adressed the usage of a post-processing filtering based on mathematical morphology idempotent functions~\cite{Najman:2013} in order to remove some undesirable small segments.
+In edge detection, we analyzed how to combine multiple ground truths annotations, presented in some data sets, into a single reference map to increase network convergence.
+
+To evaluate our model, the networks were trained for a road image segmentation task. The goal is develop methods to improve Vision-based driver-assistance systems (VB-DAS), that become popular in modern vehicles. These systems aims to identify lane lines, provide blind spot supervision, and, recently, distinguish the road from different objects such pedestrians, sidewalks and other vehicles \cite{Saleem:2018, Yang:2018, Rezaei:2017}. Road identification can also be used in road monitoring, traffic management and self-driving cars. In this context, providing a robust and reliable segmentation is essential.
+
+{
+\color{red}
+% Segmentation subdivides an image into its constituent regions or objects, while edge detection techniques identify the boundaries between objects \cite{gonzalez2002digital}.
+% An edge, according to \cite{gonzalez2002digital}, is defined as a set of connected pixels that border two regions.
+
+% Region segmentation, object and boundary detection are correlated tasks.
+% Object limits with its high-level information can be used to define boundaries location.
+% Also, boundaries can limit pixels into regions \cite{MARTIN:1273918}.
+% This correlation allows one problem to be modeled on another and effective techniques can be shared between them.
+}
 
 In order to combine these information at scale, some works such as HED, RCF and BDCN trained convolutional blocks individually, with specific loss functions for each of them.
-This procedure aims to produce macro and detailed information, which are later combined into a single map \cite{Xie:2017:HED:3158436.3158453} \cite{RCF:2019} \cite{He:2019}. 
+This procedure aims to produce macro and detailed information, which are later combined into a single map \cite{Xie:2017:HED:3158436.3158453, RCF:2019, He:2019}.
 %This option, however, does not take advantage of existing similar tasks and results, once force several layers to produce the same result, increasing training cost.
 
-\begin{comment}
-To enhance training speed and accuracy, many projects developed its own loss functions and techniques to combine intermediate results, extracted from the network and called side-outputs.
-Also, they made some changes in well-known convolutional networks, as VGG16 \cite{VGGNET:2014} and ResNet \cite{RESNET:2016:7780459}, adding extra ones to create new features and refine intermediate results \cite{DeepStructured:2017:Xu20173962} \cite{COB:2016} \cite{ProeminentEdge:2018:Cai2018}.
-\end{comment}
-
-{\color{blue}
 This work seeks to simplify this idea, proposing and evaluating some simple network architectures, based in some recent papers.
 Also, it will be evaluate the capacity of obtain good results without forcing layers to produce similar information.
 %This approach allows the information from a model for a specific task (e.g. region segmentation) to be easily adapted, with little training, for a similar task (e.g. edge detection).

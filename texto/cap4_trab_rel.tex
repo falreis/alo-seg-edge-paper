@@ -3,11 +3,11 @@
 
 Edge detection has been researched over the last 50 years, with several proposed algorithms. 
 It was used in the first segmentation works, which later also began to identify regions.
-In parallel to the edge detection works, specific algorithms for region detection and pixel classification were developed \cite{RCF:2017:8100105} \cite{pedrini2008analise}.
+In parallel to the edge detection works, specific algorithms for region detection and pixel classification were developed \cite{RCF:2017:8100105, pedrini2008analise}.
 
-The first works of edge detection, in the 1960s and 1970s, used color and shades intensity variation to identify horizontal or vertical differences, corresponding to the gradients \cite{Roberts:1963} \cite{KIRSCH1971315} \cite{ROBINSON1977492} \cite{FREI_CHEN:1674733}.
-In the following decade, works used Laplacian of Gaussian operator for smoothing and edge detection \cite{BERZINS1984195}, \cite{Canny:1986}, \cite{HUERTAS_MEDIONI:4767838}.
-In the 1990s and 2000s, techniques were developed using manually created features, who developed methods based on gradients, color intensity and textures \cite{KONISHI:1159946}, \cite{MARTIN:1273918}.
+The first works of edge detection, in the 1960s and 1970s, used color and shades intensity variation to identify horizontal or vertical differences, corresponding to the gradients \cite{Roberts:1963, KIRSCH1971315, ROBINSON1977492, FREI_CHEN:1674733}.
+In the following decade, works used Laplacian of Gaussian operator for smoothing and edge detection \cite{BERZINS1984195, Canny:1986, HUERTAS_MEDIONI:4767838}.
+In the 1990s and 2000s, techniques were developed using manually created features, who developed methods based on gradients, color intensity and textures \cite{KONISHI:1159946, MARTIN:1273918}.
 In 2010s works with manually developed features were also proposed \cite{LIM:6619250}, however new approaches have emerged using machine learning \cite{StructuredEdges:2015}.
 
 At the same time of rise of machine learning techniques, some studies have been carried out using deep convolutional networks, following the success of neural networks for object detection \cite{Segnet:2017:7803544}.
@@ -40,7 +40,7 @@ Following the side-output approach, it was observed by \cite{Wang:2017} that HED
 To avoid ``crispness'' of the boundaries (precisely localizing edge pixels), it was developed a new architecture, called Crisp Edge Detector that create a backward-refining pathway, which increases the resolution of intermediary maps progressively \cite{Wang:2017}. 
 The border crispness was also observed by \cite{CrispBoundaries:2018:Deng2018570}, that proposed refinement modules to reduce them.
 
-Some level of refinement was used also by \cite{DeepStructured:2017:Xu20173962} \cite{Xu:2020}.
+Some level of refinement was used also by \cite{DeepStructured:2017:Xu20173962, Xu:2020}.
 It was proposed the usage of Attention-Gated Conditional Random Fields (AG-CRFs) to refine and fuse the representations learned at multiple scales.
 Attention mechanisms were integrated, into a two-level hierarchical CNN model, to produce multi-scale learning, in a custom network for contour detection \cite{DeepStructured:2017:Xu20173962}.
 
@@ -92,8 +92,8 @@ PiDiNet also proposed lightweight version of its networks, with reduced number o
 \cite{Wibisono:2020} and \cite{Wibisono:2021} also proposed lightweight models, with performance similar to the literature, despite of the reduced number of parameters.
 % FINED network had ODS performance similar to HED, besides the number of almost 14 times less parameters.
 
-Besides the works with neural networks, some authors proposed tradicional methods to identify edges, using unsupervised learning \cite{Wan:2020} \cite{Wang:2020} \cite{Lin:2021} \cite{Dhillon:2022} \cite{Yan:2022}.
-These methods included enhanced versions of Canny Edge Detection \cite{Dhillon:2022}, the usage of Oriented Dynamic Threshold Neural System P \cite{Yan:2022}, and methods based on superpixels \cite{Wan:2020} \cite{Lin:2021}.
+Besides the works with neural networks, some authors proposed tradicional methods to identify edges, using unsupervised learning \cite{Wan:2020, Wang:2020, Lin:2021, Dhillon:2022, Yan:2022}.
+These methods included enhanced versions of Canny Edge Detection \cite{Dhillon:2022}, the usage of Oriented Dynamic Threshold Neural System P \cite{Yan:2022}, and methods based on superpixels \cite{Wan:2020, Lin:2021}.
 
 \begin{comment}
 {\color{blue}

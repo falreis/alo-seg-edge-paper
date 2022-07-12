@@ -171,8 +171,17 @@ Despite the poor results in some layers, the learning process adjusts itself so 
 \label{cap6_pos_processamento}
 
 At the end of the segmentation, a post processing step was added to reduce some noise.
+In this work, we propose to use mathematical morphology as post-processing step only in image segmentation task.
+%Then, this step is not inserted in the learning stage and the default procedure.
+
+Mathematical morphology is consistent with the non-linear image analysis, presenting solid theoretical foundation and idempotent functions \cite{Najman:2013}.
+The main goal is to better cope with the fundamental properties of a wellsegmented image, particularly, region uniformity and continuity. To achieve that, we decided to use the \textit{morphological opening} function filter, which tends to destroy the small, and conspicuous areas according to the size of the structuring element.
+This additional step could reduce possible noises on the final result and improve the accuracy on distinguishing the road from other objects present on the image.
+
 For this, the \textit{morphological opening} operation was used to remove small noises created by the foreground (road) in the background.
-The operation was applied using a $13 \times 13$ square structuring element as a result of empirical tests.
+The opening operation was applied using a square structuring element of the size $13 \times 13$, and this operation removes objects that are relatively smaller than the structuring element.
+It allowed the reduce reduce of possible noises on the final result and improve the accuracy, make predictions become smoother.
+%A side effect of this method is the removal of some points that seems to fit correctly.
 
 % A simple comparison of the final result with the original prediction is presented in Figure \ref{fig:kitti_post_processing_comp}.
 % The image shows an example of benefit from the post processing step.

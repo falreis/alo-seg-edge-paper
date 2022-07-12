@@ -33,20 +33,21 @@
 
 %Segmentation subdivides an image into its constituent regions or objects, while edge detection techniques identify the boundaries between objects \cite{gonzalez2002digital}.
 
-Image segmentation corresponds to the partition of an image into a set of meaningful areas, while edge detection techniques identify the boundaries between objects, that borders to regions \cite{Dominguez:2016} \cite{gonzalez2002digital}.
-Both can be considered as challenging semantic tasks, aiming to determine and group uniform regions for analysis or identifying pixels that limit those regions.
+Image segmentation corresponds to the partition of an image into a set of meaningful areas, while edge detection techniques identify the boundaries between objects, that borders the regions \cite{Dominguez:2016} \cite{gonzalez2002digital}.
+Both can be considered as challenging semantic tasks, aiming to determine and group uniform regions for analysis, or identifying pixels that limit those regions.
 
-According to~\cite{Dominguez:2016}, a proper segmented image should present some fundamental characteristics, such as: (i) region uniformity and homogeneity in  its features, such as gray level, color or texture; (ii) region continuity, without holes; (iii) significant difference between adjacent regions; and (iv) spatial accuracy with smooth and well-defined boundaries.
+Edge detection and image segmentation are still active topics of research \cite{Khan:2020} \cite{Sun:2022}, with room for improving techniques and solving practical problems.
+As complementary tasks, both can be modeled on each other by sharing effective techniques.
 
-Image segmentation is still an active topic of research \cite{Khan:2020}, with room for improving techniques and solving practical problems.
-It could be divided in two stages~\cite{Guigues:2006}: (i) low-level analysis, which evaluates the pixel characteristics, neighboring relation and it is ideally uncommitted in terms of position, orientation, size and contrast; and (ii) high-level analysis, which maps the low-level characteristics to fulfill the task.
-
-Edge detection can limit pixels into regions and, as a complementary task, can be used to refine segmentation \cite{MARTIN:1273918}.
-This correlation allows one problem to be modeled on another and effective techniques can be shared between them.
-%This task could be subdivided into boundary detection and the classical edge detection, where edge is ``an abrupt change in some low-level image feature such as brightness or color'' while boundary ``is a contour in the image plane that represents a change in pixel ownership from one object or surface to another'' \cite{MARTIN:1273918}.
-% \cite{Jain:1995} defines contours as a link between edges and a representation of region boundaries.
+{\color{red}
+Edge detection may be subdivided into boundary detection and the classical edge detection, where edge is ``an abrupt change in some low-level image feature such as brightness or color'' while boundary is a contour that represents a change in pixel ownership, that links edges and representation of region boundaries \cite{MARTIN:1273918} \cite{Jain:1995}.
+Closed contours represents region boundaries and open contours are parts of region boundaries \cite{Jain:1995}.
 % Closed contours represents region boundaries and open contours are parts of region boundaries \cite{Jain:1995}.
 % Contours can be combined into a UCM representation, an indexed hierarchy of regions as a soft boundaries \cite{Arbelaez:2006}.
+}
+
+According to~\cite{Dominguez:2016}, a proper segmented image should present some fundamental characteristics, such as: (i) region uniformity and homogeneity in  its features, such as gray level, color or texture; (ii) region continuity, without holes; (iii) significant difference between adjacent regions; and (iv) spatial accuracy with smooth and well-defined boundaries.
+It could be divided in two stages~\cite{Guigues:2006}: (i) low-level analysis, which evaluates the pixel characteristics, neighboring relation and it is ideally uncommitted in terms of position, orientation, size and contrast; and (ii) high-level analysis, which maps the low-level characteristics to fulfill the task.
 
 Traditional segmentation methods use basic image properties to find discontinuities that can indicate objects, regions or borders.
 However, these techniques face practical problems, such as similar color patterns, noise, and multiple thresholds for groups of images \cite{MARTIN:1273918} \cite{Segnet:2017:7803544}.
@@ -57,21 +58,25 @@ Due to their architectures, a common CNN produces different information along it
 Each layer contributes specifically to the final result, with its own characteristics, that indicates how weights are adjusted by the network.
 Furthermore, the network produces information in different sizes along the layers, due convolutional and pooling operations \cite{VGGNET:2014, Zeiler:2014, Fidler:2007, Hadji:2018}. %, that can be combined to produce a single output.
 
-More recently, many proposals explored the learned model for the high-level analysis, in order to create segmentation maps from the outputs of different layers of a deep network~\cite{Xie:2017:HED:3158436.3158453, Cheng:2016, COB:2016, RCF:2017:8100105, Yang:2018}.
+Recently, many proposals explored the learned model for the high-level analysis, in order to create segmentation maps from the outputs of different layers of a deep network~\cite{Xie:2017:HED:3158436.3158453, Cheng:2016, COB:2016, RCF:2017:8100105, Yang:2018}.
 These outputs are network samples, which do not require architectural changes and are therefore often called \textit{side-outputs}.
 One challenge on the latter strategy is the combination of the side-outputs from distinct layers, considering that they have different sizes and could represent different aspects of the input.
 
 In this work, we propose some strategies to combine the side-outputs from different layers by using simple merging functions in order to explore useful behavior in the learning process.
 We also study the amount of combined side-outputs that is needed to create a viable region propositions.
+To evaluate our model, the networks were trained for a road image segmentation and edge detection tasks.
+
+In road segmentation, the goal is develop methods to improve Vision-based Driver-Assistance Systems (VB-DAS), that become popular in modern vehicles.
+These systems aims to identify lane lines, provide blind spot supervision, and, recently, distinguish the road from different objects such pedestrians, sidewalks and other vehicles \cite{Saleem:2018, Yang:2018, Rezaei:2017}.
+
+Road identification can also be used in road monitoring, traffic management and self-driving cars.
+Edge detection task can be use to refine results of region segmentation, refining and improving results.
+Also, it is suitable for real-time applications, as microscope images information extraction and road boundary detection \cite{Qu:2020, Li:2020, Perng:2020}
 
 {\color{red}
-In region segmentation task, we adressed the usage of a post-processing filtering based on mathematical morphology idempotent functions~\cite{Najman:2013} in order to remove some undesirable small segments.
-In edge detection, we analyzed how to combine multiple ground truths annotations, presented in some data sets, into a single reference map to increase network convergence.
+% In region segmentation task, we adressed the usage of a post-processing filtering based on mathematical morphology idempotent functions~\cite{Najman:2013} in order to remove some undesirable small segments.
+% In edge detection, we analyzed how to combine multiple ground truths annotations, presented in some data sets, into a single reference map to increase network convergence.
 
-To evaluate our model, the networks were trained for a road image segmentation task. The goal is develop methods to improve Vision-based driver-assistance systems (VB-DAS), that become popular in modern vehicles. These systems aims to identify lane lines, provide blind spot supervision, and, recently, distinguish the road from different objects such pedestrians, sidewalks and other vehicles \cite{Saleem:2018, Yang:2018, Rezaei:2017}. Road identification can also be used in road monitoring, traffic management and self-driving cars. In this context, providing a robust and reliable segmentation is essential.
-
-{
-\color{red}
 % Segmentation subdivides an image into its constituent regions or objects, while edge detection techniques identify the boundaries between objects \cite{gonzalez2002digital}.
 % An edge, according to \cite{gonzalez2002digital}, is defined as a set of connected pixels that border two regions.
 
@@ -79,23 +84,22 @@ To evaluate our model, the networks were trained for a road image segmentation t
 % Object limits with its high-level information can be used to define boundaries location.
 % Also, boundaries can limit pixels into regions \cite{MARTIN:1273918}.
 % This correlation allows one problem to be modeled on another and effective techniques can be shared between them.
-}
 
-In order to combine these information at scale, some works such as HED, RCF and BDCN trained convolutional blocks individually, with specific loss functions for each of them.
-This procedure aims to produce macro and detailed information, which are later combined into a single map \cite{Xie:2017:HED:3158436.3158453, RCF:2019, He:2019}.
+% In order to combine these information at scale, some works such as HED, RCF and BDCN trained convolutional blocks individually, with specific loss functions for each of them.
+% This procedure aims to produce macro and detailed information, which are later combined into a single map \cite{Xie:2017:HED:3158436.3158453, RCF:2019, He:2019}.
 %This option, however, does not take advantage of existing similar tasks and results, once force several layers to produce the same result, increasing training cost.
 
-This work seeks to simplify this idea, proposing and evaluating some simple network architectures, based in some recent papers.
-Also, it will be evaluate the capacity of obtain good results without forcing layers to produce similar information.
+% This work seeks to simplify this idea, proposing and evaluating some simple network architectures, based in some recent papers.
+% Also, it will be evaluate the capacity of obtain good results without forcing layers to produce similar information.
 %This approach allows the information from a model for a specific task (e.g. region segmentation) to be easily adapted, with little training, for a similar task (e.g. edge detection).
 %This approach allows to adapt a model for a specific task (e.g. region segmentation) to a similar one (e.g. edge detection).
 
-To evaluate the methodology, our work will show results obtained in the tasks of region segmentation and edge detection.
-The task of region segmentation was addressed in our previous work \cite{Reis:2019} and, at this stage, we will focus mainly, but not only, in edge detection.
+% To evaluate the methodology, our work will show results obtained in the tasks of region segmentation and edge detection.
+% The task of region segmentation was addressed in our previous work \cite{Reis:2019} and, at this stage, we will focus mainly, but not only, in edge detection.
 }
 
-In edge detection we will refine the results of our previous work in a more difficult task, that will allow to identify more clearly the best technique to combine side-outputs.
-Also, this paper will address how to increase training speed and performance with simple transformation in the ground truth of edging detection.
+In edge detection we will refine the results of our previous work \cite{Reis:2019} in a more difficult task, that will allow to identify more clearly the best technique to combine side-outputs.
+Also, this paper will address how to combine multiple ground truths annotations, presented in some data sets, into a single reference map to increase training speed and performance.
 
 %This work also developed generic loss functions and trivial operations to combine side-outputs, such as average, maximum and sum.
 %The creation of simple or even trivial methods favors the use in different scenarios.

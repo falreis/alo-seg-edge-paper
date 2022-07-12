@@ -91,9 +91,15 @@ Formally, the set $ \mathcal{H}$ of $m$ side-outputs maps in each strategy is de
 \end{align}
 
 Each side-output $\mathcal{H}_1, ... \mathcal{H}_m$ is composed of a $1 \times 1$ convolution \footnote{It is important to note that the $1 \times 1$ convolutions will not be used in experiments from the Section \ref{ssec:bsds_subexp5}.}, followed by a transposed convolution of variable size.
+In this operation, the transposed weighted map is used to perform convolution between the side-output maps and an appropriate kernel to up-sample each position while maintaining the connectivity pattern \cite{Dumoulin:2016}.
+
 Due to the network architecture, with \textit{pooling} layers, the images are reduced along the network. 
-Thus, for the images to be rescaled to a single size, it is necessary that the transposed convolutions have a variable size.
+Thus, for the images to be rescaled to a single size, it is necessary the usage of a transposed convolutions operation with variable size.
+We expect side-output maps to carry information on the segmentation task at different layers of the network, thus at different scales.
 %The evaluation of the learning curve and final post-training performance of each strategy will be presented in Section \ref{cap6_experm_1_qtd_saidas}.
+
+
+
 
 %--------------------------------
 %SUB - TÉCNICAS PARA COMBINAR SAÍDAS LATERAIS

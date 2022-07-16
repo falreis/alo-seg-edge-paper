@@ -28,7 +28,7 @@ In the framework protocol, the first phases uses large differences between the p
 % In order to increase the convergence of the Focal Loss function, a small change was made to add an extra parameter, corresponding to the Pixel Error metric, also used in the KITTI data set experiments.
 % The change, despite improving the network convergence, the new PEFL function, did not considerably improve the smooth identification of sets.
 
-Due to the smooth identification of edges, the network, despite the good results in the ODS and OIS metrics, presented low results in the AP metric, when compared to other methods in the literature.
+Due to the smooth identification of edges, the network, despite the good results in the ODS and OIS metrics, presented low results in the AP metric, when compared to other methods in the literature, as available in Table \ref{tab:bsds_results_comparison}.
 It can also be inferred from the PR curve of Figure \ref{fig:bsds_xlo_avg_curve} that the network does not distinguish the edges well, being necessary to consider low thresholds as edges. 
 Low thresholds between borders and background have also been adopted in other studies, such as the DOOBNet network \cite{Cumulative:Song20181847}.
 
@@ -39,10 +39,9 @@ Low thresholds between borders and background have also been adopted in other st
   \label{fig:bsds_xlo_avg_curve}
 \end{figure}
 
-\begin{comment}
 \begin{table}%[h!]
   \centering
-  \caption{Performance comparison between our method and other methods in literature.}
+  \caption{\color{red}Performance comparison between our method and other methods in literature.}
   %\scriptsize
   %\setlength{\tabcolsep}{1em}
   \renewcommand{\arraystretch}{1.5}
@@ -51,41 +50,54 @@ Low thresholds between borders and background have also been adopted in other st
     Method & ODS & OIS & AP
     \\
     \hline
-    DeepContour \cite{DeepContour:2015:7299024} & .756 & .776 & -
+    %Human & .803 & .803 & -
+    %\\
+    %\hline
+    DeepContour & .76 & .78 & .80 %\cite{DeepContour:2015:7299024}
     \\
-    HED \cite{HED:2015} & .782 & .808 & -
+    HED & .782 & .804 & .833 %\cite{HED:2015}
     \\
-    DCNN + sPb \cite{Kokkinos:2016} & .813 & .831 & -
+    DCNN + sPb & .813 & .831 & .866 %\cite{Kokkinos:2016}
     \\
-    RDS \cite{LearningRelaxed:2016:7780401} & .792 & .810 & -
+    RDS & .792 & .810 & .818 %\cite{LearningRelaxed:2016:7780401}
     \\
-    EdgeNet \cite{SemanticSeg:2016:7780861} & .718 & .731 & -
+    EdgeNet & .718 & .731 & .685 %\cite{SemanticSeg:2016:7780861}
     \\
-    Edge CNN \cite{EdgeCNN:Wang201612} & .69 & .71 & -
+    Edge CNN & .69 & .71 & .71 %\cite{EdgeCNN:Wang201612}
     \\
-    COB \cite{COB:2016} & .793 & - & -
+    COB & .793 & .820 & .859 %\cite{COB:2016}
     \\
-    \cite{Wang:2017} & .803 & - & -
+    CED & .803 & .820 & .871 %\cite{Wang:2017}
     \\
-    \cite{ContourDetect:2017:8124495} & .75 & - & -
+    Contour Detection & .75 & .78 & .78 %\cite{ContourDetect:2017:8124495}
     \\
-    \cite{DeepStructured:2017:Xu20173962} & .798 & - & -
+    AMH-Net & .798 & .829 & .869 %\cite{DeepStructured:2017:Xu20173962}
     \\ 
-    RCF \cite{RCF:2017:8100105} & .819 & .823 & -
+    RCF & .819 & .823 & .839 %\cite{RCF:2017:8100105}
     \\
-    \cite{ProeminentEdge:2018:Cai2018} & .788 & - & -
+    Proeminent Edge & .788 & .804 & .845 %\cite{ProeminentEdge:2018:Cai2018}
     \\ 
-    \cite{Cumulative:Song20181847} & .819 & - & -
+    C-Net & .819 & .835 & .862 %\cite{Cumulative:Song20181847}
     \\
-    \cite{CrispBoundaries:2018:Deng2018570} & .815 & - & -
+    Crisp Boundaries & .800 & .816 & - %\cite{CrispBoundaries:2018:Deng2018570}
     \\ 
-    \cite{ReExtraction:Wen201884} & .804 & - & -
+    FRE & .804 & .821 & .850 %\cite{ReExtraction:Wen201884}
     \\  
-    \cite{LearningHybrid:Hu2018377} & .814 & - & -
+    HCF & .814 & .827 & - %\cite{LearningHybrid:Hu2018377}
     \\
-    \cite{Yang:2019} & .810 & - & -
+    ContourGAN & .802 & .831 & - %\cite{Yang:2019}
     \\
-    BDCN \cite{He:2019} & .828 & .844 & -
+    BDCN & .806 & .826 & .847 %\cite{He:2019}
+    \\
+    BMRN & .828 & .841 & .875 %\cite{Bao:2022}
+    \\
+    PiDiNet & .807 & .823 & - %\cite{Su:2021}
+    \\
+    TIN1 & .749 & .772 & - %\cite{Wibisono:2020}
+    \\
+    TIN2 & .772 & .795 & - %\cite{Wibisono:2020}
+    \\
+    FINED &.796 & .817 & - %\cite{Wibisono:2021}
     \\
     \hline
     XLO-ADD (ALL) & .776 & .790 & .702
@@ -98,9 +110,8 @@ Low thresholds between borders and background have also been adopted in other st
     \\
     \hline
   \end{tabular}
-  \label{tab:bsds_subexp5_results}
+  \label{tab:bsds_results_comparison}
 \end{table}
-\end{comment}
 
 % \begin{figure}%[h!]
 %   \centering
